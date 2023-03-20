@@ -1,4 +1,4 @@
-import { bumawikiAxios } from 'lib/axios/customAxios'
+import { bumawikiAxios } from '@/lib/axios/customAxios'
 
 export const getDocs = async (title: string) => {
 	return (await bumawikiAxios.get(`/docs/find/title/${title}`)).data

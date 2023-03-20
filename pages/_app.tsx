@@ -1,12 +1,14 @@
 import userState from '@/context/userState'
 import tokenExpired from '@/lib/token/tokenExpired'
 import '@/styles/globals.css'
-import { AxiosError } from 'axios'
+import * as api from '@/api/user'
+import axios, { AxiosError } from 'axios'
 import type { AppProps } from 'next/app'
 import { useEffect } from 'react'
-import * as api from '@/api/user'
 import { QueryCache, QueryClient, QueryClientProvider } from 'react-query'
 import { RecoilRoot, useSetRecoilState } from 'recoil'
+
+axios.defaults.baseURL = 'http://bumawiki.kro.kr/api'
 
 const queryClient = new QueryClient({
 	defaultOptions: {

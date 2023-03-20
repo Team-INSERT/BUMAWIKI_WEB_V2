@@ -18,13 +18,13 @@ const Teacher = () => {
 
 		if (router === 'teacher') {
 			setHumanities(data)
-			getTeacherDocs('majorTeacher')
+			getTeacherDocs('major_teacher')
 		}
-		if (router === 'majorTeacher') {
+		if (router === 'major_teacher') {
 			setMajor(data)
-			getTeacherDocs('mentorTeacher')
+			getTeacherDocs('mentor_teacher')
 		}
-		if (router === 'mentorTeacher') {
+		if (router === 'mentor_teacher') {
 			setMentor(data)
 		}
 	}

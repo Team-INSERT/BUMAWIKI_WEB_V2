@@ -104,7 +104,7 @@ export const HeaderSectionLogo = styled(Image)`
 	height: 14px;
 `
 
-export const HeaderSectionText = styled.span<{ display?: boolean }>`
+export const HeaderSectionText = styled.span<{ display?: string }>`
 	margin-left: 8px;
 	color: white;
 	font-size: 15px;
@@ -113,7 +113,7 @@ export const HeaderSectionText = styled.span<{ display?: boolean }>`
 
 	@media (max-width: 500px) {
 		font-size: 10px;
-		display: ${(props) => (props.display ? 'block' : 'none')};
+		display: ${(props) => (props.display === 'true' ? 'block' : 'none')};
 	}
 `
 

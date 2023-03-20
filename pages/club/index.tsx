@@ -16,9 +16,12 @@ const Club = () => {
 		onSuccess: async (res) => {
 			const data = res.sort((a: Docs, b: Docs) => (a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1))
 			setClubs(data)
-			const freeClub = (await axios.get(`/docs/freeClub`)).data
+			const freeClub = (await axios.get(`/docs/free_club`)).data
 			const freeClubData = freeClub.sort((a: Docs, b: Docs) => (a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1))
 			setFreeClubs(freeClubData)
+		},
+		onError: (err) => {
+			console.log(err)
 		},
 	})
 

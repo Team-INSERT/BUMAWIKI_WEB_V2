@@ -127,37 +127,37 @@ const Header = () => {
 				<S.HeaderSectionWrap>
 					<S.SubHeaderSectionWrap>
 						<S.SubHeaderSection href="/docs/부마위키%20방명록">
-							<S.HeaderSectionText display={true}>방명록</S.HeaderSectionText>
+							<S.HeaderSectionText display="true">방명록</S.HeaderSectionText>
 						</S.SubHeaderSection>
 						<S.SubHeaderSection href="/docs/부마위키%20업데이트%20내용">
-							<S.HeaderSectionText display={true}>공지사항</S.HeaderSectionText>
+							<S.HeaderSectionText display="true">공지사항</S.HeaderSectionText>
 						</S.SubHeaderSection>
 						<S.SubHeaderSection href="https://forms.gle/DzAP7XSYH4ubK43FA" target="_blank">
-							<S.HeaderSectionText display={true}>문의하기</S.HeaderSectionText>
+							<S.HeaderSectionText display="true">문의하기</S.HeaderSectionText>
 						</S.SubHeaderSection>
 					</S.SubHeaderSectionWrap>
 					<S.SubHeaderSectionWrap>
 						<S.SubHeaderSection href="/student">
-							<S.HeaderSectionText display={true}>학생</S.HeaderSectionText>
+							<S.HeaderSectionText display="true">학생</S.HeaderSectionText>
 						</S.SubHeaderSection>
 						<S.SubHeaderSection href="/teacher">
-							<S.HeaderSectionText display={true}>선생님</S.HeaderSectionText>
+							<S.HeaderSectionText display="true">선생님</S.HeaderSectionText>
 						</S.SubHeaderSection>
 						<S.SubHeaderSection href="/club">
-							<S.HeaderSectionText display={true}>동아리</S.HeaderSectionText>
+							<S.HeaderSectionText display="true">동아리</S.HeaderSectionText>
 						</S.SubHeaderSection>
 					</S.SubHeaderSectionWrap>
 					<S.SubHeaderSectionWrap>
 						<S.SubHeaderSection href="/frame">
-							<S.HeaderSectionText display={true}>틀</S.HeaderSectionText>
+							<S.HeaderSectionText display="true">틀</S.HeaderSectionText>
 						</S.SubHeaderSection>
 						<S.SubHeaderSection href="/accident">
-							<S.HeaderSectionText display={true}>사건</S.HeaderSectionText>
+							<S.HeaderSectionText display="true">사건</S.HeaderSectionText>
 						</S.SubHeaderSection>
 					</S.SubHeaderSectionWrap>
 					<S.SubHeaderSectionWrap>
 						<S.SubHeaderSection href="">
-							<S.HeaderSectionText display={true}>추가예정</S.HeaderSectionText>
+							<S.HeaderSectionText display="true">추가예정</S.HeaderSectionText>
 						</S.SubHeaderSection>
 					</S.SubHeaderSectionWrap>
 				</S.HeaderSectionWrap>
