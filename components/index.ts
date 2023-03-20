@@ -7,5 +7,6 @@ import Classify from './Classify'
 import Header from './Section/Header'
 import SubFooter from './Section/SubFooter'
 import Footer from './Section/Footer'
+import Authority from './Button/Authority'
 
-export { AccodianMenu, Aside, Board, DetailBtn, ScrollBtn, Classify, Header, SubFooter, Footer }
+export { AccodianMenu, Aside, Board, DetailBtn, ScrollBtn, Classify, Header, SubFooter, Footer, Authority }
