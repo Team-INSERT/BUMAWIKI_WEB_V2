@@ -1,13 +1,19 @@
+import { getAccessToken } from '@/api/user'
 import axios from 'axios'
-import tokenExpired from '@/lib/token/tokenExpired'
+import { Storage } from '../storage/storage'
 
 const bumawikiAxios = axios.create({
 	baseURL: 'http://bumawiki.kro.kr/api',
-	timeout: 100000,
+	timeout: 10000,
 })
 
 bumawikiAxios.interceptors.request.use(
-	(config) => {
+	async (config) => {
+		if (config.headers['Authorization'] === null && Storage.getItem('refresh_token')) {
+			const res = await getAccessToken()
+			Storage.setItem('access_token', res.accessToken)
+			config.headers['Authorization'] = res.accessToken
+		}
 		return config
 	},
 	(error) => {
@@ -20,12 +26,8 @@ bumawikiAxios.interceptors.response.use(
 		return response
 	},
 	(error) => {
-		const { status, message } = error.response.data
-		if (status === 403 && message !== 'User Not Login') {
-			// if (message === 'Refresh Token Expired') {
-			// 	alert('토큰이 만료되었습니다. 다시 로그인해주세요.')
-			// } else tokenExpired()
-		}
+		const { code } = error.response.data
+		console.log(code)
 		return Promise.reject(error)
 	}
 )

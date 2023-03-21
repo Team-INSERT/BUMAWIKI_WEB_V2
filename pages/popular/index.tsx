@@ -1,21 +1,13 @@
 import * as C from '@/components'
-import * as api from '@/api/getDocs'
+import * as docs from '@/api/getDocs'
 import * as S from './style'
 
 import React from 'react'
 import { useQuery } from 'react-query'
 import Docs from '@/types/docs.type'
+import DocsPropsType from '@/types/static/docs.props.type'
 
-const Popular = () => {
-	const [populars, setPopulars] = React.useState([])
-
-	useQuery('getPopular', () => api.getBaseDocs('popular'), {
-		onSuccess: (res) => {
-			const data = res.sort((a: Docs, b: Docs) => (a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1))
-			setPopulars(data)
-		},
-	})
-
+const Popular = ({ docs }: DocsPropsType) => {
 	return (
 		<>
 			<C.Header />
@@ -31,7 +23,7 @@ const Popular = () => {
 					<S.PopularListWrap>
 						<C.AccodianMenu name={`인기 문서`}>
 							<S.PopularList>
-								{populars.map((popular: Docs, index) => (
+								{docs.map((popular: Docs, index) => (
 									<S.PopularListItem key={popular.id}>
 										<S.PopularLink href={`/docs/${popular.title}`}>
 											{index + 1}위 {popular.title} (조회수 {popular.view})
@@ -49,6 +41,16 @@ const Popular = () => {
 			<C.Footer />
 		</>
 	)
+}
+
+export async function getStaticProps() {
+	const popular = await docs.getBaseDocs('find/popular')
+
+	return {
+		props: {
+			docs: popular,
+		},
+	}
 }
 
 export default Popular

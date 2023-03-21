@@ -13,7 +13,6 @@ interface DetailBtnProps {
 
 const DetailBtn = ({ docsId }: DetailBtnProps) => {
 	const router = useRouter()
-	const user = useRecoilValue(userState)
 	const [docsName, setDocsName] = React.useState('')
 	const queryClient = useQueryClient()
 
@@ -27,7 +26,7 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 
 	const onClickNavigatePage = (type: string) => {
 		if (type === 'VERSION') router.push(`/version/${router.pathname}`)
-		else if (type === 'UPDATE' && !user.isLogin) alert('로그인 후 편집하실 수 있습니다!')
+		// else if (type === 'UPDATE' && !user.isLogin) alert('로그인 후 편집하실 수 있습니다!')
 		else router.push(`/update/${router.pathname}`)
 	}
 
@@ -53,23 +52,19 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 
 	return (
 		<S.DetailButtonWrap>
-			{user.authority === 'ADMIN' ? (
-				<>
-					<S.DetailWrap onClick={onClickDeleteDocs}>
-						<S.DetailButton>
-							<S.DetailText>삭제</S.DetailText>
-						</S.DetailButton>
-					</S.DetailWrap>
-					<S.DetailInput value={docsName} onChange={(e) => setDocsName(e.target.value)} />
-					<S.DetailWrap onClick={onClickChangeDocsName}>
-						<S.DetailButton>
-							<S.DetailText>변경</S.DetailText>
-						</S.DetailButton>
-					</S.DetailWrap>
-				</>
-			) : (
-				''
-			)}
+			<>
+				<S.DetailWrap onClick={onClickDeleteDocs}>
+					<S.DetailButton>
+						<S.DetailText>삭제</S.DetailText>
+					</S.DetailButton>
+				</S.DetailWrap>
+				<S.DetailInput value={docsName} onChange={(e) => setDocsName(e.target.value)} />
+				<S.DetailWrap onClick={onClickChangeDocsName}>
+					<S.DetailButton>
+						<S.DetailText>변경</S.DetailText>
+					</S.DetailButton>
+				</S.DetailWrap>
+			</>
 			<S.DetailLinkWrap onClick={() => onClickNavigatePage('UPDATE')}>
 				<S.DetailButton>
 					<S.DetailText>편집</S.DetailText>

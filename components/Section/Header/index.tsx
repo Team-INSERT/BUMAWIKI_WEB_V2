@@ -8,79 +8,43 @@ import Search from 'assets/search.svg'
 import Student from 'assets/student.svg'
 import Teacher from 'assets/teacher.svg'
 import userState from '@/context/userState'
-import React, { useEffect } from 'react'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import React from 'react'
 import { useRouter } from 'next/router'
-import tokenExpired from '@/lib/token/tokenExpired'
-import { AxiosError } from 'axios'
+import { useRecoilState } from 'recoil'
 
 const Header = () => {
 	const [search, setSearch] = React.useState('')
-	const [isLoad, setIsLoad] = React.useState(false)
 	const [isHover, setIsHover] = React.useState(false)
-
-	const user = useRecoilValue(userState)
+	const [user, setUser] = useRecoilState(userState)
 	const router = useRouter()
 
-	const navigateSearchResult = () => {
-		if (!search.length) alert('검색할 문서명을 입력해주세요!')
-		else router.push(`/search/${search}`)
-	}
-
 	React.useEffect(() => {
-		console.log(user)
-		if (user.id) setIsLoad(true)
-	}, [user])
-
-	const setUser = useSetRecoilState(userState)
-
-	const getUser = async () => {
-		try {
-			const data = await api.getUser()
-			setUser({
-				...data,
-				contributeDocs: data.contributeDocs.reverse(),
-				isLogin: true,
-			})
-		} catch (err) {
-			console.log(err)
-			await tokenExpired()
-			console.error('로그인 후 서비스를 이용해주세요!')
-		}
-	}
-
-	const refreshLogin = async () => {
-		try {
-			await getUser()
-		} catch (err) {
-			if (err instanceof AxiosError) {
-				const { status, message } = err?.response?.data
-				if (status === 403) {
-					if (message === 'User Not Login') return console.error('로그인 후 서비스를 이용해주세요!')
-					await tokenExpired()
-				}
-				getUser()
+		;(async () => {
+			try {
+				const res = await api.getUser()
+				if (!user.id) setUser(res)
+			} catch (err) {
+				console.log(err)
 			}
-		}
-	}
+		})()
+	}, [setUser, user])
 
-	useEffect(() => {
-		refreshLogin()
-		// eslint-disable-next-line
-	}, [])
+	const navigateSearchResult = () => {
+		if (search.length) return router.push(`/search/${search}`)
+		alert('검색할 문서명을 입력해주세요!')
+	}
 
 	return (
 		<S.HeaderContainer onMouseOver={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
 			<S.HeaderWrap>
 				<S.HeaderLink href={'/'}>
-					<S.HeaderLogo src="/images/logo.png" alt="logo" width={1000} height={1000} />
+					<S.HeaderLogo src="/images/logo.png" width="1000" height="1000" alt="logo" />
 				</S.HeaderLink>
 				<S.HeaderSectionWrap>
 					<S.HeaderSection href={''}>
 						<S.HeaderSectionLogo src={Student} alt="" />
 						<S.HeaderSectionText>공지</S.HeaderSectionText>
 					</S.HeaderSection>
-					&nbsp;&nbsp;&nbsp;
 					<S.HeaderSection href={''}>
 						<S.HeaderSectionLogo src={Teacher} alt="" />
 						<S.HeaderSectionText>학교</S.HeaderSectionText>
@@ -93,14 +57,12 @@ const Header = () => {
 						<S.HeaderSectionLogo src={Club} alt="" />
 						<S.HeaderSectionText>외부 서비스</S.HeaderSectionText>
 					</S.HeaderSection>
-					{user.isLogin ? (
+					{user.id ? (
 						<S.HeaderSection href={`/create`}>
 							<S.HeaderSectionLogo src={Create} alt="" />
 							<S.HeaderSectionText>문서 생성</S.HeaderSectionText>
 						</S.HeaderSection>
-					) : (
-						''
-					)}
+					) : null}
 				</S.HeaderSectionWrap>
 				<S.HeaderSearchWrap>
 					<S.HeaderSearchForm onSubmit={(e) => e.preventDefault()}>
@@ -110,7 +72,7 @@ const Header = () => {
 						</S.HeaderSearchButton>
 					</S.HeaderSearchForm>
 					<S.HeaderLoginWrap>
-						{isLoad ? (
+						{user.id ? (
 							<S.HeaderMypageText href="/mypage">마이페이지</S.HeaderMypageText>
 						) : (
 							<S.HeaderLoginText href="https://auth.bssm.kro.kr/oauth?clientId=a1a16261&redirectURI=http://bumawiki.kro.kr/oauth">
@@ -122,15 +84,18 @@ const Header = () => {
 			</S.HeaderWrap>
 			<S.SubHeaderWrap isHover={isHover}>
 				<S.SubHeaderPlace>
-					<S.HeaderLogo src="/images/logo.png" alt="logo" width={0} height={0} />
+					<S.HeaderLogo src="/images/logo.png" width="1000" height="1000" alt="logo" />
 				</S.SubHeaderPlace>
 				<S.HeaderSectionWrap>
 					<S.SubHeaderSectionWrap>
+						<S.SubHeaderSection href="/docs/부마위키%20업데이트%20내용">
+							<S.HeaderSectionText display="true">공지사항</S.HeaderSectionText>
+						</S.SubHeaderSection>
 						<S.SubHeaderSection href="/docs/부마위키%20방명록">
 							<S.HeaderSectionText display="true">방명록</S.HeaderSectionText>
 						</S.SubHeaderSection>
-						<S.SubHeaderSection href="/docs/부마위키%20업데이트%20내용">
-							<S.HeaderSectionText display="true">공지사항</S.HeaderSectionText>
+						<S.SubHeaderSection href="/docs/부마위키%20개인정보처리방침">
+							<S.HeaderSectionText>처리방침</S.HeaderSectionText>
 						</S.SubHeaderSection>
 						<S.SubHeaderSection href="https://forms.gle/DzAP7XSYH4ubK43FA" target="_blank">
 							<S.HeaderSectionText display="true">문의하기</S.HeaderSectionText>
@@ -147,17 +112,26 @@ const Header = () => {
 							<S.HeaderSectionText display="true">동아리</S.HeaderSectionText>
 						</S.SubHeaderSection>
 					</S.SubHeaderSectionWrap>
-					<S.SubHeaderSectionWrap>
+					<S.SubHeaderSectionWrap margin="1.2vw">
 						<S.SubHeaderSection href="/frame">
 							<S.HeaderSectionText display="true">틀</S.HeaderSectionText>
 						</S.SubHeaderSection>
 						<S.SubHeaderSection href="/accident">
 							<S.HeaderSectionText display="true">사건</S.HeaderSectionText>
 						</S.SubHeaderSection>
+						<S.SubHeaderSection href="/popular">
+							<S.HeaderSectionText display="true">인기문서</S.HeaderSectionText>
+						</S.SubHeaderSection>
 					</S.SubHeaderSectionWrap>
 					<S.SubHeaderSectionWrap>
 						<S.SubHeaderSection href="">
-							<S.HeaderSectionText display="true">추가예정</S.HeaderSectionText>
+							<S.HeaderSectionText display="true">BSM</S.HeaderSectionText>
+						</S.SubHeaderSection>
+						<S.SubHeaderSection href="">
+							<S.HeaderSectionText display="true">BGIT</S.HeaderSectionText>
+						</S.SubHeaderSection>
+						<S.SubHeaderSection href="">
+							<S.HeaderSectionText display="true">심청이</S.HeaderSectionText>
 						</S.SubHeaderSection>
 					</S.SubHeaderSectionWrap>
 				</S.HeaderSectionWrap>

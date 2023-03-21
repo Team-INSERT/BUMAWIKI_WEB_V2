@@ -1,14 +1,9 @@
-import { getRefreshToken } from 'api/user'
-import delCookie from 'utils/etc/delCookie'
+import { getAccessToken } from '@/api/user'
+import { Storage } from '../storage/storage'
 
 const tokenExpired = async () => {
-	try {
-		const res = await getRefreshToken()
-		document.cookie = `authorization=${res.data.accessToken};`
-	} catch (err) {
-		delCookie('authorization')
-		delCookie('refresh_token')
-	}
+	const res = await getAccessToken()
+	Storage.setItem('access_token', res.accessToken)
 }
 
 export default tokenExpired

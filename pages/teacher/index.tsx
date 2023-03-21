@@ -1,48 +1,21 @@
 import * as C from '@/components'
 import * as S from './style'
+import * as docs from '@/api/getDocs'
 
-import axios from 'axios'
 import React from 'react'
 import Docs from '@/types/docs.type'
-import { Helmet } from 'react-helmet'
-import { bumawikiAxios } from '@/lib/axios/customAxios'
 
-const Teacher = () => {
-	const [major, setMajor] = React.useState([])
-	const [humanities, setHumanities] = React.useState([])
-	const [mentor, setMentor] = React.useState([])
-
-	const getTeacherDocs = async (router: string) => {
-		const res = await bumawikiAxios.get(`/docs/${router}`)
-		const data = res.data.sort((a: Docs, b: Docs) => (a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1))
-
-		if (router === 'teacher') {
-			setHumanities(data)
-			getTeacherDocs('major_teacher')
-		}
-		if (router === 'major_teacher') {
-			setMajor(data)
-			getTeacherDocs('mentor_teacher')
-		}
-		if (router === 'mentor_teacher') {
-			setMentor(data)
-		}
+interface TeacherDocsPropsType {
+	docs: {
+		common_teacher: Docs[]
+		major_teacher: Docs[]
+		mentor_teacher: Docs[]
 	}
+}
 
-	React.useEffect(() => {
-		getTeacherDocs('teacher')
-		// eslint-disable-next-line
-	}, [])
-
+const Teacher = ({ docs }: TeacherDocsPropsType) => {
 	return (
 		<>
-			<Helmet>
-				<meta property="og:title" content={`부마위키 - 선생님`} />
-				<meta property="og:image" content="images/meta-img.png" />
-				<meta property="og:description" content="여러분이 가꾸어 나가는 역사의 고서 - 선생님" />
-				<link href="images/icon.ico" rel="shortcut icon" type="image/x-icon" />
-				<title>부마위키 - 선생님</title>
-			</Helmet>
 			<C.Header />
 			<S.TeacherWrap>
 				<C.Board>
@@ -57,7 +30,7 @@ const Teacher = () => {
 					<S.TeacherList>
 						<C.AccodianMenu name={`인문과목 선생님`}>
 							<S.TeacherDetailList>
-								{humanities.map((teacher: Docs, index) => (
+								{docs.common_teacher.map((teacher: Docs, index) => (
 									<S.TeacherListItem key={index}>
 										<S.TeacherLink href={`/docs/${teacher.title}`}>{teacher.title}</S.TeacherLink>
 									</S.TeacherListItem>
@@ -66,7 +39,7 @@ const Teacher = () => {
 						</C.AccodianMenu>
 						<C.AccodianMenu name={`전공과목 선생님`}>
 							<S.TeacherDetailList>
-								{major.map((teacher: Docs, index) => (
+								{docs.major_teacher.map((teacher: Docs, index) => (
 									<S.TeacherListItem key={index}>
 										<S.TeacherLink href={`/docs/${teacher.title}`} className="link">
 											{teacher.title}
@@ -77,7 +50,7 @@ const Teacher = () => {
 						</C.AccodianMenu>
 						<C.AccodianMenu name={`멘토 선생님`}>
 							<S.TeacherDetailList>
-								{mentor.map((teacher: Docs) => (
+								{docs.mentor_teacher.map((teacher: Docs) => (
 									<S.TeacherListItem key={teacher.id}>
 										<S.TeacherLink href={`/docs/${teacher.title}`} className="link">
 											{teacher.title}
@@ -95,6 +68,22 @@ const Teacher = () => {
 			<C.Footer />
 		</>
 	)
+}
+
+export async function getStaticProps() {
+	const common_teacher = await docs.getBaseDocs('teacher')
+	const major_teacher = await docs.getBaseDocs('major_teacher')
+	const mentor_teacher = await docs.getBaseDocs('mentor_teacher')
+
+	return {
+		props: {
+			docs: {
+				common_teacher,
+				major_teacher,
+				mentor_teacher,
+			},
+		},
+	}
 }
 
 export default Teacher
