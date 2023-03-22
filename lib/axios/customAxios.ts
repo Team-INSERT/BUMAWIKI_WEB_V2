@@ -10,6 +10,11 @@ const bumawikiAxios = axios.create({
 bumawikiAxios.interceptors.request.use(
 	async (config) => {
 		if (config.headers['Authorization'] === null && Storage.getItem('refresh_token')) {
+			try {
+				await getAccessToken()
+			} catch (err) {
+				Storage.delItem('access_token')
+			}
 			const res = await getAccessToken()
 			Storage.setItem('access_token', res.accessToken)
 			config.headers['Authorization'] = res.accessToken
@@ -17,6 +22,7 @@ bumawikiAxios.interceptors.request.use(
 		return config
 	},
 	(error) => {
+		Storage.delItem('access_token')
 		return Promise.reject(error)
 	}
 )
@@ -26,8 +32,6 @@ bumawikiAxios.interceptors.response.use(
 		return response
 	},
 	(error) => {
-		const { code } = error.response.data
-		console.log(code)
 		return Promise.reject(error)
 	}
 )

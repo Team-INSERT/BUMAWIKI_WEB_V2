@@ -13,6 +13,7 @@ interface DetailBtnProps {
 
 const DetailBtn = ({ docsId }: DetailBtnProps) => {
 	const router = useRouter()
+	const { query } = router
 	const [docsName, setDocsName] = React.useState('')
 	const queryClient = useQueryClient()
 
@@ -25,9 +26,9 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 	})
 
 	const onClickNavigatePage = (type: string) => {
-		if (type === 'VERSION') router.push(`/version/${router.pathname}`)
-		// else if (type === 'UPDATE' && !user.isLogin) alert('로그인 후 편집하실 수 있습니다!')
-		else router.push(`/update/${router.pathname}`)
+		if (type === 'VERSION') router.push(`/version/${query.title}`)
+		// else if (type === 'UPDATE' && !user.id) alert('로그인 후 편집하실 수 있습니다!')
+		else router.push(`/update/${query.title}`)
 	}
 
 	const deleteDocsTitleMutation = useMutation(api.deleteDocs as MutationFunction, {

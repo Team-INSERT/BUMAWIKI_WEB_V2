@@ -8,21 +8,17 @@ import React from 'react'
 import { useMutation } from 'react-query'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import Contributors from '@/types/contributors.type'
-import { flushSync } from 'react-dom'
+import { Storage } from '@/lib/storage/storage'
 
 const MyPage = () => {
 	const user = useRecoilValue(userState)
 	const setUser = useSetRecoilState(userState)
 
-	const { mutate } = useMutation(api.logoutUser, {
+	const { mutate } = useMutation(api.onLogoutUser, {
 		onSuccess: () => {
-			localStorage.removeItem('access_token')
-			localStorage.removeItem('refresh_token')
-			localStorage.removeItem('refresh_token_expired_at')
-			console.log('asd')
-			flushSync(() => {
-				setUser(initUserState)
-			})
+			Storage.delItem('access_token')
+			Storage.delItem('refresh_token')
+			setUser(initUserState)
 		},
 	})
 

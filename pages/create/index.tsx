@@ -2,30 +2,42 @@ import * as C from '@/components'
 import * as api from '@/api/editDocs'
 import * as FC from '@/utils'
 import * as S from './style'
+import * as userApi from '@/api/user'
 
 import userState from '@/context/userState'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useMutation } from 'react-query'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import CreateDocsType from '@/types/create.type'
 import { encodeContents } from '@/utils/document/requestContents'
 import Frame from '@/types/frame.type'
 import sizeInitState from '@/state/sizeInitState'
 import { useRouter } from 'next/router'
+import createInitState from '@/state/createInitState'
+import createDocsForm from '@/utils/document/createDocsForm'
 
 const Create = () => {
 	const router = useRouter()
-	const user = useRecoilValue(userState)
+	const { query } = router
+	const [user, setUser] = useRecoilState(userState)
 	const years = FC.getAllYear()
 
 	const [size, setSize] = React.useState<Frame>(sizeInitState)
 	const [docs, setDocs] = React.useState<CreateDocsType>({
-		title: (router.query.name as string) || '',
-		contents: '',
-		docsType: '',
-		enroll: -1,
-		files: [],
+		title: (query.name as string) || '',
+		...createInitState,
 	})
+
+	React.useEffect(() => {
+		;(async () => {
+			try {
+				const res = await userApi.getUser()
+				if (!user.id) setUser(res)
+			} catch (err) {
+				console.log(err)
+			}
+		})()
+	}, [setUser, user])
 
 	const { mutate } = useMutation(api.createDocs, {
 		onSuccess: (data) => {
@@ -34,31 +46,25 @@ const Create = () => {
 		},
 	})
 
-	const createDocs = () => {
-		const FormData = require('form-data')
-		const data = new FormData()
-		data.append(
-			'request',
-			new Blob(
-				[`{ "title": "${docs.title}", "enroll":"${docs.enroll}", "contents":"${encodeContents(docs.contents)}", "docsType":"${docs.docsType}"}`],
-				{
-					type: 'application/json',
-				}
-			)
-		)
-		docs.files.reverse().forEach((file) => data.append('files', file, file.name))
-		mutate(data)
-	}
-
 	const onClickCreateDocs = () => {
 		if (docs.title.includes('?') || docs.title.includes('/') || docs.title.includes('"') || docs.title.includes('\\'))
 			return alert('문서명에는 물음표나 쌍따옴표, 슬래시나 역슬래시를 넣을 수 없습니다.')
-		if (!user.isLogin) return alert('로그인 후 이용 가능한 서비스입니다.')
+		if (!user.id) return alert('로그인 후 이용 가능한 서비스입니다.')
 		if (!docs.enroll) return alert('연도를 선택해주세요!')
 		if (!docs.title.length) return alert('문서의 이름을 정해주세요!')
 		if (!docs.docsType) return alert('문서의 분류를 선택해주세요!')
 
-		createDocs()
+		const { title, enroll, contents, docsType, files } = docs
+
+		mutate(
+			createDocsForm({
+				title,
+				enroll,
+				contents,
+				docsType,
+				files,
+			})
+		)
 	}
 
 	const makeFrame = () => {

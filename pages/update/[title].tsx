@@ -10,27 +10,29 @@ import { useRecoilValue } from 'recoil'
 import { MutationFunction, useMutation, useQuery } from 'react-query'
 import UpdateDocsType from '@/types/update.type.'
 import { decodeContents, encodeContents } from '@/utils/document/requestContents'
-import updateInitState from '@/state/updateInitState'
 import { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
+import Docs from '@/types/docs.type'
+import { GetStaticProps } from 'next'
+import { Storage } from '@/lib/storage/storage'
 
-const Update = () => {
+interface SinglDocsPropsType {
+	defaultDocs: Docs
+	title: string
+}
+
+const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 	const router = useRouter()
-	const { title } = router.query
 	const user = useRecoilValue(userState)
 	const textareaRef = React.useRef<HTMLTextAreaElement>(null)
 
-	const [docs, setDocs] = React.useState<UpdateDocsType>(updateInitState)
-	const [fileInput, setFileInput] = React.useState([''])
-	const [isOnAutoComplete, setIsOnAutoComplete] = React.useState(
-		JSON.parse(typeof window !== 'undefined' ? window.localStorage.getItem('autoComplete') || 'true' : 'false')
-	)
-
-	useQuery('docs', () => getApi.getDocs(title as string), {
-		onSuccess: (data) => {
-			setDocs({ ...docs, contents: decodeContents(data.contents), title: data.title })
-		},
+	const [docs, setDocs] = React.useState<UpdateDocsType>({
+		title: defaultDocs.title,
+		contents: decodeContents(defaultDocs.contents),
+		files: [],
 	})
+	const [fileInput, setFileInput] = React.useState([''])
+	const [isOnAutoComplete, setIsOnAutoComplete] = React.useState(JSON.parse(Storage.getItem('autoComplete') || 'true'))
 
 	const { mutate } = useMutation(editApi.updateDocs as MutationFunction, {
 		onSuccess: () => {
@@ -119,7 +121,7 @@ const Update = () => {
 							ref={textareaRef}
 							onKeyDown={(e) => FC.onKeyDownUseTab(e)}
 							onChange={(e) => setDocs(isOnAutoComplete ? { ...docs, contents: FC.autoClosingTag(e) } : { ...docs, contents: e.target.value })}
-							value={docs.contents.replace(/&\$\^%/gi, '"')}
+							value={decodeContents(docs.contents)}
 						/>
 						<S.UpdatePreviewText>미리보기</S.UpdatePreviewText>
 						<S.UpdatePreview
@@ -140,6 +142,42 @@ const Update = () => {
 			<C.Footer />
 		</>
 	)
+}
+
+export const getStaticPaths = async () => {
+	return {
+		paths: [],
+		fallback: true,
+	}
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
+	const { params } = context
+
+	const res = await getApi.getDocs(params?.title as string)
+	const { contents } = res
+
+	if (contents.indexOf('include(') !== -1) {
+		const includeTag = contents.substring(contents.indexOf('include('), contents.indexOf(');') + 2)
+		const frame = await FC.includeFrame(contents.substring(contents.indexOf('include('), contents.indexOf(');')).replace('include(', ''))
+
+		return {
+			props: {
+				defaultDocs: {
+					...res,
+					contents: contents.replace(includeTag, frame),
+					title: params?.title,
+				},
+			},
+		}
+	}
+
+	return {
+		props: {
+			defaultDocs: res,
+			title: params?.title,
+		},
+	}
 }
 
 export default Update
