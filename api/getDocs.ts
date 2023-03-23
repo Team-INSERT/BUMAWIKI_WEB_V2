@@ -4,8 +4,8 @@ export const getDocs = async (title: string) => {
 	return (await bumawikiAxios.get(`/docs/find/title/${title}`)).data
 }
 
-export const getLastModifiedDocs = async () => {
-	return (await bumawikiAxios.get('/docs/find/modified')).data
+export const getLastModifiedDocs = async (page: number) => {
+	return (await bumawikiAxios.get(`/docs/find/modified?page=${page}`)).data
 }
 
 export const getFindDocs = async (title: string) => {

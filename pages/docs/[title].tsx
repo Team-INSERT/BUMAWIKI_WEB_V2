@@ -1,21 +1,18 @@
 import * as C from '@/components'
 import * as FC from '@/utils'
 import * as S from './style'
-import * as docs from '@/api/getDocs'
+import * as api from '@/api/getDocs'
 
-import React, { useEffect, useState } from 'react'
-import { useQuery } from 'react-query'
+import React from 'react'
 import Docs from '@/types/docs.type'
-import { AxiosError } from 'axios'
 import { decodeContents } from '@/utils/document/requestContents'
-import { useRouter } from 'next/router'
 import { GetStaticProps } from 'next'
 
-interface SinglDocsPropsType {
+interface SingleDocsPropsType {
 	docs: Docs
 }
 
-const Doc = ({ docs }: SinglDocsPropsType) => {
+const Doc = ({ docs }: SingleDocsPropsType) => {
 	return (
 		<>
 			<C.Header />
@@ -61,23 +58,8 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
 	const { params } = context
-	
-	const res = await docs.getDocs(params?.title as string)
-	const { contents } = res
 
-	if (contents.indexOf('include(') !== -1) {
-		const includeTag = contents.substring(contents.indexOf('include('), contents.indexOf(');') + 2)
-		const frame = await FC.includeFrame(contents.substring(contents.indexOf('include('), contents.indexOf(');')).replace('include(', ''))
-
-		return {
-			props: {
-				docs: {
-					...res,
-					contents: contents.replace(includeTag, frame),
-				},
-			},
-		}
-	}
+	const res = await api.getDocs(params?.title as string)
 
 	return {
 		props: {

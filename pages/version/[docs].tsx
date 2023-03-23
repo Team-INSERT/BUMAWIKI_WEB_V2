@@ -5,25 +5,15 @@ import * as S from '../docs/style'
 import * as V from './style'
 
 import React from 'react'
-import { useQuery } from 'react-query'
 import { VersionDocs } from '@/types/version.type'
-import { useRouter } from 'next/router'
+import { GetStaticProps } from 'next'
 
-const Version = () => {
-	const router = useRouter()
-	const { docs } = router.query
-	const [version, setVersion] = React.useState([])
-	const [isLoad, setIsLoad] = React.useState(false)
-	const [docsName, setDocsName] = React.useState()
+interface SingleDocsPropsType {
+	version: VersionDocs[]
+	docsName: string
+}
 
-	useQuery('versionDocs', () => api.getVersionDocs(docs as string), {
-		onSuccess: (data) => {
-			setVersion(data.versionDocsResponseDto.reverse())
-			setDocsName(data.docsResponseDto.title)
-			setIsLoad(true)
-		},
-	})
-
+const Version = ({ version, docsName }: SingleDocsPropsType) => {
 	return (
 		<>
 			<C.Header />
@@ -35,22 +25,16 @@ const Version = () => {
 					<S.DocsLine />
 					<S.DocsContentsWrap>
 						<ul>
-							{router.isReady && isLoad ? (
-								<>
-									{version.map((ver: VersionDocs, index: number) => (
-										<V.VersionList key={index}>
-											<span>
-												<V.VersionLink href={`/version/${docs}/detail/${index}`}>{FC.dateParser(ver.thisVersionCreatedAt)}</V.VersionLink>
-											</span>
-											<span>
-												작성자 : <V.VersionLink href={`/user/${ver.userId}`}>{ver.nickName}</V.VersionLink>
-											</span>
-										</V.VersionList>
-									))}
-								</>
-							) : (
-								''
-							)}
+							{version?.map((ver: VersionDocs, index: number) => (
+								<V.VersionList key={index}>
+									<span>
+										<V.VersionLink href={`/version/${docsName}/detail/${index}`}>{FC.dateParser(ver.thisVersionCreatedAt)}</V.VersionLink>
+									</span>
+									<span>
+										작성자 : <V.VersionLink href={`/user/${ver.userId}`}>{ver.nickName}</V.VersionLink>
+									</span>
+								</V.VersionList>
+							))}
 						</ul>
 					</S.DocsContentsWrap>
 					<C.SubFooter />
@@ -61,6 +45,26 @@ const Version = () => {
 			<C.Footer />
 		</>
 	)
+}
+
+export const getStaticPaths = async () => {
+	return {
+		paths: [],
+		fallback: true,
+	}
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
+	const { params } = context
+
+	const res = await api.getVersionDocs(params?.docs as string)
+
+	return {
+		props: {
+			version: res.versionDocsResponseDto,
+			docsName: params?.docs,
+		},
+	}
 }
 
 export default Version
