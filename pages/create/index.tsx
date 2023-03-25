@@ -43,6 +43,7 @@ const Create = () => {
 
 	const { mutate } = useMutation(api.createDocs, {
 		onSuccess: (data) => {
+			// alert -> modal or popup or toast 로 대체
 			alert('문서가 생성되었습니다!')
 			router.push(`/docs/${data.title}`)
 		},
