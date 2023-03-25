@@ -64,6 +64,13 @@ const Student = ({ docs, years }: DocsPropsType) => {
 	)
 }
 
+export const getStaticPaths = async () => {
+	return {
+		paths: [],
+		fallback: true,
+	}
+}
+
 export async function getStaticProps() {
 	const student = await docs.getBaseDocs('student')
 	const years = FC.getAllYear()

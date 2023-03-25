@@ -59,6 +59,13 @@ const Popular = ({ docs }: DocsPropsType) => {
 	)
 }
 
+export const getStaticPaths = async () => {
+	return {
+		paths: [],
+		fallback: true,
+	}
+}
+
 export async function getStaticProps() {
 	const popular = await docs.getBaseDocs('find/popular')
 

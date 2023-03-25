@@ -87,6 +87,13 @@ const Teacher = ({ docs }: TeacherDocsPropsType) => {
 	)
 }
 
+export const getStaticPaths = async () => {
+	return {
+		paths: [],
+		fallback: true,
+	}
+}
+
 export async function getStaticProps() {
 	const common_teacher = await docs.getBaseDocs('teacher')
 	const major_teacher = await docs.getBaseDocs('major_teacher')
