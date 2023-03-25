@@ -24,6 +24,8 @@ export const getVersionDocs = async (title: string) => {
 			},
 		})
 	).data
+	// 기본값 추가 
+	// return data || { user : null }
 }
 
 export const getBaseDocs = async (docsType: string) => {
