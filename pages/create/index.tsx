@@ -235,6 +235,7 @@ const Create = () => {
 				<C.ScrollBtn />
 				<C.Aside />
 			</S.CreateWrap>
+			{ /* header, footer 안쓰는 페이지 없을 시 _app.tsx로 이동 */ }
 			<C.Footer />
 		</>
 	)
