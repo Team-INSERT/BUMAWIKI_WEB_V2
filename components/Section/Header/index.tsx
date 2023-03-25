@@ -41,27 +41,27 @@ const Header = () => {
 					<S.HeaderLogo src="/images/logo.png" width="1000" height="1000" alt="logo" />
 				</S.HeaderLink>
 				<S.HeaderSectionWrap>
-					<S.HeaderSection href={''}>
+					<S.HeaderSection>
 						<S.HeaderSectionLogo src={Student} alt="" />
 						<S.HeaderSectionText>공지</S.HeaderSectionText>
 					</S.HeaderSection>
-					<S.HeaderSection href={''}>
+					<S.HeaderSection>
 						<S.HeaderSectionLogo src={Teacher} alt="" />
 						<S.HeaderSectionText>학교</S.HeaderSectionText>
 					</S.HeaderSection>
-					<S.HeaderSection href={''}>
+					<S.HeaderSection>
 						<S.HeaderSectionLogo src={Accident} alt="" />
 						<S.HeaderSectionText>기타</S.HeaderSectionText>
 					</S.HeaderSection>
-					<S.HeaderSection href={''}>
+					<S.HeaderSection>
 						<S.HeaderSectionLogo src={Club} alt="" />
 						<S.HeaderSectionText>외부 서비스</S.HeaderSectionText>
 					</S.HeaderSection>
 					{user.id && (
-						<S.HeaderSection href={`/create`}>
+						<S.HeaderSectionLink href={`/create`}>
 							<S.HeaderSectionLogo src={Create} alt="" />
 							<S.HeaderSectionText>문서 생성</S.HeaderSectionText>
-						</S.HeaderSection>
+						</S.HeaderSectionLink>
 					)}
 				</S.HeaderSectionWrap>
 				<S.HeaderSearchWrap>

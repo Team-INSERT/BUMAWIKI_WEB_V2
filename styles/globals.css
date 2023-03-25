@@ -59,8 +59,29 @@ input[type='file']::file-selector-button {
 	background-color: #274168;
 	color: white;
 	font-weight: 700;
-	padding: 6px;
+	padding: 10px;
 	font-size: 20px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.frame_caption::marker {
+	content: '';
+}
+
+details {
+	margin-bottom: 1em;
+	transition: all 1.5s ease-in-out;
+	max-height: 10em;
+	overflow: hidden;
+}
+
+details[open] {
+	max-height: 500em;
+}
+
+details[close] {
+	max-height: auto;
 }
 
 .analects {

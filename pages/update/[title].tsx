@@ -5,7 +5,7 @@ import * as getApi from '@/api/getDocs'
 import * as editApi from '@/api/editDocs'
 
 import userState from '@/context/userState'
-import React from 'react'
+import React, { Suspense } from 'react'
 import { useRecoilValue } from 'recoil'
 import { MutationFunction, useMutation, useQuery } from 'react-query'
 import UpdateDocsType from '@/types/update.type.'
@@ -16,6 +16,7 @@ import Docs from '@/types/docs.type'
 import { GetStaticProps } from 'next'
 import { Storage } from '@/lib/storage/storage'
 import { NextSeo, NextSeoProps } from 'next-seo'
+import NotFound from '../404'
 
 interface SinglDocsPropsType {
 	defaultDocs: Docs
@@ -28,8 +29,8 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 	const textareaRef = React.useRef<HTMLTextAreaElement>(null)
 
 	const [docs, setDocs] = React.useState<UpdateDocsType>({
-		title: defaultDocs.title,
-		contents: decodeContents(defaultDocs.contents),
+		title: defaultDocs?.title,
+		contents: decodeContents(defaultDocs?.contents || ''),
 		files: [],
 	})
 	const [fileInput, setFileInput] = React.useState([''])
@@ -82,12 +83,12 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 	}
 
 	const seoConfig: NextSeoProps = {
-		title: `부마위키 문서편집 - ${defaultDocs.title}`,
-		description: `"${defaultDocs.title}" 문서편집 페이지입니다.`,
+		title: `부마위키 문서편집 - ${defaultDocs?.title}`,
+		description: `"${defaultDocs?.title}" 문서편집 페이지입니다.`,
 		openGraph: {
 			type: 'website',
-			title: `부마위키 문서편집 - ${defaultDocs.title}`,
-			description: `"${defaultDocs.title}" 문서편집 페이지입니다.`,
+			title: `부마위키 문서편집 - ${defaultDocs?.title}`,
+			description: `"${defaultDocs?.title}" 문서편집 페이지입니다.`,
 			images: [
 				{
 					url: '/images/meta-img.png',
@@ -138,7 +139,7 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 							ref={textareaRef}
 							onKeyDown={(e) => FC.onKeyDownUseTab(e)}
 							onChange={(e) => setDocs(isOnAutoComplete ? { ...docs, contents: FC.autoClosingTag(e) } : { ...docs, contents: e.target.value })}
-							value={decodeContents(docs.contents)}
+							value={decodeContents(docs.contents || '')}
 						/>
 						<S.UpdatePreviewText>미리보기</S.UpdatePreviewText>
 						<S.UpdatePreview
@@ -164,7 +165,7 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 export const getStaticPaths = async () => {
 	return {
 		paths: [],
-		fallback: false,
+		fallback: true,
 	}
 }
 
@@ -173,21 +174,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 	const res = await getApi.getDocs(params?.title as string)
 	const { contents } = res
-
-	if (contents.indexOf('include(') !== -1) {
-		const includeTag = contents.substring(contents.indexOf('include('), contents.indexOf(');') + 2)
-		const frame = await FC.includeFrame(contents.substring(contents.indexOf('include('), contents.indexOf(');')).replace('include(', ''))
-
-		return {
-			props: {
-				defaultDocs: {
-					...res,
-					contents: contents.replace(includeTag, frame),
-					title: params?.title,
-				},
-			},
-		}
-	}
 
 	return {
 		props: {

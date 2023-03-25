@@ -15,12 +15,12 @@ interface SingleDocsPropsType {
 
 const Doc = ({ docs }: SingleDocsPropsType) => {
 	const seoConfig: NextSeoProps = {
-		title: `부마위키 - ${docs.title} (${FC.typeEditor(docs.docsType)})`,
-		description: `${docs.contents.slice(0, 16)}...`,
+		title: `부마위키 - ${docs?.title} (${FC.typeEditor(docs?.docsType)})`,
+		description: `${docs?.contents.slice(0, 16)}...`,
 		openGraph: {
 			type: 'website',
-			title: `부마위키 - ${docs.title} (${FC.typeEditor(docs.docsType)})`,
-			description: `${docs.contents.slice(0, 16)}...`,
+			title: `부마위키 - ${docs?.title} (${FC.typeEditor(docs?.docsType)})`,
+			description: `${docs?.contents.slice(0, 16)}...`,
 			images: [
 				{
 					url: '/images/meta-img.png',
@@ -69,7 +69,7 @@ const Doc = ({ docs }: SingleDocsPropsType) => {
 export const getStaticPaths = async () => {
 	return {
 		paths: [],
-		fallback: false,
+		fallback: true,
 	}
 }
 
@@ -77,6 +77,38 @@ export const getStaticProps: GetStaticProps = async (context) => {
 	const { params } = context
 
 	const res = await api.getDocs(params?.title as string)
+	const { contents } = res
+
+	try {
+		if (res.contents.indexOf('include(') !== -1) {
+			const includeTag = res.contents.substring(res.contents.indexOf('include('), res.contents.indexOf(');') + 2)
+			const frames = res.contents.substring(res.contents.indexOf('include('), res.contents.indexOf(');')).replace('include(', '').split(', ')
+
+			let frameValue = ''
+
+			for (const frame of frames) {
+				const result = await FC.includeFrame(frame)
+				frameValue += `${result}\n`
+			}
+
+			return {
+				props: {
+					docs: {
+						...res,
+						contents: contents.replace(includeTag, frameValue),
+						title: params?.title,
+					},
+				},
+			}
+		}
+	} catch (err) {
+		console.log(err)
+		return {
+			props: {
+				docs: res,
+			},
+		}
+	}
 
 	return {
 		props: {

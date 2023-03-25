@@ -59,7 +59,21 @@ export const HeaderSectionWrap = styled.div`
 	display: flex;
 `
 
-export const HeaderSection = styled(Link)`
+export const HeaderSection = styled.div`
+	display: flex;
+	cursor: pointer;
+	text-decoration: none;
+	margin-left: 4vw;
+	height: 6.5vh;
+	justify-content: center;
+	align-items: center;
+
+	@media (max-width: 500px) {
+		margin-left: 9vw;
+	}
+`
+
+export const HeaderSectionLink = styled(Link)`
 	display: flex;
 	cursor: pointer;
 	text-decoration: none;
