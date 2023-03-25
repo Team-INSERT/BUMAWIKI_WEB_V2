@@ -125,6 +125,7 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 						<S.DocsNeedFileText>문서에 필요한 사진태그 개수 : {docs.files.length}개</S.DocsNeedFileText>
 						<S.AutoCompleteToggleWrap onClick={onClickAutoComplete}>
 							<S.AutoCompleteToggleText>자동완성</S.AutoCompleteToggleText>
+							{/* 색상코드는 변수로 관리 : https://github.com/Novel-Cloud/app/blob/master/styles/theme.ts */}
 							<S.AutoCompleteToggleButton color={isOnAutoComplete ? '#274168' : 'white'}>
 								{/* svg는 컴포넌트로 분리 or .svg파일을 import */}
 								<svg width="11" height="8" viewBox="0 0 11 8" fill="none" xmlns="http://www.w3.org/2000/svg">
