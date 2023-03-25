@@ -5,16 +5,16 @@ import * as S from './style'
 import * as userApi from '@/api/user'
 
 import userState from '@/context/userState'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useMutation } from 'react-query'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import CreateDocsType from '@/types/create.type'
-import { encodeContents } from '@/utils/document/requestContents'
 import Frame from '@/types/frame.type'
 import sizeInitState from '@/state/sizeInitState'
 import { useRouter } from 'next/router'
 import createInitState from '@/state/createInitState'
 import createDocsForm from '@/utils/document/createDocsForm'
+import { NextSeo, NextSeoProps } from 'next-seo'
 
 const Create = () => {
 	const router = useRouter()
@@ -81,8 +81,24 @@ const Create = () => {
 		}
 	}
 
+	const seoConfig: NextSeoProps = {
+		title: '부마위키 - 문서생성',
+		description: '부마위키 문서생성 페이지입니다.',
+		openGraph: {
+			type: 'website',
+			title: '부마위키 - 문서생성',
+			description: '부마위키 문서생성 페이지입니다.',
+			images: [
+				{
+					url: '/images/meta-img.png',
+				},
+			],
+		},
+	}
+
 	return (
 		<>
+			<NextSeo {...seoConfig} />
 			<C.Header />
 			<S.CreateWrap>
 				<C.Board>
@@ -93,13 +109,11 @@ const Create = () => {
 						<S.CreateTableTR>
 							<S.CreateTableTRTitle>분류</S.CreateTableTRTitle>
 							<S.CreateTableTRContents>
-								{user.authority === 'ADMIN' ? (
+								{user.authority === 'ADMIN' && (
 									<>
 										<label htmlFor="STUDENT">학생</label>
 										<S.CreateTableRadio type="radio" onChange={(e) => setDocs({ ...docs, docsType: e.target.id })} id="STUDENT" name="radio" />
 									</>
-								) : (
-									''
 								)}
 								<label htmlFor="TEACHER">인문 선생님</label>
 								<S.CreateTableRadio type="radio" onChange={(e) => changeDocsType(e)} id="TEACHER" name="radio" />

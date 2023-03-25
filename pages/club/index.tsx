@@ -5,6 +5,7 @@ import * as docs from '@/api/getDocs'
 import React from 'react'
 import axios from 'axios'
 import Docs from '@/types/docs.type'
+import { NextSeo, NextSeoProps } from 'next-seo'
 
 interface ClubDocsPropsType {
 	docs: {
@@ -14,8 +15,23 @@ interface ClubDocsPropsType {
 }
 
 const Club = ({ docs }: ClubDocsPropsType) => {
+	const seoConfig: NextSeoProps = {
+		title: '부마위키 - 동아리',
+		description: '교내에서 활동하는 모든 동아리를 담은 페이지입니다.',
+		openGraph: {
+			type: 'website',
+			title: '부마위키 - 동아리',
+			description: '교내에서 일어나는 모든 동아리를 담은 페이지입니다.',
+			images: [
+				{
+					url: '/images/meta-img.png',
+				},
+			],
+		},
+	}
 	return (
 		<>
+			<NextSeo {...seoConfig} />
 			<C.Header />
 			<S.ClubWrap>
 				<C.Board>

@@ -3,38 +3,48 @@ import * as api from '@/api/getDocs'
 import * as FC from '@/utils'
 import * as S from './style'
 
-import React, { useEffect } from 'react'
-import { useQuery } from 'react-query'
+import React, { useEffect, useLayoutEffect } from 'react'
 import Docs from '@/types/docs.type'
 import { useRouter } from 'next/router'
+import { GetStaticProps } from 'next'
+import { NextSeo, NextSeoProps } from 'next-seo'
 
-const Search = () => {
+interface SingleDocsPropsType {
+	results: Docs[]
+	redirect: boolean
+	searchValue: string
+}
+
+const Search = ({ results, redirect, searchValue }: SingleDocsPropsType) => {
 	const router = useRouter()
-	const { search } = router.query
-	const [result, setResult] = React.useState([])
-	const [isLoad, setIsLoad] = React.useState(false)
 
-	const { refetch } = useQuery('findDocs', () => api.findDocs(search as string), {
-		onSuccess: (data) => {
-			if (data.length === 1) router.push(`/docs/${data[0].title}`)
-			setResult(data)
-			setIsLoad(true)
+	const seoConfig: NextSeoProps = {
+		title: `부마위키 검색 - ${searchValue}`,
+		description: `부마위키의 "${searchValue}" 검색 결과에 관한 페이지입니다.`,
+		openGraph: {
+			type: 'website',
+			title: `부마위키 검색 - ${searchValue}`,
+			description: `부마위키의 "${searchValue}" 검색 결과에 관한 페이지입니다.`,
+			images: [
+				{
+					url: '/images/meta-img.png',
+				},
+			],
 		},
-		onError: () => setIsLoad(false),
-	})
+	}
 
-	useEffect(() => {
-		refetch()
-		// eslint-disable-next-line
-	}, [router])
+	useLayoutEffect(() => {
+		if (redirect) router.push(`docs/${results[0].title}`)
+	}, [redirect, results, router])
 
 	return (
 		<>
+			<NextSeo {...seoConfig} />
 			<C.Header />
 			<S.SearchWrap>
 				<C.Board>
 					<S.SearchTitleWrap>
-						<span>&quot;{search}&quot; 검색결과</span>
+						<span>&quot;{searchValue}&quot; 검색결과</span>
 					</S.SearchTitleWrap>
 					<S.Classify>
 						<C.Classify>검색</C.Classify>
@@ -42,27 +52,23 @@ const Search = () => {
 					<S.SearchLine />
 					<S.SearchResult>
 						<S.SearchList>
-							{isLoad ? (
+							{results ? (
 								<>
-									{result.map((result: Docs, index) => (
+									{results.map((result: Docs, index) => (
 										<S.SearchListItem key={index}>
-											{result.docsType === 'FRAME' ? (
-												<S.SearchLink href={`/docs/${result.title}`}>{result.title}</S.SearchLink>
-											) : (
-												<S.SearchLink href={`/docs/${result.title}`}>
-													{result.title} — ( {FC.typeEditor(result.docsType)},{result.enroll} )
-												</S.SearchLink>
-											)}
+											<S.SearchLink href={`/docs/${result.title}`}>
+												{result.title}&nbsp;
+												{result.docsType === 'FRAME' ? null : (
+													<span>
+														({FC.typeEditor(result.docsType)},{result.enroll})
+													</span>
+												)}
+											</S.SearchLink>
 										</S.SearchListItem>
 									))}
 								</>
 							) : (
-								<>
-									<span>아직 &quot;{search}&quot; 문서는 없습니다.</span>
-									<br />
-									<br />
-									<S.SearchCreateLink href={`/create?name=${search}`}>지금 문서를 생성해보세요</S.SearchCreateLink>
-								</>
+								<S.SearchCreateLink href={`/create?name=${searchValue}`}>검색 결과가 없습니다. 지금 문서를 생성해보세요</S.SearchCreateLink>
 							)}
 						</S.SearchList>
 					</S.SearchResult>
@@ -74,6 +80,29 @@ const Search = () => {
 			<C.Footer />
 		</>
 	)
+}
+
+export const getStaticPaths = async () => {
+	return {
+		paths: [],
+		fallback: true,
+	}
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
+	const search = context?.params?.search
+	let redirect = false
+
+	const res = await api.getFindDocs(search as string)
+	if (res.length === 1) redirect = true
+
+	return {
+		props: {
+			results: res,
+			redirect,
+			searchValue: search,
+		},
+	}
 }
 
 export default Search

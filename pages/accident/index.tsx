@@ -7,10 +7,26 @@ import * as FC from '@/utils'
 import React from 'react'
 import Docs from '@/types/docs.type'
 import DocsPropsType from '@/types/static/docs.props.type'
+import { NextSeo, NextSeoProps } from 'next-seo'
 
 const Accident = ({ docs, years }: DocsPropsType) => {
+	const seoConfig: NextSeoProps = {
+		title: '부마위키 - 사건/사고',
+		description: '교내에서 일어나는 모든 사건/사고를 담은 페이지입니다.',
+		openGraph: {
+			type: 'website',
+			title: '부마위키 - 사건/사고',
+			description: '교내에서 일어나는 모든 사건/사고를 담은 페이지입니다.',
+			images: [
+				{
+					url: '/images/meta-img.png',
+				},
+			],
+		},
+	}
 	return (
 		<>
+			<NextSeo {...seoConfig} />
 			<C.Header />
 			<S.AccidentWrap>
 				<C.Board>
@@ -26,12 +42,10 @@ const Accident = ({ docs, years }: DocsPropsType) => {
 							<C.AccodianMenu name={`${year}년 사건/사고`} key={year}>
 								{docs.map((accident: Docs, index) => (
 									<S.AccidentList key={index}>
-										{accident.enroll === year ? (
+										{accident.enroll === year && (
 											<S.AccidentListItem>
 												<S.AccidentLink href={`/docs/${accident.title}`}>{accident.title}</S.AccidentLink>
 											</S.AccidentListItem>
-										) : (
-											''
 										)}
 									</S.AccidentList>
 								))}

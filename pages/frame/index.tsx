@@ -6,10 +6,27 @@ import React from 'react'
 import Docs from '@/types/docs.type'
 import { Helmet } from 'react-helmet'
 import DocsPropsType from '@/types/static/docs.props.type'
+import { NextSeo, NextSeoProps } from 'next-seo'
 
 const Frame = ({ docs }: DocsPropsType) => {
+	const seoConfig: NextSeoProps = {
+		title: `부마위키 - 틀`,
+		description: `부마위키의 모든 틀을 담은 페이지입니다.`,
+		openGraph: {
+			type: 'website',
+			title: `부마위키 - 틀`,
+			description: `부마위키의 모든 틀을 담은 페이지입니다.`,
+			images: [
+				{
+					url: '/images/meta-img.png',
+				},
+			],
+		},
+	}
+
 	return (
 		<>
+			<NextSeo {...seoConfig} />
 			<C.Header />
 			<S.FrameWrap>
 				<C.Board>

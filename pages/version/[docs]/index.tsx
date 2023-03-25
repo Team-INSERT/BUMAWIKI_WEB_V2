@@ -1,12 +1,13 @@
 import * as C from '@/components'
 import * as api from '@/api/getDocs'
 import * as FC from '@/utils'
-import * as S from '../docs/style'
-import * as V from './style'
+import * as S from '../../docs/style'
+import * as V from '../style'
 
 import React from 'react'
 import { VersionDocs } from '@/types/version.type'
 import { GetStaticProps } from 'next'
+import { NextSeo, NextSeoProps } from 'next-seo'
 
 interface SingleDocsPropsType {
 	version: VersionDocs[]
@@ -14,8 +15,24 @@ interface SingleDocsPropsType {
 }
 
 const Version = ({ version, docsName }: SingleDocsPropsType) => {
+	const seoConfig: NextSeoProps = {
+		title: `부마위키 문서 수정 기록 - ${docsName}`,
+		description: `"${docsName}" 문서의 수정 기록 페이지입니다.`,
+		openGraph: {
+			type: 'website',
+			title: `부마위키 문서 수정 기록 - ${docsName}`,
+			description: `"${docsName}" 문서의 수정 기록 페이지입니다.`,
+			images: [
+				{
+					url: '/images/meta-img.png',
+				},
+			],
+		},
+	}
+
 	return (
 		<>
+			<NextSeo {...seoConfig} />
 			<C.Header />
 			<S.DocsWrap>
 				<C.Board>

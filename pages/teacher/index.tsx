@@ -4,6 +4,7 @@ import * as docs from '@/api/getDocs'
 
 import React from 'react'
 import Docs from '@/types/docs.type'
+import { NextSeo, NextSeoProps } from 'next-seo'
 
 interface TeacherDocsPropsType {
 	docs: {
@@ -14,8 +15,24 @@ interface TeacherDocsPropsType {
 }
 
 const Teacher = ({ docs }: TeacherDocsPropsType) => {
+	const seoConfig: NextSeoProps = {
+		title: `부마위키 - 선생님`,
+		description: `교내의 모든 선생님을 담은 페이지입니다.`,
+		openGraph: {
+			type: 'website',
+			title: `부마위키 - 선생님`,
+			description: `교내의 모든 선생님을 담은 페이지입니다.`,
+			images: [
+				{
+					url: '/images/meta-img.png',
+				},
+			],
+		},
+	}
+
 	return (
 		<>
+			<NextSeo {...seoConfig} />
 			<C.Header />
 			<S.TeacherWrap>
 				<C.Board>

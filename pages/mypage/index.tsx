@@ -9,6 +9,7 @@ import { useMutation } from 'react-query'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import Contributors from '@/types/contributors.type'
 import { Storage } from '@/lib/storage/storage'
+import { NextSeo, NextSeoProps } from 'next-seo'
 
 const MyPage = () => {
 	const user = useRecoilValue(userState)
@@ -22,8 +23,24 @@ const MyPage = () => {
 		},
 	})
 
+	const seoConfig: NextSeoProps = {
+		title: `부마위키 - 마이페이지`,
+		description: `부마위키의 마이페이지입니다.`,
+		openGraph: {
+			type: 'website',
+			title: `부마위키 - 마이페이지`,
+			description: `부마위키의 마이페이지입니다.`,
+			images: [
+				{
+					url: '/images/meta-img.png',
+				},
+			],
+		},
+	}
+
 	return (
 		<>
+			<NextSeo {...seoConfig} />
 			<C.Header />
 			<S.MyPageWrap>
 				<C.Board>
@@ -52,7 +69,6 @@ const MyPage = () => {
 								) : (
 									<span>이 유저는 로그인을 하지 않은 유저다. 로그인을 하면 문서를 생성하고 편집할 수 있다.</span>
 								)}
-								<br />
 							</S.MyPageInfoLoadWrap>
 						</C.AccodianMenu>
 						{user.id ? (

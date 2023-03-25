@@ -7,14 +7,31 @@ import React from 'react'
 import Docs from '@/types/docs.type'
 import { decodeContents } from '@/utils/document/requestContents'
 import { GetStaticProps } from 'next'
+import { NextSeo, NextSeoProps } from 'next-seo'
 
 interface SingleDocsPropsType {
 	docs: Docs
 }
 
 const Doc = ({ docs }: SingleDocsPropsType) => {
+	const seoConfig: NextSeoProps = {
+		title: `부마위키 - ${docs.title} (${FC.typeEditor(docs.docsType)})`,
+		description: `${docs.contents.slice(0, 16)}...`,
+		openGraph: {
+			type: 'website',
+			title: `부마위키 - ${docs.title} (${FC.typeEditor(docs.docsType)})`,
+			description: `${docs.contents.slice(0, 16)}...`,
+			images: [
+				{
+					url: '/images/meta-img.png',
+				},
+			],
+		},
+	}
+
 	return (
 		<>
+			<NextSeo {...seoConfig} />
 			<C.Header />
 			<S.DocsWrap>
 				<C.Board>

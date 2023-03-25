@@ -10,17 +10,33 @@ import UserType from '@/types/user.type'
 import { useRecoilValue } from 'recoil'
 import userState from '@/context/userState'
 import { useRouter } from 'next/router'
+import { NextSeo, NextSeoProps } from 'next-seo'
 
 const User = () => {
-	const userInfo = useRecoilValue(userState)
 	const [user, setUser] = React.useState<UserType>()
 	const router = useRouter()
 	useQuery('otherUser', () => api.getOtherUser(parseInt(router.query.userId as string)), {
 		onSuccess: (data) => setUser(data),
 	})
 
+	const seoConfig: NextSeoProps = {
+		title: `부마위키 유저 - ${user?.nickName}`,
+		description: `부마위키 유저 "${user?.nickName}" 페이지입니다.`,
+		openGraph: {
+			type: 'website',
+			title: `부마위키 유저 - ${user?.nickName}`,
+			description: `부마위키 유저 "${user?.nickName}" 페이지입니다.`,
+			images: [
+				{
+					url: '/images/meta-img.png',
+				},
+			],
+		},
+	}
+
 	return (
 		<div>
+			<NextSeo {...seoConfig} />
 			<C.Header />
 			<S.UserWrap>
 				<C.Board>

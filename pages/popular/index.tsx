@@ -3,13 +3,29 @@ import * as docs from '@/api/getDocs'
 import * as S from './style'
 
 import React from 'react'
-import { useQuery } from 'react-query'
 import Docs from '@/types/docs.type'
 import DocsPropsType from '@/types/static/docs.props.type'
+import { NextSeo, NextSeoProps } from 'next-seo'
 
 const Popular = ({ docs }: DocsPropsType) => {
+	const seoConfig: NextSeoProps = {
+		title: `부마위키 - 인기문서`,
+		description: `부마위키 문서 중 인기있는 문서를 담은 페이지입니다.`,
+		openGraph: {
+			type: 'website',
+			title: `부마위키 - 인기문서`,
+			description: `부마위키 문서 중 인기있는 문서를 담은 페이지입니다.`,
+			images: [
+				{
+					url: '/images/meta-img.png',
+				},
+			],
+		},
+	}
+
 	return (
 		<>
+			<NextSeo {...seoConfig} />
 			<C.Header />
 			<S.PopularWrap>
 				<C.Board>

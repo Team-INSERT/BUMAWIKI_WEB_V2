@@ -15,6 +15,7 @@ import { useRouter } from 'next/router'
 import Docs from '@/types/docs.type'
 import { GetStaticProps } from 'next'
 import { Storage } from '@/lib/storage/storage'
+import { NextSeo, NextSeoProps } from 'next-seo'
 
 interface SinglDocsPropsType {
 	defaultDocs: Docs
@@ -80,8 +81,24 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 		mutateUpdateDocs()
 	}
 
+	const seoConfig: NextSeoProps = {
+		title: `부마위키 문서편집 - ${defaultDocs.title}`,
+		description: `"${defaultDocs.title}" 문서편집 페이지입니다.`,
+		openGraph: {
+			type: 'website',
+			title: `부마위키 문서편집 - ${defaultDocs.title}`,
+			description: `"${defaultDocs.title}" 문서편집 페이지입니다.`,
+			images: [
+				{
+					url: '/images/meta-img.png',
+				},
+			],
+		},
+	}
+
 	return (
 		<>
+			<NextSeo {...seoConfig} />
 			<C.Header />
 			<S.DocsWrap>
 				<C.Board>
