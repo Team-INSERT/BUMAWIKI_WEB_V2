@@ -185,3 +185,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 }
 
 export default Update
+
+// revalidate : 
+// https://github.com/bssm-portfolio/app/blob/develop/pages/api/revalidate-portfolio.ts
+// https://github.com/bssm-portfolio/app/blob/develop/components/portfolio/edit/index.tsx#L78
