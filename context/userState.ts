@@ -1,5 +1,4 @@
 import { atom } from 'recoil'
-import { v4 } from 'uuid'
 
 export const initUserState = {
 	id: 0,
@@ -11,7 +10,7 @@ export const initUserState = {
 }
 
 const userState = atom({
-	key: `userState/${v4()}`,
+	key: `userState`,
 	default: initUserState,
 })
 
