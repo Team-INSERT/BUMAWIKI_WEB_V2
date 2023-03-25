@@ -16,7 +16,6 @@ import Docs from '@/types/docs.type'
 import { GetStaticProps } from 'next'
 import { Storage } from '@/lib/storage/storage'
 import { NextSeo, NextSeoProps } from 'next-seo'
-import NotFound from '../404'
 
 interface SinglDocsPropsType {
 	defaultDocs: Docs
@@ -127,6 +126,7 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 						<S.AutoCompleteToggleWrap onClick={onClickAutoComplete}>
 							<S.AutoCompleteToggleText>자동완성</S.AutoCompleteToggleText>
 							<S.AutoCompleteToggleButton color={isOnAutoComplete ? '#274168' : 'white'}>
+								{/* svg는 컴포넌트로 분리 or .svg파일을 import */}
 								<svg width="11" height="8" viewBox="0 0 11 8" fill="none" xmlns="http://www.w3.org/2000/svg">
 									<path
 										d="M4.36016 5.38789L9.26016 0.48789C9.44349 0.304557 9.67682 0.212891 9.96016 0.212891C10.2435 0.212891 10.4768 0.304557 10.6602 0.48789C10.8435 0.671224 10.9352 0.904557 10.9352 1.18789C10.9352 1.47122 10.8435 1.70456 10.6602 1.88789L5.06016 7.48789C4.86016 7.68789 4.62682 7.78789 4.36016 7.78789C4.09349 7.78789 3.86016 7.68789 3.66016 7.48789L1.06016 4.88789C0.876823 4.70456 0.785156 4.47122 0.785156 4.18789C0.785156 3.90456 0.876823 3.67122 1.06016 3.48789C1.24349 3.30456 1.47682 3.21289 1.76016 3.21289C2.04349 3.21289 2.27682 3.30456 2.46016 3.48789L4.36016 5.38789Z"
