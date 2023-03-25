@@ -57,12 +57,12 @@ const Header = () => {
 						<S.HeaderSectionLogo src={Club} alt="" />
 						<S.HeaderSectionText>외부 서비스</S.HeaderSectionText>
 					</S.HeaderSection>
-					{user.id ? (
+					{user.id && (
 						<S.HeaderSection href={`/create`}>
 							<S.HeaderSectionLogo src={Create} alt="" />
 							<S.HeaderSectionText>문서 생성</S.HeaderSectionText>
 						</S.HeaderSection>
-					) : null}
+					)}
 				</S.HeaderSectionWrap>
 				<S.HeaderSearchWrap>
 					<S.HeaderSearchForm onSubmit={(e) => e.preventDefault()}>

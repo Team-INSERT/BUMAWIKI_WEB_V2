@@ -1,8 +1,9 @@
 import * as S from './style'
 import * as api from '@/api/editDocs'
+import * as userApi from '@/api/user'
 
 import React from 'react'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import userState from '@/context/userState'
 import { MutationFunction, useMutation, useQueryClient } from 'react-query'
 import { useRouter } from 'next/router'
@@ -16,6 +17,18 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 	const { query } = router
 	const [docsName, setDocsName] = React.useState('')
 	const queryClient = useQueryClient()
+	const [user, setUser] = useRecoilState(userState)
+
+	React.useEffect(() => {
+		;(async () => {
+			try {
+				const res = await userApi.getUser()
+				if (!user.id) setUser(res)
+			} catch (err) {
+				console.log(err)
+			}
+		})()
+	}, [setUser, user])
 
 	const updateDocsTitleMutation = useMutation(api.updateDocsTitle, {
 		onSuccess: (res) => {
@@ -27,7 +40,7 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 
 	const onClickNavigatePage = (type: string) => {
 		if (type === 'VERSION') router.push(`/version/${query.title}`)
-		// else if (type === 'UPDATE' && !user.id) alert('로그인 후 편집하실 수 있습니다!')
+		else if (type === 'UPDATE' && !user.id) alert('로그인 후 편집하실 수 있습니다!')
 		else router.push(`/update/${query.title}`)
 	}
 
@@ -53,19 +66,21 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 
 	return (
 		<S.DetailButtonWrap>
-			<>
-				<S.DetailWrap onClick={onClickDeleteDocs}>
-					<S.DetailButton>
-						<S.DetailText>삭제</S.DetailText>
-					</S.DetailButton>
-				</S.DetailWrap>
-				<S.DetailInput value={docsName} onChange={(e) => setDocsName(e.target.value)} />
-				<S.DetailWrap onClick={onClickChangeDocsName}>
-					<S.DetailButton>
-						<S.DetailText>변경</S.DetailText>
-					</S.DetailButton>
-				</S.DetailWrap>
-			</>
+			{user.authority === 'ADMIN' && (
+				<>
+					<S.DetailWrap onClick={onClickDeleteDocs}>
+						<S.DetailButton>
+							<S.DetailText>삭제</S.DetailText>
+						</S.DetailButton>
+					</S.DetailWrap>
+					<S.DetailInput value={docsName} onChange={(e) => setDocsName(e.target.value)} />
+					<S.DetailWrap onClick={onClickChangeDocsName}>
+						<S.DetailButton>
+							<S.DetailText>변경</S.DetailText>
+						</S.DetailButton>
+					</S.DetailWrap>
+				</>
+			)}
 			<S.DetailLinkWrap onClick={() => onClickNavigatePage('UPDATE')}>
 				<S.DetailButton>
 					<S.DetailText>편집</S.DetailText>
