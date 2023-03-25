@@ -70,7 +70,10 @@ const Create = () => {
 	}
 
 	const makeFrame = () => {
-		const frame = `<틀>\n<틀제목>제목삽입</틀제목>\n` + `<행>${'<열>내용삽입</열>'.repeat(size.row)}</행>\n`.repeat(size.column) + `</틀>`
+		// 템플릿 리터럴 안의 \n를 엔터로 대체하고 '+'는 지양
+		const frame = `<틀>
+		<틀제목>제목삽입</틀제목>
+		` + `<행>${'<열>내용삽입</열>'.repeat(size.row)}</행>\n`.repeat(size.column) + `</틀>`
 		setDocs({ ...docs, contents: frame })
 	}
 
