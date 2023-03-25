@@ -1,4 +1,4 @@
-import * as api from 'api/getDocs'
+import * as api from '@/api/getDocs'
 
 const includeFrame = async (frameTitle: string) => {
 	const res = await api.getDocs(frameTitle)

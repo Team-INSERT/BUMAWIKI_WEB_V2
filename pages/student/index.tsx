@@ -1,6 +1,6 @@
 import * as C from '@/components'
 import * as docs from '@/api/getDocs'
-import * as S from './style'
+import * as S from '../../layout/student/style'
 import * as FC from '@/utils'
 
 import React from 'react'

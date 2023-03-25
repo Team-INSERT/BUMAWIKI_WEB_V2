@@ -1,8 +1,8 @@
 import * as C from '@/components'
 import * as api from '@/api/getDocs'
 import * as FC from '@/utils'
-import * as S from '../../docs/style'
-import * as V from '../style'
+import * as S from '../../../layout/docs/style'
+import * as V from '../../../layout/version/style'
 
 import React from 'react'
 import { VersionDocs } from '@/types/version.type'

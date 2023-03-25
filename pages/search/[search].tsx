@@ -1,7 +1,7 @@
 import * as C from '@/components'
 import * as api from '@/api/getDocs'
 import * as FC from '@/utils'
-import * as S from './style'
+import * as S from '../../layout/search/style'
 
 import React, { useEffect, useLayoutEffect } from 'react'
 import Docs from '@/types/docs.type'

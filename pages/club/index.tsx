@@ -1,5 +1,5 @@
 import * as C from '@/components'
-import * as S from './style'
+import * as S from '../../layout/club/style'
 import * as docs from '@/api/getDocs'
 
 import React from 'react'

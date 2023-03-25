@@ -1,7 +1,7 @@
 import * as C from '@/components'
 import * as api from '@/api/editDocs'
 import * as FC from '@/utils'
-import * as S from './style'
+import * as S from '../../layout/create/style'
 import * as userApi from '@/api/user'
 
 import userState from '@/context/userState'
