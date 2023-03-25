@@ -9,11 +9,8 @@ interface VersionDocsInfo {
 	docsType: string
 }
 
-interface VersionDocsService {
+interface VersionDocsService extends VersionDocs {
 	contents: string
-	nickName: string
-	thisVersionCreatedAt: string
-	userId: string
 }
 
-export { VersionDocs, VersionDocsInfo, VersionDocsService }
+export type { VersionDocs, VersionDocsInfo, VersionDocsService }
