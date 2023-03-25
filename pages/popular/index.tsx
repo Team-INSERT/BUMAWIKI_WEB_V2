@@ -19,7 +19,6 @@ const Popular = ({ docs }: DocsPropsType) => {
 				{
 					url: '/images/meta-img.png',
 				},
-				
 			],
 		},
 	}

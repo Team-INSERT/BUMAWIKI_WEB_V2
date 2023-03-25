@@ -28,6 +28,8 @@ const Create = () => {
 		...createInitState,
 	})
 
+	// useUser hooks로 로직 단순하게 하면 좋을 것 같습니다.
+	// https://github.com/bssm-portfolio/app/blob/develop/hooks/useUser.tsx
 	React.useEffect(() => {
 		;(async () => {
 			try {
