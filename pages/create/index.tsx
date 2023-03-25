@@ -79,6 +79,7 @@ const Create = () => {
 
 	const changeDocsType = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const type = e.target.id
+		// early return, if else 중 택 1
 		if (type === 'FRAME') {
 			setDocs({ ...docs, docsType: type, title: `틀:${docs.title}` })
 		} else {
