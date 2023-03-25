@@ -164,7 +164,7 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 export const getStaticPaths = async () => {
 	return {
 		paths: [],
-		fallback: true,
+		fallback: false,
 	}
 }
 

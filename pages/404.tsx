@@ -1,5 +1,5 @@
 import * as C from '@/components'
-import * as S from './index.style'
+import * as S from '../layout/index.style'
 
 import React from 'react'
 import { NextSeoProps } from 'next-seo'
