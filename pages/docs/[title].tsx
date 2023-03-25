@@ -15,12 +15,12 @@ interface SingleDocsPropsType {
 
 const Doc = ({ docs }: SingleDocsPropsType) => {
 	const seoConfig: NextSeoProps = {
-		title: `부마위키 - ${docs?.title} (${FC.typeEditor(docs?.docsType)})`,
-		description: `${docs?.contents.slice(0, 16)}...`,
+		title: `부마위키 - ${docs.title} (${FC.typeEditor(docs.docsType)})`,
+		description: `${docs.contents.slice(0, 16)}...`,
 		openGraph: {
 			type: 'website',
-			title: `부마위키 - ${docs?.title} (${FC.typeEditor(docs?.docsType)})`,
-			description: `${docs?.contents.slice(0, 16)}...`,
+			title: `부마위키 - ${docs.title} (${FC.typeEditor(docs.docsType)})`,
+			description: `${docs.contents.slice(0, 16)}...`,
 			images: [
 				{
 					url: '/images/meta-img.png',
@@ -86,6 +86,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 			let frameValue = ''
 
+			// reduce로 개선해보기
 			for (const frame of frames) {
 				const result = await FC.includeFrame(frame)
 				frameValue += `${result}\n`
