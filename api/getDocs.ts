@@ -9,7 +9,11 @@ export const getLastModifiedDocs = async (page: number) => {
 }
 
 export const getFindDocs = async (title: string) => {
-	return (await bumawikiAxios.get(`/docs/find/all/title/${title}`)).data
+	try {
+		return (await bumawikiAxios.get(`/docs/find/all/title/${title}`)).data
+	} catch (err) {
+		return false
+	}
 }
 
 export const getVersionDocs = async (title: string) => {
