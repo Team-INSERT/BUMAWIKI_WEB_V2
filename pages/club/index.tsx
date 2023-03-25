@@ -74,13 +74,6 @@ const Club = ({ docs }: ClubDocsPropsType) => {
 	)
 }
 
-export const getStaticPaths = async () => {
-	return {
-		paths: [],
-		fallback: true,
-	}
-}
-
 export async function getStaticProps() {
 	const major_club = await docs.getBaseDocs('club')
 	const custom_club = await docs.getBaseDocs('free_club')

@@ -62,13 +62,6 @@ const Accident = ({ docs, years }: DocsPropsType) => {
 	)
 }
 
-export const getStaticPaths = async () => {
-	return {
-		paths: [],
-		fallback: true,
-	}
-}
-
 export async function getStaticProps() {
 	const accident = await docs.getBaseDocs('accident')
 	const years = FC.getAllYear()

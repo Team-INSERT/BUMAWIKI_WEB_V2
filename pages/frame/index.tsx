@@ -58,13 +58,6 @@ const Frame = ({ docs }: DocsPropsType) => {
 	)
 }
 
-export const getStaticPaths = async () => {
-	return {
-		paths: [],
-		fallback: true,
-	}
-}
-
 export async function getStaticProps() {
 	const frame = await docs.getBaseDocs('frame')
 
