@@ -66,6 +66,7 @@ const Doc = ({ docs }: SingleDocsPropsType) => {
 	)
 }
 
+// 로직 전체 바꾸기, 옵셔널체이닝 지양하기
 export const getStaticPaths = async () => {
 	return {
 		paths: [],
