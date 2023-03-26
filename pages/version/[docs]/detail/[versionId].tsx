@@ -1,13 +1,13 @@
-import * as C from '@/components'
-import * as FC from '@/utils'
+import * as util from '@/utils'
 import * as S from '../../../../layout/version/detail/style'
-import * as api from '@/api/getDocs'
+import * as getApi from '@/api/getDocs'
 
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import { VersionDocsService } from '@/types/version.type'
 import { decodeContents } from '@/utils/document/requestContents'
 import { GetStaticProps } from 'next'
 import { NextSeo, NextSeoProps } from 'next-seo'
+import { AccodianMenu, Board, Classify, SubFooter } from '@/components'
 
 interface VersionDetailPropsType {
 	title: string
@@ -16,7 +16,7 @@ interface VersionDetailPropsType {
 	versionId: string
 }
 
-const VersionDetail = ({ title, docsType, docs, versionId }: VersionDetailPropsType) => {
+const VersionDetail = ({ title, docsType, docs, versionId }: VersionDetailPropsType, { children }: PropsWithChildren) => {
 	const seoConfig: NextSeoProps = {
 		title: `부마위키 문서 기록 - ${title}:${versionId}`,
 		description: `"${title}" 문서의 예전 기록 페이지입니다.`,
@@ -35,40 +35,37 @@ const VersionDetail = ({ title, docsType, docs, versionId }: VersionDetailPropsT
 	return (
 		<div>
 			<NextSeo {...seoConfig} />
-			<C.Header />
 			<S.DocsWrap>
-				<C.Board>
+				<Board>
 					<S.DocsTitleWrap>
 						<S.DocsTitleText>{title}</S.DocsTitleText>
 					</S.DocsTitleWrap>
 					<S.Classify>
-						<C.Classify>{FC.typeEditor(docsType)}</C.Classify>
+						<Classify>{util.typeEditor(docsType)}</Classify>
 					</S.Classify>
 					<S.DocsLine />
 					<S.DocsContentsWrap>
 						{docs && (
 							<S.DocsContentsLoadWrap>
 								<S.LastUpdateDate>
-									마지막 수정 : {FC.dateParser(docs.thisVersionCreatedAt || '')} | 수정자 : {docs.nickName}
+									마지막 수정 : {util.dateParser(docs.thisVersionCreatedAt || '')} | 수정자 : {docs.nickName}
 								</S.LastUpdateDate>
-								<C.AccodianMenu name="코드 내용" isOpen={false}>
+								<AccodianMenu name="코드 내용" isOpen={false}>
 									<S.DocsContents>{docs?.contents.replace(/<br>/gi, '\n').replace(/&\$\^%/gi, '"')}</S.DocsContents>
-								</C.AccodianMenu>
-								<C.AccodianMenu name="개요">
+								</AccodianMenu>
+								<AccodianMenu name="개요">
 									<S.DocsContents
 										dangerouslySetInnerHTML={{
-											__html: FC.documentation(decodeContents(docs.contents)),
+											__html: util.documentation(decodeContents(docs.contents)),
 										}}></S.DocsContents>
-								</C.AccodianMenu>
+								</AccodianMenu>
 							</S.DocsContentsLoadWrap>
 						)}
 					</S.DocsContentsWrap>
-					<C.SubFooter />
-				</C.Board>
-				<C.ScrollBtn />
-				<C.Aside />
+					<SubFooter />
+				</Board>
+				{children}
 			</S.DocsWrap>
-			<C.Footer />
 		</div>
 	)
 }
@@ -84,7 +81,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 	const versionId = context?.params?.versionId
 	const docs = context?.params?.docs
 
-	const res = await api.getVersionDocs(docs as string)
+	const res = await getApi.getVersionDocs(docs as string)
 	const versionDocsArray = res.versionDocsResponseDto.reverse()
 
 	return {

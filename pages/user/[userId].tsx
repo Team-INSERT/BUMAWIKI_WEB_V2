@@ -1,18 +1,16 @@
-import * as C from '@/components'
-import * as FC from '@/utils'
+import * as util from '@/utils'
 import * as S from '../../layout/user/style'
 import * as api from '@/api/user'
 
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import Contributors from '@/types/contributors.type'
 import { useQuery } from 'react-query'
 import UserType from '@/types/user.type'
-import { useRecoilValue } from 'recoil'
-import userState from '@/context/userState'
 import { useRouter } from 'next/router'
 import { NextSeo, NextSeoProps } from 'next-seo'
+import { AccodianMenu, Aside, Board, Classify } from '@/components'
 
-const User = () => {
+const User = ({ children }: PropsWithChildren) => {
 	const [user, setUser] = React.useState<UserType>()
 	const router = useRouter()
 	useQuery('otherUser', () => api.getOtherUser(parseInt(router.query.userId as string)), {
@@ -37,16 +35,15 @@ const User = () => {
 	return (
 		<div>
 			<NextSeo {...seoConfig} />
-			<C.Header />
 			<S.UserWrap>
-				<C.Board>
+				<Board>
 					<S.UserTitleWrap>
 						<S.UserTitleText>유저 : {user?.nickName}</S.UserTitleText>
 					</S.UserTitleWrap>
-					<C.Classify>{user?.authority}</C.Classify>
+					<Classify>{user?.authority}</Classify>
 					<S.UserLine />
 					<S.UserInfoWrap>
-						<C.AccodianMenu name="정보">
+						<AccodianMenu name="정보">
 							<S.UserInfoLoadWrap>
 								{/* {userInfo.authority === 'ADMIN' ? <C.Authority email={ || ''} /> : null} */}
 								<span>
@@ -54,8 +51,8 @@ const User = () => {
 									{user?.authority === 'ADMIN' ? ' 관리자' : user?.authority === 'BANNED' ? ' 읽기전용 사용자' : ' 사용자'} 중 한 명이다.
 								</span>
 							</S.UserInfoLoadWrap>
-						</C.AccodianMenu>
-						<C.AccodianMenu name="기여한 문서">
+						</AccodianMenu>
+						<AccodianMenu name="기여한 문서">
 							<S.ContributeWrap>
 								<span>이 유저가 기여한 문서의 정보들이다.</span>
 								<S.ContributeList>
@@ -64,19 +61,17 @@ const User = () => {
 											문서명 :&nbsp;
 											<S.ContributeLink href={`/docs/${docs.title}`}>{docs.title}</S.ContributeLink>
 											<br />
-											수정 날짜 : {FC.dateParser(docs.createTime)}
+											수정 날짜 : {util.dateParser(docs.createTime)}
 										</span>
 									))}
 								</S.ContributeList>
 							</S.ContributeWrap>
-						</C.AccodianMenu>
+						</AccodianMenu>
 						<S.UserLine />
 					</S.UserInfoWrap>
-				</C.Board>
-				<C.Aside />
+				</Board>
+				{children}
 			</S.UserWrap>
-			<C.ScrollBtn />
-			<C.Footer />
 		</div>
 	)
 }

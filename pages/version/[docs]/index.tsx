@@ -1,20 +1,20 @@
-import * as C from '@/components'
-import * as api from '@/api/getDocs'
-import * as FC from '@/utils'
+import * as getApi from '@/api/getDocs'
+import * as util from '@/utils'
 import * as S from '../../../layout/docs/style'
 import * as V from '../../../layout/version/style'
 
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import { VersionDocs } from '@/types/version.type'
 import { GetStaticProps } from 'next'
 import { NextSeo, NextSeoProps } from 'next-seo'
+import { Board, SubFooter } from '@/components'
 
 interface SingleDocsPropsType {
 	version: VersionDocs[]
 	docsName: string
 }
 
-const Version = ({ version, docsName }: SingleDocsPropsType) => {
+const Version = ({ version, docsName }: SingleDocsPropsType, { children }: PropsWithChildren) => {
 	const seoConfig: NextSeoProps = {
 		title: `부마위키 문서 수정 기록 - ${docsName}`,
 		description: `"${docsName}" 문서의 수정 기록 페이지입니다.`,
@@ -33,9 +33,8 @@ const Version = ({ version, docsName }: SingleDocsPropsType) => {
 	return (
 		<>
 			<NextSeo {...seoConfig} />
-			<C.Header />
 			<S.DocsWrap>
-				<C.Board>
+				<Board>
 					<S.DocsTitleWrap>
 						<S.DocsTitleText>문서 수정 기록 : {docsName}</S.DocsTitleText>
 					</S.DocsTitleWrap>
@@ -45,7 +44,7 @@ const Version = ({ version, docsName }: SingleDocsPropsType) => {
 							{version?.map((ver: VersionDocs, index: number) => (
 								<V.VersionList key={index}>
 									<span>
-										<V.VersionLink href={`/version/${docsName}/detail/${index}`}>{FC.dateParser(ver.thisVersionCreatedAt)}</V.VersionLink>
+										<V.VersionLink href={`/version/${docsName}/detail/${index}`}>{util.dateParser(ver.thisVersionCreatedAt)}</V.VersionLink>
 									</span>
 									<span>
 										작성자 : <V.VersionLink href={`/user/${ver.userId}`}>{ver.nickName}</V.VersionLink>
@@ -54,12 +53,10 @@ const Version = ({ version, docsName }: SingleDocsPropsType) => {
 							))}
 						</ul>
 					</S.DocsContentsWrap>
-					<C.SubFooter />
-				</C.Board>
-				<C.ScrollBtn />
-				<C.Aside />
+					<SubFooter />
+				</Board>
+				{children}
 			</S.DocsWrap>
-			<C.Footer />
 		</>
 	)
 }
@@ -74,7 +71,7 @@ export const getStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
 	const { params } = context
 
-	const res = await api.getVersionDocs(params?.docs as string)
+	const res = await getApi.getVersionDocs(params?.docs as string)
 
 	return {
 		props: {
