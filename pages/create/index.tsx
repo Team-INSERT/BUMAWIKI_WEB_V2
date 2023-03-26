@@ -12,10 +12,10 @@ import createInitState from '@/state/createInitState'
 import createDocsForm from '@/utils/document/createDocsForm'
 import { NextSeo, NextSeoProps } from 'next-seo'
 import useUser from '@/hooks/useUser'
-import { Board, SubFooter } from '@/components'
+import { Aside, Board, ScrollBtn, SubFooter } from '@/components'
 import createFormInitState from '@/state/createFormInitState'
 
-const Create = ({ children }: PropsWithChildren) => {
+const Create = () => {
 	const router = useRouter()
 	const { query } = router
 	const years = util.getAllYear()
@@ -206,7 +206,8 @@ const Create = ({ children }: PropsWithChildren) => {
 					</S.CreateSubmit>
 					<SubFooter />
 				</Board>
-				{children}
+				<ScrollBtn />
+				<Aside />
 			</S.CreateWrap>
 		</>
 	)
