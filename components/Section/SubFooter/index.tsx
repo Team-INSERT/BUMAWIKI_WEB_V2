@@ -7,6 +7,7 @@ const SubFooter = () => {
 		<S.SubFooterWrap>
 			<S.SubFooterLine />
 			<S.SubFooterNoticeWrap>
+				{/* 보수작업 필요 */}
 				<S.SubFooterNoticeLogo
 					width="130"
 					height="92"
