@@ -2,7 +2,7 @@ import * as api from '@/api/editDocs'
 import * as util from '@/utils'
 import * as S from '../../layout/create/style'
 
-import React, { PropsWithChildren } from 'react'
+import React from 'react'
 import { useMutation } from 'react-query'
 import CreateDocsType from '@/types/create.type'
 import Frame from '@/types/frame.type'

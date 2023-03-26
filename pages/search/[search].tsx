@@ -2,7 +2,7 @@ import * as api from '@/api/getDocs'
 import * as util from '@/utils'
 import * as S from '../../layout/search/style'
 
-import React, { PropsWithChildren, useEffect, useLayoutEffect } from 'react'
+import React from 'react'
 import Docs from '@/types/docs.type'
 import { useRouter } from 'next/router'
 import { GetStaticProps } from 'next'
@@ -33,7 +33,7 @@ const Search = ({ results, redirect, searchValue }: SingleDocsPropsType) => {
 		},
 	}
 
-	useLayoutEffect(() => {
+	React.useLayoutEffect(() => {
 		if (redirect) router.push(`docs/${results[0].title}`)
 	}, [redirect, results, router])
 

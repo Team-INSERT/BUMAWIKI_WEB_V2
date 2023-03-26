@@ -1,7 +1,7 @@
 import * as docs from '@/api/getDocs'
 import * as S from '../../layout/frame/style'
 
-import React, { PropsWithChildren } from 'react'
+import React from 'react'
 import Docs from '@/types/docs.type'
 import DocsPropsType from '@/types/static/docs.props.type'
 import { NextSeo, NextSeoProps } from 'next-seo'

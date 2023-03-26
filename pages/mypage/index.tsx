@@ -3,7 +3,7 @@ import * as util from '@/utils'
 import * as S from '../../layout/mypage/style'
 
 import userState, { initUserState } from '@/context/userState'
-import React, { PropsWithChildren } from 'react'
+import React from 'react'
 import { useMutation } from 'react-query'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import Contributors from '@/types/contributors.type'

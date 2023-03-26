@@ -2,7 +2,7 @@ import * as util from '@/utils'
 import * as S from '../../layout/user/style'
 import * as api from '@/api/user'
 
-import React, { PropsWithChildren } from 'react'
+import React from 'react'
 import Contributors from '@/types/contributors.type'
 import { useQuery } from 'react-query'
 import UserType from '@/types/user.type'

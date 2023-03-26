@@ -1,16 +1,9 @@
 import * as S from './style'
-import * as api from '@/api/user'
 
-import Accident from 'assets/accident.svg'
-import Club from 'assets/club.svg'
 import Create from 'assets/create.svg'
 import Search from 'assets/search.svg'
-import Student from 'assets/student.svg'
-import Teacher from 'assets/teacher.svg'
-import userState from '@/context/userState'
 import React from 'react'
 import { useRouter } from 'next/router'
-import { useRecoilState } from 'recoil'
 import useUser from '@/hooks/useUser'
 import { headerInitState, subheaderInitState } from '@/state/headerInitState'
 

@@ -1,7 +1,7 @@
 import * as S from '../../layout/teacher/style'
 import * as getApi from '@/api/getDocs'
 
-import React, { PropsWithChildren } from 'react'
+import React from 'react'
 import Docs from '@/types/docs.type'
 import { NextSeo, NextSeoProps } from 'next-seo'
 import { AccodianMenu, Aside, Board, Classify, ScrollBtn, SubFooter } from '@/components'

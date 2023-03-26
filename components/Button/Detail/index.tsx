@@ -1,10 +1,7 @@
 import * as S from './style'
 import * as api from '@/api/editDocs'
-import * as userApi from '@/api/user'
 
 import React from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import userState from '@/context/userState'
 import { MutationFunction, useMutation, useQueryClient } from 'react-query'
 import { useRouter } from 'next/router'
 import useUser from '@/hooks/useUser'
