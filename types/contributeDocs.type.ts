@@ -1,4 +1,4 @@
-interface ContibuteDocsType {
+interface ContributeDocsType {
 	userId: number
 	userNickName: string
 	docsId: number
@@ -7,4 +7,4 @@ interface ContibuteDocsType {
 	versionDocsId: number
 }
 
-export default ContibuteDocsType
+export default ContributeDocsType

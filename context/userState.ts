@@ -1,11 +1,12 @@
 import { atom } from 'recoil'
+import ContributeDocsType from '@/types/contributeDocs.type'
 
 export const initUserState = {
 	id: 0,
 	email: '',
 	nickName: '',
 	authority: '',
-	contributeDocs: [],
+	contributeDocs: [] as ContributeDocsType[],
 	isLogin: false,
 }
 
