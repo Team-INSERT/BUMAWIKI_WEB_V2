@@ -9,18 +9,10 @@ const AccodianMenu = ({ children, name, isOpen }: AccodianType) => {
 	const [detail, setDetail] = React.useState<boolean>(true)
 	const [opacity, setOpacity] = React.useState<number>(1)
 
-	React.useEffect(() => {
-		if (!isOpen) {
-			setDetail(false)
-			setOpacity(0.4)
-		}
-		// eslint-disable-next-line
-	}, [])
-
 	const onClickDetail = () => {
 		setDetail((detail) => !detail)
 		if (opacity === 1) return setOpacity(0.4)
-		return setOpacity(1)
+		setOpacity(1)
 	}
 
 	return (
