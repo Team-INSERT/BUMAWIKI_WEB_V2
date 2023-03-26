@@ -12,6 +12,7 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import { useRecoilState } from 'recoil'
 import useUser from '@/hooks/useUser'
+import { headerInitState, subheaderInitState } from '@/state/headerInitState'
 
 const Header = () => {
 	const [search, setSearch] = React.useState('')
@@ -21,7 +22,7 @@ const Header = () => {
 
 	const navigateSearchResult = () => {
 		if (search.length) return router.push(`/search/${search}`)
-		alert('검색할 문서명을 입력해주세요!')
+		return alert('검색할 문서명을 입력해주세요!')
 	}
 
 	return (
@@ -31,24 +32,7 @@ const Header = () => {
 					<S.HeaderLogo src="/images/logo.png" width="1000" height="1000" alt="logo" />
 				</S.HeaderLink>
 				<S.HeaderSectionWrap>
-					{[
-						{
-							image: Student,
-							title: '공지',
-						},
-						{
-							image: Teacher,
-							title: '학교',
-						},
-						{
-							image: Accident,
-							title: '기타',
-						},
-						{
-							image: Club,
-							title: '외부 서비스',
-						},
-					].map((header, index) => (
+					{headerInitState.map((header, index) => (
 						<S.HeaderSection key={index}>
 							<S.HeaderSectionLogo src={header.image} alt="" />
 							<S.HeaderSectionText>{header.title}</S.HeaderSectionText>
@@ -84,53 +68,17 @@ const Header = () => {
 					<S.HeaderLogo src="/images/logo.png" width="1000" height="1000" alt="logo" />
 				</S.SubHeaderPlace>
 				<S.HeaderSectionWrap>
-					<S.SubHeaderSectionWrap>
-						<S.SubHeaderSection href="/docs/부마위키%20업데이트%20내용">
-							<S.HeaderSectionText display="true">공지사항</S.HeaderSectionText>
-						</S.SubHeaderSection>
-						<S.SubHeaderSection href="/docs/부마위키%20방명록">
-							<S.HeaderSectionText display="true">방명록</S.HeaderSectionText>
-						</S.SubHeaderSection>
-						<S.SubHeaderSection href="/docs/부마위키%20개인정보처리방침">
-							<S.HeaderSectionText>처리방침</S.HeaderSectionText>
-						</S.SubHeaderSection>
-						<S.SubHeaderSection href="https://forms.gle/DzAP7XSYH4ubK43FA" target="_blank">
-							<S.HeaderSectionText display="true">문의하기</S.HeaderSectionText>
-						</S.SubHeaderSection>
-					</S.SubHeaderSectionWrap>
-					<S.SubHeaderSectionWrap>
-						<S.SubHeaderSection href="/student">
-							<S.HeaderSectionText display="true">학생</S.HeaderSectionText>
-						</S.SubHeaderSection>
-						<S.SubHeaderSection href="/teacher">
-							<S.HeaderSectionText display="true">선생님</S.HeaderSectionText>
-						</S.SubHeaderSection>
-						<S.SubHeaderSection href="/club">
-							<S.HeaderSectionText display="true">동아리</S.HeaderSectionText>
-						</S.SubHeaderSection>
-					</S.SubHeaderSectionWrap>
-					<S.SubHeaderSectionWrap margin="1.2vw">
-						<S.SubHeaderSection href="/frame">
-							<S.HeaderSectionText display="true">틀</S.HeaderSectionText>
-						</S.SubHeaderSection>
-						<S.SubHeaderSection href="/accident">
-							<S.HeaderSectionText display="true">사건</S.HeaderSectionText>
-						</S.SubHeaderSection>
-						<S.SubHeaderSection href="/popular">
-							<S.HeaderSectionText display="true">인기문서</S.HeaderSectionText>
-						</S.SubHeaderSection>
-					</S.SubHeaderSectionWrap>
-					<S.SubHeaderSectionWrap>
-						<S.SubHeaderSection href="">
-							<S.HeaderSectionText display="true">BSM</S.HeaderSectionText>
-						</S.SubHeaderSection>
-						<S.SubHeaderSection href="">
-							<S.HeaderSectionText display="true">BGIT</S.HeaderSectionText>
-						</S.SubHeaderSection>
-						<S.SubHeaderSection href="">
-							<S.HeaderSectionText display="true">심청이</S.HeaderSectionText>
-						</S.SubHeaderSection>
-					</S.SubHeaderSectionWrap>
+					{[
+						subheaderInitState.map((subheader, index) => (
+							<S.SubHeaderSectionWrap margin={index === 2 ? '1vw' : ''} key={index}>
+								{subheader.map((info, index) => (
+									<S.SubHeaderSection href={info.href} target={info.target} key={index}>
+										<S.HeaderSectionText display="true">{info.title}</S.HeaderSectionText>
+									</S.SubHeaderSection>
+								))}
+							</S.SubHeaderSectionWrap>
+						)),
+					]}
 				</S.HeaderSectionWrap>
 			</S.SubHeaderWrap>
 		</S.HeaderContainer>
