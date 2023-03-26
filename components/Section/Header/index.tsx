@@ -11,23 +11,13 @@ import userState from '@/context/userState'
 import React from 'react'
 import { useRouter } from 'next/router'
 import { useRecoilState } from 'recoil'
+import useUser from '@/hooks/useUser'
 
 const Header = () => {
 	const [search, setSearch] = React.useState('')
 	const [isHover, setIsHover] = React.useState(false)
-	const [user, setUser] = useRecoilState(userState)
+	const { user: userInfo, isLogined, logout } = useUser()
 	const router = useRouter()
-
-	React.useEffect(() => {
-		;(async () => {
-			try {
-				const res = await api.getUser()
-				if (!user.id) setUser(res)
-			} catch (err) {
-				console.log(err)
-			}
-		})()
-	}, [setUser, user])
 
 	const navigateSearchResult = () => {
 		if (search.length) return router.push(`/search/${search}`)
@@ -41,23 +31,30 @@ const Header = () => {
 					<S.HeaderLogo src="/images/logo.png" width="1000" height="1000" alt="logo" />
 				</S.HeaderLink>
 				<S.HeaderSectionWrap>
-					<S.HeaderSection>
-						<S.HeaderSectionLogo src={Student} alt="" />
-						<S.HeaderSectionText>공지</S.HeaderSectionText>
-					</S.HeaderSection>
-					<S.HeaderSection>
-						<S.HeaderSectionLogo src={Teacher} alt="" />
-						<S.HeaderSectionText>학교</S.HeaderSectionText>
-					</S.HeaderSection>
-					<S.HeaderSection>
-						<S.HeaderSectionLogo src={Accident} alt="" />
-						<S.HeaderSectionText>기타</S.HeaderSectionText>
-					</S.HeaderSection>
-					<S.HeaderSection>
-						<S.HeaderSectionLogo src={Club} alt="" />
-						<S.HeaderSectionText>외부 서비스</S.HeaderSectionText>
-					</S.HeaderSection>
-					{user.id && (
+					{[
+						{
+							image: Student,
+							title: '공지',
+						},
+						{
+							image: Teacher,
+							title: '학교',
+						},
+						{
+							image: Accident,
+							title: '기타',
+						},
+						{
+							image: Club,
+							title: '외부 서비스',
+						},
+					].map((header, index) => (
+						<S.HeaderSection key={index}>
+							<S.HeaderSectionLogo src={header.image} alt="" />
+							<S.HeaderSectionText>{header.title}</S.HeaderSectionText>
+						</S.HeaderSection>
+					))}
+					{isLogined && (
 						<S.HeaderSectionLink href={`/create`}>
 							<S.HeaderSectionLogo src={Create} alt="" />
 							<S.HeaderSectionText>문서 생성</S.HeaderSectionText>
@@ -72,7 +69,7 @@ const Header = () => {
 						</S.HeaderSearchButton>
 					</S.HeaderSearchForm>
 					<S.HeaderLoginWrap>
-						{user.id ? (
+						{isLogined ? (
 							<S.HeaderMypageText href="/mypage">마이페이지</S.HeaderMypageText>
 						) : (
 							<S.HeaderLoginText href="https://auth.bssm.kro.kr/oauth?clientId=a1a16261&redirectURI=http://bumawiki.kro.kr/oauth">
