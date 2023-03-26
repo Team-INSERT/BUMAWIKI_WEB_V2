@@ -1,8 +1,8 @@
-import * as C from '@/components'
 import * as S from '../layout/index.style'
 
 import React from 'react'
-import { NextSeoProps } from 'next-seo'
+import { NextSeo, NextSeoProps } from 'next-seo'
+import { Aside, Board, ScrollBtn } from '@/components'
 
 const NotFound = () => {
 	const seoConfig: NextSeoProps = {
@@ -22,14 +22,14 @@ const NotFound = () => {
 
 	return (
 		<>
-			<C.Header />
+			<NextSeo {...seoConfig} />
 			<S.NotFoundWrap>
-				<C.Board>
+				<Board>
 					<S.NotFound>404 Not Found</S.NotFound>
-				</C.Board>
-				<C.Aside />
+				</Board>
+				<Aside />
+				<ScrollBtn />
 			</S.NotFoundWrap>
-			<C.Footer />
 		</>
 	)
 }
