@@ -10,7 +10,7 @@ const AccodianMenu = ({ children, name, isOpen }: AccodianType) => {
 	const [opacity, setOpacity] = React.useState<number>(1)
 
 	React.useEffect(() => {
-		if (isOpen === false) {
+		if (!isOpen) {
 			setDetail(false)
 			setOpacity(0.4)
 		}
@@ -19,8 +19,8 @@ const AccodianMenu = ({ children, name, isOpen }: AccodianType) => {
 
 	const onClickDetail = () => {
 		setDetail((detail) => !detail)
-		if (opacity === 1) setOpacity(0.4)
-		else setOpacity(1)
+		if (opacity === 1) return setOpacity(0.4)
+		return setOpacity(1)
 	}
 
 	return (
