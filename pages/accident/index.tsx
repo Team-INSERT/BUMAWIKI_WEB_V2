@@ -6,9 +6,9 @@ import React, { PropsWithChildren } from 'react'
 import Docs from '@/types/docs.type'
 import DocsPropsType from '@/types/static/docs.props.type'
 import { NextSeo, NextSeoProps } from 'next-seo'
-import { AccodianMenu, Board, Classify, SubFooter } from '@/components'
+import { AccodianMenu, Aside, Board, Classify, ScrollBtn, SubFooter } from '@/components'
 
-const Accident = ({ docs, years }: DocsPropsType, { children }: PropsWithChildren) => {
+const Accident = ({ docs, years }: DocsPropsType) => {
 	const seoConfig: NextSeoProps = {
 		title: '부마위키 - 사건/사고',
 		description: '교내에서 일어나는 모든 사건/사고를 담은 페이지입니다.',
@@ -52,7 +52,8 @@ const Accident = ({ docs, years }: DocsPropsType, { children }: PropsWithChildre
 					</S.AccidentListWrap>
 					<SubFooter />
 				</Board>
-				{children}
+				<ScrollBtn />
+				<Aside />
 			</S.AccidentWrap>
 		</>
 	)

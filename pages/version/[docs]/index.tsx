@@ -3,18 +3,18 @@ import * as util from '@/utils'
 import * as S from '../../../layout/docs/style'
 import * as V from '../../../layout/version/style'
 
-import React, { PropsWithChildren } from 'react'
+import React from 'react'
 import { VersionDocs } from '@/types/version.type'
 import { GetStaticProps } from 'next'
 import { NextSeo, NextSeoProps } from 'next-seo'
-import { Board, SubFooter } from '@/components'
+import { Aside, Board, ScrollBtn, SubFooter } from '@/components'
 
 interface SingleDocsPropsType {
 	version: VersionDocs[]
 	docsName: string
 }
 
-const Version = ({ version, docsName }: SingleDocsPropsType, { children }: PropsWithChildren) => {
+const Version = ({ version, docsName }: SingleDocsPropsType) => {
 	const seoConfig: NextSeoProps = {
 		title: `부마위키 문서 수정 기록 - ${docsName}`,
 		description: `"${docsName}" 문서의 수정 기록 페이지입니다.`,
@@ -55,7 +55,8 @@ const Version = ({ version, docsName }: SingleDocsPropsType, { children }: Props
 					</S.DocsContentsWrap>
 					<SubFooter />
 				</Board>
-				{children}
+				<ScrollBtn />
+				<Aside />
 			</S.DocsWrap>
 		</>
 	)

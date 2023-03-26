@@ -4,7 +4,7 @@ import * as getApi from '@/api/getDocs'
 import React, { PropsWithChildren } from 'react'
 import Docs from '@/types/docs.type'
 import { NextSeo, NextSeoProps } from 'next-seo'
-import { AccodianMenu, Board, Classify, SubFooter } from '@/components'
+import { AccodianMenu, Aside, Board, Classify, ScrollBtn, SubFooter } from '@/components'
 
 interface ClubDocsPropsType {
 	docs: {
@@ -13,7 +13,7 @@ interface ClubDocsPropsType {
 	}
 }
 
-const Club = ({ docs }: ClubDocsPropsType, { children }: PropsWithChildren) => {
+const Club = ({ docs }: ClubDocsPropsType) => {
 	const seoConfig: NextSeoProps = {
 		title: '부마위키 - 동아리',
 		description: '교내에서 활동하는 모든 동아리를 담은 페이지입니다.',
@@ -64,7 +64,8 @@ const Club = ({ docs }: ClubDocsPropsType, { children }: PropsWithChildren) => {
 					</S.ClubListWrap>
 					<SubFooter />
 				</Board>
-				{children}
+				<ScrollBtn />
+				<Aside />
 			</S.ClubWrap>
 		</>
 	)

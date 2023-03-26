@@ -7,7 +7,7 @@ import { VersionDocsService } from '@/types/version.type'
 import { decodeContents } from '@/utils/document/requestContents'
 import { GetStaticProps } from 'next'
 import { NextSeo, NextSeoProps } from 'next-seo'
-import { AccodianMenu, Board, Classify, SubFooter } from '@/components'
+import { AccodianMenu, Aside, Board, Classify, ScrollBtn, SubFooter } from '@/components'
 
 interface VersionDetailPropsType {
 	title: string
@@ -16,7 +16,7 @@ interface VersionDetailPropsType {
 	versionId: string
 }
 
-const VersionDetail = ({ title, docsType, docs, versionId }: VersionDetailPropsType, { children }: PropsWithChildren) => {
+const VersionDetail = ({ title, docsType, docs, versionId }: VersionDetailPropsType) => {
 	const seoConfig: NextSeoProps = {
 		title: `부마위키 문서 기록 - ${title}:${versionId}`,
 		description: `"${title}" 문서의 예전 기록 페이지입니다.`,
@@ -64,7 +64,8 @@ const VersionDetail = ({ title, docsType, docs, versionId }: VersionDetailPropsT
 					</S.DocsContentsWrap>
 					<SubFooter />
 				</Board>
-				{children}
+				<ScrollBtn />
+				<Aside />
 			</S.DocsWrap>
 		</div>
 	)

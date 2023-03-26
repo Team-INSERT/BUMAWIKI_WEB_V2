@@ -8,9 +8,9 @@ import { useQuery } from 'react-query'
 import UserType from '@/types/user.type'
 import { useRouter } from 'next/router'
 import { NextSeo, NextSeoProps } from 'next-seo'
-import { AccodianMenu, Aside, Board, Classify } from '@/components'
+import { AccodianMenu, Aside, Board, Classify, ScrollBtn } from '@/components'
 
-const User = ({ children }: PropsWithChildren) => {
+const User = () => {
 	const [user, setUser] = React.useState<UserType>()
 	const router = useRouter()
 	useQuery('otherUser', () => api.getOtherUser(parseInt(router.query.userId as string)), {
@@ -70,7 +70,8 @@ const User = ({ children }: PropsWithChildren) => {
 						<S.UserLine />
 					</S.UserInfoWrap>
 				</Board>
-				{children}
+				<ScrollBtn />
+				<Aside />
 			</S.UserWrap>
 		</div>
 	)

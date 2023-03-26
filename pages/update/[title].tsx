@@ -16,7 +16,7 @@ import Docs from '@/types/docs.type'
 import { GetStaticProps } from 'next'
 import { Storage } from '@/lib/storage/storage'
 import { NextSeo, NextSeoProps } from 'next-seo'
-import { Board, SubFooter } from '@/components'
+import { Aside, Board, ScrollBtn, SubFooter } from '@/components'
 import Image from 'next/image'
 import theme from '@/styles/theme'
 
@@ -25,7 +25,7 @@ interface SinglDocsPropsType {
 	title: string
 }
 
-const Update = ({ defaultDocs, title }: SinglDocsPropsType, { children }: PropsWithChildren) => {
+const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 	const router = useRouter()
 	const user = useRecoilValue(userState)
 	const textareaRef = React.useRef<HTMLTextAreaElement>(null)
@@ -150,7 +150,8 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType, { children }: PropsW
 					</S.DocsContentsWrap>
 					<SubFooter />
 				</Board>
-				{children}
+				<ScrollBtn />
+				<Aside />
 			</S.DocsWrap>
 		</>
 	)

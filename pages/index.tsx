@@ -2,10 +2,27 @@ import * as S from '../layout/index.style'
 
 import React from 'react'
 import { AccodianMenu, Aside, Board, Classify, ScrollBtn, SubFooter } from '@/components'
+import { NextSeo, NextSeoProps } from 'next-seo'
 
 const Home = () => {
+	const seoConfig: NextSeoProps = {
+		title: `부마위키 - 대문`,
+		description: `역사의 고서, 부마위키`,
+		openGraph: {
+			type: 'website',
+			title: `부마위키 - 대문`,
+			description: `역사의 고서, 부마위키`,
+			images: [
+				{
+					url: '/images/meta-img.png',
+				},
+			],
+		},
+	}
+
 	return (
 		<>
+			<NextSeo {...seoConfig} />
 			<S.HomeWrap>
 				<Board>
 					<S.HomeTitleWrap>

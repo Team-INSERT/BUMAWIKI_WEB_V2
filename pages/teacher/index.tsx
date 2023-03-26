@@ -4,7 +4,7 @@ import * as getApi from '@/api/getDocs'
 import React, { PropsWithChildren } from 'react'
 import Docs from '@/types/docs.type'
 import { NextSeo, NextSeoProps } from 'next-seo'
-import { AccodianMenu, Board, Classify, SubFooter } from '@/components'
+import { AccodianMenu, Aside, Board, Classify, ScrollBtn, SubFooter } from '@/components'
 
 interface TeacherDocsPropsType {
 	docs: {
@@ -14,7 +14,7 @@ interface TeacherDocsPropsType {
 	}
 }
 
-const Teacher = ({ docs }: TeacherDocsPropsType, { children }: PropsWithChildren) => {
+const Teacher = ({ docs }: TeacherDocsPropsType) => {
 	const seoConfig: NextSeoProps = {
 		title: `부마위키 - 선생님`,
 		description: `교내의 모든 선생님을 담은 페이지입니다.`,
@@ -75,7 +75,8 @@ const Teacher = ({ docs }: TeacherDocsPropsType, { children }: PropsWithChildren
 					</S.TeacherList>
 					<SubFooter />
 				</Board>
-				{children}
+				<ScrollBtn />
+				<Aside />
 			</S.TeacherWrap>
 		</>
 	)
