@@ -38,10 +38,7 @@ const Teacher = ({ docs }: TeacherDocsPropsType, { children }: PropsWithChildren
 					<S.TeacherTitleWrap>
 						<S.TeacherTitleText>부마위키:선생님</S.TeacherTitleText>
 					</S.TeacherTitleWrap>
-					<Classify>
-						<Classify>선생님</Classify>
-					</Classify>
-					<S.TeacherLine />
+					<Classify>선생님</Classify>
 					<S.TeacherWarnText>※ 필독! 문서 내 대상을 비하하는 내용을 서술하는 사용자는 부마위키 이용에 제한을 받을 수 있습니다 ※</S.TeacherWarnText>
 					<S.TeacherList>
 						<AccodianMenu name={`인문과목 선생님`}>

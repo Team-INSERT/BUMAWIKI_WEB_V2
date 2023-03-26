@@ -2,18 +2,19 @@ import * as util from '@/utils'
 import * as S from '../../layout/docs/style'
 import * as api from '@/api/getDocs'
 
-import React, { PropsWithChildren } from 'react'
+import React from 'react'
 import Docs from '@/types/docs.type'
 import { decodeContents } from '@/utils/document/requestContents'
 import { GetStaticProps } from 'next'
 import { NextSeo, NextSeoProps } from 'next-seo'
-import { AccodianMenu, Board, Classify, DetailBtn, SubFooter } from '@/components'
+import docsInitState from '@/state/docsInitState'
+import { AccodianMenu, Aside, Board, Classify, DetailBtn, ScrollBtn, SubFooter } from '@/components'
 
 interface SingleDocsPropsType {
 	docs: Docs
 }
 
-const Doc = ({ docs }: SingleDocsPropsType, { children }: PropsWithChildren) => {
+const Doc = ({ docs }: SingleDocsPropsType) => {
 	const seoConfig: NextSeoProps = {
 		title: `부마위키 - ${docs?.title} (${util.typeEditor(docs?.docsType)})`,
 		description: `${docs?.contents.slice(0, 16)}...`,
@@ -57,13 +58,13 @@ const Doc = ({ docs }: SingleDocsPropsType, { children }: PropsWithChildren) => 
 					</S.DocsContentsWrap>
 					<SubFooter />
 				</Board>
-				{children}
+				<ScrollBtn />
+				<Aside />
 			</S.DocsWrap>
 		</>
 	)
 }
 
-// 로직 전체 바꾸기, 옵셔널체이닝 지양하기
 export const getStaticPaths = async () => {
 	return {
 		paths: [],
@@ -71,41 +72,36 @@ export const getStaticPaths = async () => {
 	}
 }
 
+const getApiDocs = async (docsName: string) => {
+	try {
+		return await api.getDocs(docsName)
+	} catch (err) {
+		return false
+	}
+}
+
 export const getStaticProps: GetStaticProps = async (context) => {
 	const { params } = context
 
-	const res = await api.getDocs(params?.title as string)
-	const { contents } = res
+	const res = await getApiDocs(params?.title as string)
 
-	try {
-		if (res.contents.indexOf('include(') !== -1) {
-			const includeTag = res.contents.substring(res.contents.indexOf('include('), res.contents.indexOf(');') + 2)
-			const frames = res.contents.substring(res.contents.indexOf('include('), res.contents.indexOf(');')).replace('include(', '').split(', ')
-
-			let frameValue = ''
-
-			for (const frame of frames) {
-				const result = await util.includeFrame(frame)
-				frameValue += `${result}\n`
-			}
-
-			return {
-				props: {
-					docs: {
-						...res,
-						contents: contents.replace(includeTag, frameValue),
-						title: params?.title,
-					},
-				},
-			}
-		}
-	} catch (err) {
-		console.log(err)
+	if (!res)
 		return {
 			props: {
-				docs: res,
+				docs: docsInitState,
 			},
 		}
+
+	const { contents } = res
+
+	if (res.contents.indexOf('include(') !== -1) {
+		const includeTag = contents.substring(contents.indexOf('include('), contents.indexOf(');') + 2)
+		const frames: string[] = contents.substring(contents.indexOf('include('), contents.indexOf(');')).replace('include(', '').split(', ')
+
+		let result = ''
+
+		for (const frame of frames) result += `${await util.includeFrame(frame)}\n`
+		res.contents = contents.replace(includeTag, result)
 	}
 
 	return {
