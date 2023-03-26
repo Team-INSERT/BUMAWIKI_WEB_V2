@@ -1,13 +1,9 @@
-import * as C from '@/components'
 import * as api from '@/api/editDocs'
-import * as FC from '@/utils'
+import * as util from '@/utils'
 import * as S from '../../layout/create/style'
-import * as userApi from '@/api/user'
 
-import userState from '@/context/userState'
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import { useMutation } from 'react-query'
-import { useRecoilState, useRecoilValue } from 'recoil'
 import CreateDocsType from '@/types/create.type'
 import Frame from '@/types/frame.type'
 import sizeInitState from '@/state/sizeInitState'
@@ -15,31 +11,21 @@ import { useRouter } from 'next/router'
 import createInitState from '@/state/createInitState'
 import createDocsForm from '@/utils/document/createDocsForm'
 import { NextSeo, NextSeoProps } from 'next-seo'
+import useUser from '@/hooks/useUser'
+import { Board, SubFooter } from '@/components'
+import createFormInitState from '@/state/createFormInitState'
 
-const Create = () => {
+const Create = ({ children }: PropsWithChildren) => {
 	const router = useRouter()
 	const { query } = router
-	const [user, setUser] = useRecoilState(userState)
-	const years = FC.getAllYear()
+	const years = util.getAllYear()
 
 	const [size, setSize] = React.useState<Frame>(sizeInitState)
 	const [docs, setDocs] = React.useState<CreateDocsType>({
 		title: (query.name as string) || '',
 		...createInitState,
 	})
-
-	// useUser hooks로 로직 단순하게 하면 좋을 것 같습니다.
-	// https://github.com/bssm-portfolio/app/blob/develop/hooks/useUser.tsx
-	React.useEffect(() => {
-		;(async () => {
-			try {
-				const res = await userApi.getUser()
-				if (!user.id) setUser(res)
-			} catch (err) {
-				console.log(err)
-			}
-		})()
-	}, [setUser, user])
+	const { user: userInfo, isLogined } = useUser()
 
 	const { mutate } = useMutation(api.createDocs, {
 		onSuccess: (data) => {
@@ -50,9 +36,8 @@ const Create = () => {
 	})
 
 	const onClickCreateDocs = () => {
-		// includes 로직 한줄로 
 		if (['?', '/', '"', '\\'].includes(docs.title)) return alert('문서명에는 물음표나 쌍따옴표, 슬래시나 역슬래시를 넣을 수 없습니다.')
-		if (!user.id) return alert('로그인 후 이용 가능한 서비스입니다.')
+		if (!isLogined) return alert('로그인 후 이용 가능한 서비스입니다.')
 		if (!docs.enroll) return alert('연도를 선택해주세요!')
 		if (!docs.title.length) return alert('문서의 이름을 정해주세요!')
 		if (!docs.docsType) return alert('문서의 분류를 선택해주세요!')
@@ -71,21 +56,20 @@ const Create = () => {
 	}
 
 	const makeFrame = () => {
-		// 템플릿 리터럴 안의 \n를 엔터로 대체하고 '+'는 지양
 		const frame = `<틀>
-		<틀제목>제목삽입</틀제목>
-		` + `<행>${'<열>내용삽입</열>'.repeat(size.row)}</행>\n`.repeat(size.column) + `</틀>`
+	<틀제목>제목삽입</틀제목>
+	${`<행>
+		${'<열>내용삽입</열>'.repeat(size.row)}
+	</행>`.repeat(size.column)}
+</틀>`
+
 		setDocs({ ...docs, contents: frame })
 	}
 
 	const changeDocsType = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const type = e.target.id
-		// early return, if else 중 택 1
-		if (type === 'FRAME') {
-			setDocs({ ...docs, docsType: type, title: `틀:${docs.title}` })
-		} else {
-			setDocs({ ...docs, docsType: type, title: docs.title.replace('틀:', ''), contents: '' })
-		}
+		if (type === 'FRAME') return setDocs({ ...docs, docsType: type, title: `틀:${docs.title}` })
+		return setDocs({ ...docs, docsType: type, title: docs.title.replace('틀:', ''), contents: '' })
 	}
 
 	const seoConfig: NextSeoProps = {
@@ -106,9 +90,8 @@ const Create = () => {
 	return (
 		<>
 			<NextSeo {...seoConfig} />
-			<C.Header />
 			<S.CreateWrap>
-				<C.Board>
+				<Board>
 					<S.CreateTitleWrap>
 						<S.CreateTitleText>문서 생성</S.CreateTitleText>
 					</S.CreateTitleWrap>
@@ -116,27 +99,20 @@ const Create = () => {
 						<S.CreateTableTR>
 							<S.CreateTableTRTitle>분류</S.CreateTableTRTitle>
 							<S.CreateTableTRContents>
-								{user.authority === 'ADMIN' && (
-									<>
+								{userInfo.authority === 'ADMIN' && (
+									<div>
 										<label htmlFor="STUDENT">학생</label>
 										<S.CreateTableRadio type="radio" onChange={(e) => setDocs({ ...docs, docsType: e.target.id })} id="STUDENT" name="radio" />
-									</>
+										<label htmlFor="READONLY">관리자</label>
+										<S.CreateTableRadio type="radio" onChange={(e) => setDocs({ ...docs, docsType: e.target.id })} id="READONLY" name="radio" />
+									</div>
 								)}
-								{/* 반복문으로 변경 */}
-								<label htmlFor="TEACHER">인문 선생님</label>
-								<S.CreateTableRadio type="radio" onChange={(e) => changeDocsType(e)} id="TEACHER" name="radio" />
-								<label htmlFor="MAJOR_TEACHER">전공 선생님</label>
-								<S.CreateTableRadio type="radio" onChange={(e) => changeDocsType(e)} id="MAJOR_TEACHER" name="radio" />
-								<label htmlFor="MENTOR_TEACHER">멘토 선생님</label>
-								<S.CreateTableRadio type="radio" onChange={(e) => changeDocsType(e)} id="MENTOR_TEACHER" name="radio" />
-								<label htmlFor="ACCIDENT">사건/사고</label>
-								<S.CreateTableRadio type="radio" onChange={(e) => changeDocsType(e)} id="ACCIDENT" name="radio" />
-								<label htmlFor="CLUB">전공동아리</label>
-								<S.CreateTableRadio type="radio" onChange={(e) => changeDocsType(e)} id="CLUB" name="radio" />
-								<label htmlFor="FREE_CLUB">사설동아리</label>
-								<S.CreateTableRadio type="radio" onChange={(e) => changeDocsType(e)} id="FREE_CLUB" name="radio" />
-								<label htmlFor="FRAME">틀</label>
-								<S.CreateTableRadio type="radio" onChange={(e) => changeDocsType(e)} id="FRAME" name="radio" />
+								{createFormInitState.map((info, index) => (
+									<div key={index}>
+										<label htmlFor={info.id}>{info.title}</label>
+										<S.CreateTableRadio type="radio" onChange={(e) => changeDocsType(e)} id={info.id} name="radio" />
+									</div>
+								))}
 							</S.CreateTableTRContents>
 						</S.CreateTableTR>
 						<S.CreateTableTR>
@@ -180,7 +156,7 @@ const Create = () => {
 								))}
 							</S.FileInputWrap>
 						</S.CreateTableTRFile>
-						{docs.docsType === 'FRAME' ? (
+						{docs.docsType === 'FRAME' && (
 							<S.CreateTableTRFrame>
 								<S.CreateTableTRTitle>틀 규격</S.CreateTableTRTitle>
 								<S.FrameInputDiv>
@@ -207,14 +183,12 @@ const Create = () => {
 									<S.CreateFrameButton onClick={() => makeFrame()}>틀생성/초기화</S.CreateFrameButton>
 								</S.FrameInputDiv>
 							</S.CreateTableTRFrame>
-						) : (
-							''
 						)}
 						<S.CreateTableTRTextContent>
 							<S.CreateTableTRTitle>문서 내용</S.CreateTableTRTitle>
 							<S.CreateTableTRTextarea
-								onKeyDown={(e) => FC.onKeyDownUseTab(e)}
-								onChange={(e) => setDocs({ ...docs, contents: FC.autoClosingTag(e) })}
+								onKeyDown={(e) => util.onKeyDownUseTab(e)}
+								onChange={(e) => setDocs({ ...docs, contents: util.autoClosingTag(e) })}
 								value={docs.contents}
 							/>
 						</S.CreateTableTRTextContent>
@@ -222,7 +196,7 @@ const Create = () => {
 							<S.CreateTableTRTitle>미리보기</S.CreateTableTRTitle>
 							<S.CreateTableTRDiv
 								dangerouslySetInnerHTML={{
-									__html: FC.documentation(docs.contents),
+									__html: util.documentation(docs.contents),
 								}}></S.CreateTableTRDiv>
 						</S.CreateTableTRTextContent>
 					</S.CreateTable>
@@ -230,13 +204,10 @@ const Create = () => {
 						<S.CreateWarn>※ 필독! 문서 내 부적절한 내용을 서술하는 사용자는 부마위키 이용에 제한을 받을 수 있습니다 ※</S.CreateWarn>
 						<S.CreateButton onClick={onClickCreateDocs}>문서 생성</S.CreateButton>
 					</S.CreateSubmit>
-					<C.SubFooter />
-				</C.Board>
-				<C.ScrollBtn />
-				<C.Aside />
+					<SubFooter />
+				</Board>
+				{children}
 			</S.CreateWrap>
-			{ /* header, footer 안쓰는 페이지 없을 시 _app.tsx로 이동 */ }
-			<C.Footer />
 		</>
 	)
 }
