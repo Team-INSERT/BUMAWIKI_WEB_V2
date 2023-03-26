@@ -1,10 +1,10 @@
-import * as C from '@/components'
 import * as S from '../../layout/teacher/style'
-import * as docs from '@/api/getDocs'
+import * as getApi from '@/api/getDocs'
 
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import Docs from '@/types/docs.type'
 import { NextSeo, NextSeoProps } from 'next-seo'
+import { AccodianMenu, Board, Classify, SubFooter } from '@/components'
 
 interface TeacherDocsPropsType {
 	docs: {
@@ -14,7 +14,7 @@ interface TeacherDocsPropsType {
 	}
 }
 
-const Teacher = ({ docs }: TeacherDocsPropsType) => {
+const Teacher = ({ docs }: TeacherDocsPropsType, { children }: PropsWithChildren) => {
 	const seoConfig: NextSeoProps = {
 		title: `부마위키 - 선생님`,
 		description: `교내의 모든 선생님을 담은 페이지입니다.`,
@@ -33,19 +33,15 @@ const Teacher = ({ docs }: TeacherDocsPropsType) => {
 	return (
 		<>
 			<NextSeo {...seoConfig} />
-			<C.Header />
 			<S.TeacherWrap>
-				<C.Board>
+				<Board>
 					<S.TeacherTitleWrap>
 						<S.TeacherTitleText>부마위키:선생님</S.TeacherTitleText>
 					</S.TeacherTitleWrap>
-					<S.Classify>
-						<C.Classify>선생님</C.Classify>
-					</S.Classify>
-					<S.TeacherLine />
+					<Classify>선생님</Classify>
 					<S.TeacherWarnText>※ 필독! 문서 내 대상을 비하하는 내용을 서술하는 사용자는 부마위키 이용에 제한을 받을 수 있습니다 ※</S.TeacherWarnText>
 					<S.TeacherList>
-						<C.AccodianMenu name={`인문과목 선생님`}>
+						<AccodianMenu name={`인문과목 선생님`}>
 							<S.TeacherDetailList>
 								{docs.common_teacher.map((teacher: Docs, index) => (
 									<S.TeacherListItem key={index}>
@@ -53,8 +49,8 @@ const Teacher = ({ docs }: TeacherDocsPropsType) => {
 									</S.TeacherListItem>
 								))}
 							</S.TeacherDetailList>
-						</C.AccodianMenu>
-						<C.AccodianMenu name={`전공과목 선생님`}>
+						</AccodianMenu>
+						<AccodianMenu name={`전공과목 선생님`}>
 							<S.TeacherDetailList>
 								{docs.major_teacher.map((teacher: Docs, index) => (
 									<S.TeacherListItem key={index}>
@@ -64,8 +60,8 @@ const Teacher = ({ docs }: TeacherDocsPropsType) => {
 									</S.TeacherListItem>
 								))}
 							</S.TeacherDetailList>
-						</C.AccodianMenu>
-						<C.AccodianMenu name={`멘토 선생님`}>
+						</AccodianMenu>
+						<AccodianMenu name={`멘토 선생님`}>
 							<S.TeacherDetailList>
 								{docs.mentor_teacher.map((teacher: Docs) => (
 									<S.TeacherListItem key={teacher.id}>
@@ -75,22 +71,20 @@ const Teacher = ({ docs }: TeacherDocsPropsType) => {
 									</S.TeacherListItem>
 								))}
 							</S.TeacherDetailList>
-						</C.AccodianMenu>
+						</AccodianMenu>
 					</S.TeacherList>
-					<C.SubFooter />
-				</C.Board>
-				<C.ScrollBtn />
-				<C.Aside />
+					<SubFooter />
+				</Board>
+				{children}
 			</S.TeacherWrap>
-			<C.Footer />
 		</>
 	)
 }
 
 export async function getStaticProps() {
-	const common_teacher = await docs.getBaseDocs('teacher')
-	const major_teacher = await docs.getBaseDocs('major_teacher')
-	const mentor_teacher = await docs.getBaseDocs('mentor_teacher')
+	const common_teacher = await getApi.getBaseDocs('teacher')
+	const major_teacher = await getApi.getBaseDocs('major_teacher')
+	const mentor_teacher = await getApi.getBaseDocs('mentor_teacher')
 
 	return {
 		props: {

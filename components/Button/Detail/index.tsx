@@ -7,6 +7,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import userState from '@/context/userState'
 import { MutationFunction, useMutation, useQueryClient } from 'react-query'
 import { useRouter } from 'next/router'
+import useUser from '@/hooks/useUser'
 
 interface DetailBtnProps {
 	docsId: number
@@ -17,18 +18,7 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 	const { query } = router
 	const [docsName, setDocsName] = React.useState('')
 	const queryClient = useQueryClient()
-	const [user, setUser] = useRecoilState(userState)
-
-	React.useEffect(() => {
-		;(async () => {
-			try {
-				const res = await userApi.getUser()
-				if (!user.id) setUser(res)
-			} catch (err) {
-				console.log(err)
-			}
-		})()
-	}, [setUser, user])
+	const { user: userInfo, isLogined } = useUser()
 
 	const updateDocsTitleMutation = useMutation(api.updateDocsTitle, {
 		onSuccess: (res) => {
@@ -40,7 +30,7 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 
 	const onClickNavigatePage = (type: string) => {
 		if (type === 'VERSION') router.push(`/version/${query.title}`)
-		else if (type === 'UPDATE' && !user.id) alert('로그인 후 편집하실 수 있습니다!')
+		else if (type === 'UPDATE' && !isLogined) alert('로그인 후 편집하실 수 있습니다!')
 		else router.push(`/update/${query.title}`)
 	}
 
@@ -52,10 +42,7 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 	})
 
 	const onClickChangeDocsName = async () => {
-		if (!docsName.length) {
-			alert('내용이 없습니다.')
-			return
-		}
+		if (!docsName.length) return alert('내용이 없습니다.')
 		updateDocsTitleMutation.mutate({ title: router.pathname as string, docsName })
 	}
 
@@ -66,7 +53,7 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 
 	return (
 		<S.DetailButtonWrap>
-			{user.authority === 'ADMIN' && (
+			{userInfo.authority === 'ADMIN' && (
 				<>
 					<S.DetailWrap onClick={onClickDeleteDocs}>
 						<S.DetailButton>

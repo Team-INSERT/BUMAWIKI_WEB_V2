@@ -1,14 +1,14 @@
-import * as C from '@/components'
-import * as docs from '@/api/getDocs'
+import * as getApi from '@/api/getDocs'
 import * as S from '../../layout/student/style'
-import * as FC from '@/utils'
+import * as util from '@/utils'
 
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import Docs from '@/types/docs.type'
 import DocsPropsType from '@/types/static/docs.props.type'
 import { NextSeo, NextSeoProps } from 'next-seo'
+import { AccodianMenu, Board, Classify, SubFooter } from '@/components'
 
-const Student = ({ docs, years }: DocsPropsType) => {
+const Student = ({ docs, years }: DocsPropsType, { children }: PropsWithChildren) => {
 	const seoConfig: NextSeoProps = {
 		title: `부마위키 - 학생`,
 		description: `교내의 모든 학생을 담은 페이지입니다.`,
@@ -27,46 +27,41 @@ const Student = ({ docs, years }: DocsPropsType) => {
 	return (
 		<>
 			<NextSeo {...seoConfig} />
-			<C.Header />
 			<S.StudentWrap>
-				<C.Board>
+				<Board>
 					<S.StudentTitleWrap>
 						<S.StudentTitleText>부마위키:학생</S.StudentTitleText>
 					</S.StudentTitleWrap>
 					<S.StudentClassify>
-						<C.Classify>학생</C.Classify>
+						<Classify>학생</Classify>
 					</S.StudentClassify>
 					<S.StudentLine />
 					<S.StudentListWrap>
 						{years.map((year) => (
-							<C.AccodianMenu name={`${year}년도 입학생`} key={year} isOpen={true}>
+							<AccodianMenu name={`${year}년도 입학생`} key={year} isOpen={true}>
 								{docs.map((student: Docs, index) => (
 									<S.StudentList key={index}>
-										{student.enroll === year ? (
+										{student.enroll === year && (
 											<S.StudentListItem>
 												<S.StudentLink href={`/docs/${student.title}`}>{student.title}</S.StudentLink>
 											</S.StudentListItem>
-										) : (
-											''
 										)}
 									</S.StudentList>
 								))}
-							</C.AccodianMenu>
+							</AccodianMenu>
 						))}
 					</S.StudentListWrap>
-					<C.SubFooter />
-				</C.Board>
-				<C.ScrollBtn />
-				<C.Aside />
+					<SubFooter />
+				</Board>
+				{children}
 			</S.StudentWrap>
-			<C.Footer />
 		</>
 	)
 }
 
 export async function getStaticProps() {
-	const student = await docs.getBaseDocs('student')
-	const years = FC.getAllYear()
+	const student = await getApi.getBaseDocs('student')
+	const years = util.getAllYear()
 
 	return {
 		props: {

@@ -1,15 +1,14 @@
-import * as C from '@/components'
 import * as docs from '@/api/getDocs'
-import * as user from '@/api/user'
 import * as S from '../../layout/accident/style'
-import * as FC from '@/utils'
+import * as util from '@/utils'
 
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import Docs from '@/types/docs.type'
 import DocsPropsType from '@/types/static/docs.props.type'
 import { NextSeo, NextSeoProps } from 'next-seo'
+import { AccodianMenu, Board, Classify, SubFooter } from '@/components'
 
-const Accident = ({ docs, years }: DocsPropsType) => {
+const Accident = ({ docs, years }: DocsPropsType, { children }: PropsWithChildren) => {
 	const seoConfig: NextSeoProps = {
 		title: '부마위키 - 사건/사고',
 		description: '교내에서 일어나는 모든 사건/사고를 담은 페이지입니다.',
@@ -27,19 +26,18 @@ const Accident = ({ docs, years }: DocsPropsType) => {
 	return (
 		<>
 			<NextSeo {...seoConfig} />
-			<C.Header />
 			<S.AccidentWrap>
-				<C.Board>
+				<Board>
 					<S.AccidentTitleWrap>
 						<S.AccidentTitleText>부마위키:사건/사고</S.AccidentTitleText>
 					</S.AccidentTitleWrap>
 					<S.AccidentClassify>
-						<C.Classify>사건/사고</C.Classify>
+						<Classify>사건/사고</Classify>
 					</S.AccidentClassify>
 					<S.AccidentLine />
 					<S.AccidentListWrap>
 						{years.map((year) => (
-							<C.AccodianMenu name={`${year}년 사건/사고`} key={year}>
+							<AccodianMenu name={`${year}년 사건/사고`} key={year} isOpen={true}>
 								{docs.map((accident: Docs, index) => (
 									<S.AccidentList key={index}>
 										{accident.enroll === year && (
@@ -49,22 +47,20 @@ const Accident = ({ docs, years }: DocsPropsType) => {
 										)}
 									</S.AccidentList>
 								))}
-							</C.AccodianMenu>
+							</AccodianMenu>
 						))}
 					</S.AccidentListWrap>
-					<C.SubFooter />
-				</C.Board>
-				<C.ScrollBtn />
-				<C.Aside />
+					<SubFooter />
+				</Board>
+				{children}
 			</S.AccidentWrap>
-			<C.Footer />
 		</>
 	)
 }
 
 export async function getStaticProps() {
 	const accident = await docs.getBaseDocs('accident')
-	const years = FC.getAllYear()
+	const years = util.getAllYear()
 
 	return {
 		props: {

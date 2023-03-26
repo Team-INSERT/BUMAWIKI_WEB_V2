@@ -1,13 +1,13 @@
-import * as C from '@/components'
-import * as docs from '@/api/getDocs'
+import * as getApi from '@/api/getDocs'
 import * as S from '../../layout/popular/style'
 
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import Docs from '@/types/docs.type'
 import DocsPropsType from '@/types/static/docs.props.type'
 import { NextSeo, NextSeoProps } from 'next-seo'
+import { AccodianMenu, Board, Classify, SubFooter } from '@/components'
 
-const Popular = ({ docs }: DocsPropsType) => {
+const Popular = ({ docs }: DocsPropsType, { children }: PropsWithChildren) => {
 	const seoConfig: NextSeoProps = {
 		title: `부마위키 - 인기문서`,
 		description: `부마위키 문서 중 인기있는 문서를 담은 페이지입니다.`,
@@ -26,18 +26,17 @@ const Popular = ({ docs }: DocsPropsType) => {
 	return (
 		<>
 			<NextSeo {...seoConfig} />
-			<C.Header />
 			<S.PopularWrap>
-				<C.Board>
+				<Board>
 					<S.PopularTitleWrap>
 						<S.PopularTitleText>부마위키:인기문서</S.PopularTitleText>
 					</S.PopularTitleWrap>
 					<S.PopularClassify>
-						<C.Classify>인기문서</C.Classify>
+						<Classify>인기문서</Classify>
 					</S.PopularClassify>
 					<S.PopularLine />
 					<S.PopularListWrap>
-						<C.AccodianMenu name={`인기 문서`}>
+						<AccodianMenu name={`인기 문서`}>
 							<S.PopularList>
 								{docs.map((popular: Docs, index) => (
 									<S.PopularListItem key={popular.id}>
@@ -47,20 +46,18 @@ const Popular = ({ docs }: DocsPropsType) => {
 									</S.PopularListItem>
 								))}
 							</S.PopularList>
-						</C.AccodianMenu>
+						</AccodianMenu>
 					</S.PopularListWrap>
-					<C.SubFooter />
-				</C.Board>
-				<C.ScrollBtn />
-				<C.Aside />
+					<SubFooter />
+				</Board>
+				{children}
 			</S.PopularWrap>
-			<C.Footer />
 		</>
 	)
 }
 
 export async function getStaticProps() {
-	const popular = await docs.getBaseDocs('find/popular')
+	const popular = await getApi.getBaseDocs('find/popular')
 
 	return {
 		props: {

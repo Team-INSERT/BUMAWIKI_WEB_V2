@@ -1,14 +1,13 @@
-import * as C from '@/components'
 import * as docs from '@/api/getDocs'
 import * as S from '../../layout/frame/style'
 
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import Docs from '@/types/docs.type'
-import { Helmet } from 'react-helmet'
 import DocsPropsType from '@/types/static/docs.props.type'
 import { NextSeo, NextSeoProps } from 'next-seo'
+import { AccodianMenu, Board, Classify, SubFooter } from '@/components'
 
-const Frame = ({ docs }: DocsPropsType) => {
+const Frame = ({ docs }: DocsPropsType, { children }: PropsWithChildren) => {
 	const seoConfig: NextSeoProps = {
 		title: `부마위키 - 틀`,
 		description: `부마위키의 모든 틀을 담은 페이지입니다.`,
@@ -27,18 +26,17 @@ const Frame = ({ docs }: DocsPropsType) => {
 	return (
 		<>
 			<NextSeo {...seoConfig} />
-			<C.Header />
 			<S.FrameWrap>
-				<C.Board>
+				<Board>
 					<S.FrameTitleWrap>
 						<S.FrameTitleText>부마위키:틀</S.FrameTitleText>
 					</S.FrameTitleWrap>
 					<S.FrameClassify>
-						<C.Classify>틀</C.Classify>
+						<Classify>틀</Classify>
 					</S.FrameClassify>
 					<S.FrameLine />
 					<S.FrameListWrap>
-						<C.AccodianMenu name={`틀`}>
+						<AccodianMenu name={`틀`}>
 							<S.FrameList>
 								{docs.map((frame: Docs) => (
 									<S.FrameListItem key={frame.id}>
@@ -46,14 +44,12 @@ const Frame = ({ docs }: DocsPropsType) => {
 									</S.FrameListItem>
 								))}
 							</S.FrameList>
-						</C.AccodianMenu>
+						</AccodianMenu>
 					</S.FrameListWrap>
-					<C.SubFooter />
-				</C.Board>
-				<C.ScrollBtn />
-				<C.Aside />
+					<SubFooter />
+				</Board>
+				{children}
 			</S.FrameWrap>
-			<C.Footer />
 		</>
 	)
 }

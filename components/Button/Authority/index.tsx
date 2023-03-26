@@ -18,9 +18,7 @@ const Authority = ({ email }: AuthorityProps) => {
 	})
 
 	const onClickAuthorityUser = (authority: string) => {
-		if (window.confirm(`유저 권한을 ${authority}(으)로 변경하시겠습니까?`)) {
-			mutate({ email, authority })
-		}
+		if (window.confirm(`유저 권한을 ${authority}(으)로 변경하시겠습니까?`)) return mutate({ email, authority })
 	}
 
 	return (

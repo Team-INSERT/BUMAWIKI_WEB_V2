@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import styled from 'styled-components'
 
@@ -79,13 +80,6 @@ export const AsidePageButton = styled.div`
 		height: 10px;
 	}
 
-	span {
-		margin: 0 2px 0 2px;
-		&::selection {
-			background-color: transparent;
-		}
-	}
-
 	&:first-child {
 		margin-left: 0;
 	}
@@ -93,3 +87,12 @@ export const AsidePageButton = styled.div`
 		margin-right: 0;
 	}
 `
+
+export const AsidePageText = styled.span`
+	margin: 0 2px 0 2px;
+	&::selection {
+		background-color: transparent;
+	}
+`
+
+export const AsideImage = styled(Image)``

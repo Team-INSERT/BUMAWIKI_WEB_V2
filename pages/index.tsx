@@ -1,28 +1,18 @@
 import * as S from '../layout/index.style'
-import * as C from '@/components'
 
 import React from 'react'
-import { Helmet } from 'react-helmet'
-import { useRouter } from 'next/router'
+import { AccodianMenu, Aside, Board, Classify, ScrollBtn, SubFooter } from '@/components'
 
 const Home = () => {
 	return (
 		<>
-			<Helmet>
-				<meta property="og:title" content={`부마위키 - 홈`} />
-				<meta property="og:image" content="images/meta-img.png" />
-				<meta property="og:description" content={`여러분이 가꾸어 나가는 역사의 고서`} />
-				<link href="images/icon.ico" rel="shortcut icon" type="image/x-icon" />
-				<title>부마위키 - 홈</title>
-			</Helmet>
-			<C.Header />
 			<S.HomeWrap>
-				<C.Board>
+				<Board>
 					<S.HomeTitleWrap>
 						<S.HomeTitleText>부마위키:대문</S.HomeTitleText>
 					</S.HomeTitleWrap>
 					<S.HomeClassify>
-						<C.Classify>부마위키</C.Classify>
+						<Classify>부마위키</Classify>
 					</S.HomeClassify>
 					<S.HomeLine />
 					<S.HomeDescriptionWrap>
@@ -165,7 +155,7 @@ const Home = () => {
 						</S.TableWrap>
 					</S.TitleBoxWrap>
 					<S.SummaryWrap>
-						<C.AccodianMenu name={'개요'}>
+						<AccodianMenu name={'개요'}>
 							<S.SummaryContent>
 								<span>
 									환영합니다! 창의와 성실로 꿈을 펼치는 부산소프트웨어마이스터고등학교입니다.
@@ -195,10 +185,10 @@ const Home = () => {
 									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
 									allowFullScreen></S.SummaryVideo>
 							</S.SummaryVideoWrap>
-						</C.AccodianMenu>
+						</AccodianMenu>
 					</S.SummaryWrap>
 					<S.DepartmentWrap>
-						<C.AccodianMenu name={'학과'}>
+						<AccodianMenu name={'학과'}>
 							<S.DepartmentContent>
 								1학년때에는 공통이며, 2학년 때 소프트웨어개발과 32명, 임베디드소프트웨어과 32명으로 나뉘게 된다.
 							</S.DepartmentContent>
@@ -212,10 +202,10 @@ const Home = () => {
 								전자기기 및 산업용 기기의 HW와 SW에 대한 이해를 바탕으로 제조업 하드웨어를 제어하는 펌웨어 개발, 시험, 유지 보수를
 								<br /> 능동적으로 수행할 수 있는 시스템 SW엔지니어 및 응용 SW엔지니어를 양성한다.
 							</S.DepartmentContent>
-						</C.AccodianMenu>
+						</AccodianMenu>
 					</S.DepartmentWrap>
 					<S.SongWrap>
-						<C.AccodianMenu name={'교가'}>
+						<AccodianMenu name={'교가'}>
 							<S.SongContent>
 								옛 가야 푸른 정기 서려도는 낙동강 구비
 								<br />
@@ -229,10 +219,10 @@ const Home = () => {
 								<br />
 								영원토록 길이 빛날 부산소프트웨어마이스터고
 							</S.SongContent>
-						</C.AccodianMenu>
+						</AccodianMenu>
 					</S.SongWrap>
 					<S.HistoryWrap>
-						<C.AccodianMenu name={'학교 연혁'}>
+						<AccodianMenu name={'학교 연혁'}>
 							<S.HistoryContent>
 								<S.TitleBoxWrap>
 									<S.TableHistoryWrap>
@@ -357,10 +347,10 @@ const Home = () => {
 									</S.TableWrap>
 								</S.TitleBoxWrap>
 							</S.HistoryContent>
-						</C.AccodianMenu>
+						</AccodianMenu>
 					</S.HistoryWrap>
 					<S.BusWrap>
-						<C.AccodianMenu name={'운행 버스'}>
+						<AccodianMenu name={'운행 버스'}>
 							<S.BusContent>
 								세 노선 다 배차간격이 길어 이용하기 어려운 편이다. 심지어 김해 4번과 강서2번, 강서15-1번은 일 8회만 운행한다.
 								<br />
@@ -394,14 +384,13 @@ const Home = () => {
 									</S.TableWrap>
 								</S.TitleBoxWrap>
 							</S.BusDescription>
-						</C.AccodianMenu>
+						</AccodianMenu>
 					</S.BusWrap>
-					<C.SubFooter />
-				</C.Board>
-				<C.ScrollBtn />
-				<C.Aside />
+					<SubFooter />
+				</Board>
+				<ScrollBtn />
+				<Aside />
 			</S.HomeWrap>
-			<C.Footer />
 		</>
 	)
 }

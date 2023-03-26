@@ -1,10 +1,12 @@
-import ContibuteDocsType from './contributeDocs.type'
+import ContributeDocsType from './contributeDocs.type'
 
 interface UserType {
 	id: number
 	nickName: string
 	authority: string
-	contributeDocs: ContibuteDocsType[]
+	email: string
+	isLogin: boolean
+	contributeDocs: ContributeDocsType[]
 }
 
 export default UserType

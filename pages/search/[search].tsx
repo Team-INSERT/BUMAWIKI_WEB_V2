@@ -1,13 +1,13 @@
-import * as C from '@/components'
 import * as api from '@/api/getDocs'
-import * as FC from '@/utils'
+import * as util from '@/utils'
 import * as S from '../../layout/search/style'
 
-import React, { useEffect, useLayoutEffect } from 'react'
+import React, { PropsWithChildren, useEffect, useLayoutEffect } from 'react'
 import Docs from '@/types/docs.type'
 import { useRouter } from 'next/router'
 import { GetStaticProps } from 'next'
 import { NextSeo, NextSeoProps } from 'next-seo'
+import { Board, Classify, SubFooter } from '@/components'
 
 interface SingleDocsPropsType {
 	results: Docs[]
@@ -15,7 +15,7 @@ interface SingleDocsPropsType {
 	searchValue: string
 }
 
-const Search = ({ results, redirect, searchValue }: SingleDocsPropsType) => {
+const Search = ({ results, redirect, searchValue }: SingleDocsPropsType, { children }: PropsWithChildren) => {
 	const router = useRouter()
 
 	const seoConfig: NextSeoProps = {
@@ -40,14 +40,13 @@ const Search = ({ results, redirect, searchValue }: SingleDocsPropsType) => {
 	return (
 		<>
 			<NextSeo {...seoConfig} />
-			<C.Header />
 			<S.SearchWrap>
-				<C.Board>
+				<Board>
 					<S.SearchTitleWrap>
 						<span>&quot;{searchValue}&quot; 검색결과</span>
 					</S.SearchTitleWrap>
 					<S.Classify>
-						<C.Classify>검색</C.Classify>
+						<Classify>검색</Classify>
 					</S.Classify>
 					<S.SearchLine />
 					<S.SearchResult>
@@ -60,7 +59,7 @@ const Search = ({ results, redirect, searchValue }: SingleDocsPropsType) => {
 												{result.title}&nbsp;
 												{result.docsType === 'FRAME' ? null : (
 													<span>
-														({FC.typeEditor(result.docsType)},{result.enroll})
+														({util.typeEditor(result.docsType)},{result.enroll})
 													</span>
 												)}
 											</S.SearchLink>
@@ -72,12 +71,10 @@ const Search = ({ results, redirect, searchValue }: SingleDocsPropsType) => {
 							)}
 						</S.SearchList>
 					</S.SearchResult>
-					<C.SubFooter />
-				</C.Board>
-				<C.ScrollBtn />
-				<C.Aside />
+					<SubFooter />
+				</Board>
+				{children}
 			</S.SearchWrap>
-			<C.Footer />
 		</>
 	)
 }

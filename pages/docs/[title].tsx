@@ -1,5 +1,4 @@
-import * as C from '@/components'
-import * as FC from '@/utils'
+import * as util from '@/utils'
 import * as S from '../../layout/docs/style'
 import * as api from '@/api/getDocs'
 
@@ -8,6 +7,8 @@ import Docs from '@/types/docs.type'
 import { decodeContents } from '@/utils/document/requestContents'
 import { GetStaticProps } from 'next'
 import { NextSeo, NextSeoProps } from 'next-seo'
+import docsInitState from '@/state/docsInitState'
+import { AccodianMenu, Aside, Board, Classify, DetailBtn, ScrollBtn, SubFooter } from '@/components'
 
 interface SingleDocsPropsType {
 	docs: Docs
@@ -15,11 +16,11 @@ interface SingleDocsPropsType {
 
 const Doc = ({ docs }: SingleDocsPropsType) => {
 	const seoConfig: NextSeoProps = {
-		title: `부마위키 - ${docs?.title} (${FC.typeEditor(docs?.docsType)})`,
+		title: `부마위키 - ${docs?.title} (${util.typeEditor(docs?.docsType)})`,
 		description: `${docs?.contents.slice(0, 16)}...`,
 		openGraph: {
 			type: 'website',
-			title: `부마위키 - ${docs?.title} (${FC.typeEditor(docs?.docsType)})`,
+			title: `부마위키 - ${docs?.title} (${util.typeEditor(docs?.docsType)})`,
 			description: `${docs?.contents.slice(0, 16)}...`,
 			images: [
 				{
@@ -32,36 +33,34 @@ const Doc = ({ docs }: SingleDocsPropsType) => {
 	return (
 		<>
 			<NextSeo {...seoConfig} />
-			<C.Header />
 			<S.DocsWrap>
-				<C.Board>
+				<Board>
 					<S.DocsTitleWrap>
 						<S.DocsTitleText>{docs?.title.replace(/&\$\^%/gi, '"')}</S.DocsTitleText>
 						<S.DocsMenu>
-							<C.DetailBtn docsId={docs?.id || -1} />
+							<DetailBtn docsId={docs?.id || -1} />
 						</S.DocsMenu>
 					</S.DocsTitleWrap>
 					<S.Classify>
-						<C.Classify>{FC.typeEditor(docs?.docsType as string)}</C.Classify>
+						<Classify>{util.typeEditor(docs?.docsType as string)}</Classify>
 					</S.Classify>
 					<S.DocsLine />
 					<S.DocsContentsWrap>
 						<S.DocsContentsLoadWrap>
-							<S.LastUpdateDate>마지막 수정 : {FC.dateParser(docs !== undefined ? docs.lastModifiedAt : '')}</S.LastUpdateDate>
-							<C.AccodianMenu name="내용">
+							<S.LastUpdateDate>마지막 수정 : {util.dateParser(docs !== undefined ? docs.lastModifiedAt : '')}</S.LastUpdateDate>
+							<AccodianMenu name="내용">
 								<S.DocsContents
 									dangerouslySetInnerHTML={{
-										__html: FC.documentation(decodeContents(docs?.contents || '')),
+										__html: util.documentation(decodeContents(docs?.contents || '')),
 									}}></S.DocsContents>
-							</C.AccodianMenu>
+							</AccodianMenu>
 						</S.DocsContentsLoadWrap>
 					</S.DocsContentsWrap>
-					<C.SubFooter />
-				</C.Board>
-				<C.ScrollBtn />
-				<C.Aside />
+					<SubFooter />
+				</Board>
+				<ScrollBtn />
+				<Aside />
 			</S.DocsWrap>
-			<C.Footer />
 		</>
 	)
 }
@@ -73,41 +72,36 @@ export const getStaticPaths = async () => {
 	}
 }
 
+const getApiDocs = async (docsName: string) => {
+	try {
+		return await api.getDocs(docsName)
+	} catch (err) {
+		return false
+	}
+}
+
 export const getStaticProps: GetStaticProps = async (context) => {
 	const { params } = context
 
-	const res = await api.getDocs(params?.title as string)
-	const { contents } = res
+	const res = await getApiDocs(params?.title as string)
 
-	try {
-		if (res.contents.indexOf('include(') !== -1) {
-			const includeTag = res.contents.substring(res.contents.indexOf('include('), res.contents.indexOf(');') + 2)
-			const frames = res.contents.substring(res.contents.indexOf('include('), res.contents.indexOf(');')).replace('include(', '').split(', ')
-
-			let frameValue = ''
-
-			for (const frame of frames) {
-				const result = await FC.includeFrame(frame)
-				frameValue += `${result}\n`
-			}
-
-			return {
-				props: {
-					docs: {
-						...res,
-						contents: contents.replace(includeTag, frameValue),
-						title: params?.title,
-					},
-				},
-			}
-		}
-	} catch (err) {
-		console.log(err)
+	if (!res)
 		return {
 			props: {
-				docs: res,
+				docs: docsInitState,
 			},
 		}
+
+	const { contents } = res
+
+	if (res.contents.indexOf('include(') !== -1) {
+		const includeTag = contents.substring(contents.indexOf('include('), contents.indexOf(');') + 2)
+		const frames: string[] = contents.substring(contents.indexOf('include('), contents.indexOf(');')).replace('include(', '').split(', ')
+
+		let result = ''
+
+		for (const frame of frames) result += `${await util.includeFrame(frame)}\n`
+		res.contents = contents.replace(includeTag, result)
 	}
 
 	return {

@@ -8,11 +8,11 @@ const Footer = () => {
 	return (
 		<S.FooterWrap>
 			<S.FooterLogoWrap>
-				<S.FooterLink href={'https://github.com/Original-Gimchi'} target={'_blank'} rel="noreferrer">
+				<S.FooterLink href="https://github.com/Original-Gimchi" target="_blank" rel="noreferrer">
 					<S.FooterLogo src={github} alt="" />
 				</S.FooterLink>
 				<S.FooterLine />
-				<S.FooterLink href={'https://www.instagram.com/#'} target={'_blank'} rel="noreferrer">
+				<S.FooterLink href="https://www.instagram.com/#" target="_blank" rel="noreferrer">
 					<S.FooterLogo src={instagram} alt="" />
 				</S.FooterLink>
 			</S.FooterLogoWrap>

@@ -1,11 +1,11 @@
-import * as C from '@/components'
-import * as FC from '@/utils'
+import * as util from '@/utils'
 import * as S from '../../layout/update/style'
 import * as getApi from '@/api/getDocs'
 import * as editApi from '@/api/editDocs'
 
+import Check from 'assets/check.svg'
 import userState from '@/context/userState'
-import React, { Suspense } from 'react'
+import React, { PropsWithChildren, Suspense } from 'react'
 import { useRecoilValue } from 'recoil'
 import { MutationFunction, useMutation, useQuery } from 'react-query'
 import UpdateDocsType from '@/types/update.type.'
@@ -16,14 +16,16 @@ import Docs from '@/types/docs.type'
 import { GetStaticProps } from 'next'
 import { Storage } from '@/lib/storage/storage'
 import { NextSeo, NextSeoProps } from 'next-seo'
-import NotFound from '../404'
+import { Board, SubFooter } from '@/components'
+import Image from 'next/image'
+import theme from '@/styles/theme'
 
 interface SinglDocsPropsType {
 	defaultDocs: Docs
 	title: string
 }
 
-const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
+const Update = ({ defaultDocs, title }: SinglDocsPropsType, { children }: PropsWithChildren) => {
 	const router = useRouter()
 	const user = useRecoilValue(userState)
 	const textareaRef = React.useRef<HTMLTextAreaElement>(null)
@@ -100,9 +102,8 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 	return (
 		<>
 			<NextSeo {...seoConfig} />
-			<C.Header />
 			<S.DocsWrap>
-				<C.Board>
+				<Board>
 					<S.DocsTitleWrap>
 						<S.DocsTitleText>문서 편집 : {docs.title}</S.DocsTitleText>
 					</S.DocsTitleWrap>
@@ -126,25 +127,20 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 						<S.DocsNeedFileText>문서에 필요한 사진태그 개수 : {docs.files.length}개</S.DocsNeedFileText>
 						<S.AutoCompleteToggleWrap onClick={onClickAutoComplete}>
 							<S.AutoCompleteToggleText>자동완성</S.AutoCompleteToggleText>
-							<S.AutoCompleteToggleButton color={isOnAutoComplete ? '#274168' : 'white'}>
-								<svg width="11" height="8" viewBox="0 0 11 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<path
-										d="M4.36016 5.38789L9.26016 0.48789C9.44349 0.304557 9.67682 0.212891 9.96016 0.212891C10.2435 0.212891 10.4768 0.304557 10.6602 0.48789C10.8435 0.671224 10.9352 0.904557 10.9352 1.18789C10.9352 1.47122 10.8435 1.70456 10.6602 1.88789L5.06016 7.48789C4.86016 7.68789 4.62682 7.78789 4.36016 7.78789C4.09349 7.78789 3.86016 7.68789 3.66016 7.48789L1.06016 4.88789C0.876823 4.70456 0.785156 4.47122 0.785156 4.18789C0.785156 3.90456 0.876823 3.67122 1.06016 3.48789C1.24349 3.30456 1.47682 3.21289 1.76016 3.21289C2.04349 3.21289 2.27682 3.30456 2.46016 3.48789L4.36016 5.38789Z"
-										fill="white"
-									/>
-								</svg>
+							<S.AutoCompleteToggleButton color={isOnAutoComplete ? theme.primary : theme.white}>
+								<Image src={Check} alt="" />
 							</S.AutoCompleteToggleButton>
 						</S.AutoCompleteToggleWrap>
 						<S.UpdateTextarea
 							ref={textareaRef}
-							onKeyDown={(e) => FC.onKeyDownUseTab(e)}
-							onChange={(e) => setDocs(isOnAutoComplete ? { ...docs, contents: FC.autoClosingTag(e) } : { ...docs, contents: e.target.value })}
+							onKeyDown={(e) => util.onKeyDownUseTab(e)}
+							onChange={(e) => setDocs(isOnAutoComplete ? { ...docs, contents: util.autoClosingTag(e) } : { ...docs, contents: e.target.value })}
 							value={decodeContents(docs.contents || '')}
 						/>
 						<S.UpdatePreviewText>미리보기</S.UpdatePreviewText>
 						<S.UpdatePreview
 							dangerouslySetInnerHTML={{
-								__html: FC.documentation(docs.contents),
+								__html: util.documentation(docs.contents),
 							}}
 						/>
 						<S.UpdateSubmit>
@@ -152,12 +148,10 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 							<S.UpdateButton onClick={onClickUpdateDocs}>문서 업데이트</S.UpdateButton>
 						</S.UpdateSubmit>
 					</S.DocsContentsWrap>
-					<C.SubFooter />
-				</C.Board>
-				<C.ScrollBtn />
-				<C.Aside />
+					<SubFooter />
+				</Board>
+				{children}
 			</S.DocsWrap>
-			<C.Footer />
 		</>
 	)
 }
@@ -173,7 +167,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
 	const { params } = context
 
 	const res = await getApi.getDocs(params?.title as string)
-	const { contents } = res
 
 	return {
 		props: {
@@ -184,3 +177,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 }
 
 export default Update
+
+// revalidate :
+// https://github.com/bssm-portfolio/app/blob/develop/pages/api/revalidate-portfolio.ts
+// https://github.com/bssm-portfolio/app/blob/develop/components/portfolio/edit/index.tsx#L78
