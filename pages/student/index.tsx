@@ -6,9 +6,9 @@ import React, { PropsWithChildren } from 'react'
 import Docs from '@/types/docs.type'
 import DocsPropsType from '@/types/static/docs.props.type'
 import { NextSeo, NextSeoProps } from 'next-seo'
-import { AccodianMenu, Board, Classify, SubFooter } from '@/components'
+import { AccodianMenu, Aside, Board, Classify, ScrollBtn, SubFooter } from '@/components'
 
-const Student = ({ docs, years }: DocsPropsType, { children }: PropsWithChildren) => {
+const Student = ({ docs, years }: DocsPropsType) => {
 	const seoConfig: NextSeoProps = {
 		title: `부마위키 - 학생`,
 		description: `교내의 모든 학생을 담은 페이지입니다.`,
@@ -53,7 +53,8 @@ const Student = ({ docs, years }: DocsPropsType, { children }: PropsWithChildren
 					</S.StudentListWrap>
 					<SubFooter />
 				</Board>
-				{children}
+				<ScrollBtn />
+				<Aside />
 			</S.StudentWrap>
 		</>
 	)

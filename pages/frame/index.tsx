@@ -5,9 +5,9 @@ import React, { PropsWithChildren } from 'react'
 import Docs from '@/types/docs.type'
 import DocsPropsType from '@/types/static/docs.props.type'
 import { NextSeo, NextSeoProps } from 'next-seo'
-import { AccodianMenu, Board, Classify, SubFooter } from '@/components'
+import { AccodianMenu, Aside, Board, Classify, ScrollBtn, SubFooter } from '@/components'
 
-const Frame = ({ docs }: DocsPropsType, { children }: PropsWithChildren) => {
+const Frame = ({ docs }: DocsPropsType) => {
 	const seoConfig: NextSeoProps = {
 		title: `부마위키 - 틀`,
 		description: `부마위키의 모든 틀을 담은 페이지입니다.`,
@@ -48,7 +48,8 @@ const Frame = ({ docs }: DocsPropsType, { children }: PropsWithChildren) => {
 					</S.FrameListWrap>
 					<SubFooter />
 				</Board>
-				{children}
+				<ScrollBtn />
+				<Aside />
 			</S.FrameWrap>
 		</>
 	)

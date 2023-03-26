@@ -7,7 +7,7 @@ import Docs from '@/types/docs.type'
 import { useRouter } from 'next/router'
 import { GetStaticProps } from 'next'
 import { NextSeo, NextSeoProps } from 'next-seo'
-import { Board, Classify, SubFooter } from '@/components'
+import { Aside, Board, Classify, ScrollBtn, SubFooter } from '@/components'
 
 interface SingleDocsPropsType {
 	results: Docs[]
@@ -15,7 +15,7 @@ interface SingleDocsPropsType {
 	searchValue: string
 }
 
-const Search = ({ results, redirect, searchValue }: SingleDocsPropsType, { children }: PropsWithChildren) => {
+const Search = ({ results, redirect, searchValue }: SingleDocsPropsType) => {
 	const router = useRouter()
 
 	const seoConfig: NextSeoProps = {
@@ -73,7 +73,8 @@ const Search = ({ results, redirect, searchValue }: SingleDocsPropsType, { child
 					</S.SearchResult>
 					<SubFooter />
 				</Board>
-				{children}
+				<ScrollBtn />
+				<Aside />
 			</S.SearchWrap>
 		</>
 	)

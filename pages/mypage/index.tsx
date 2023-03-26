@@ -9,9 +9,9 @@ import { useRecoilValue, useSetRecoilState } from 'recoil'
 import Contributors from '@/types/contributors.type'
 import { Storage } from '@/lib/storage/storage'
 import { NextSeo, NextSeoProps } from 'next-seo'
-import { AccodianMenu, Board, Classify } from '@/components'
+import { AccodianMenu, Aside, Board, Classify, ScrollBtn } from '@/components'
 
-const MyPage = ({ children }: PropsWithChildren) => {
+const MyPage = () => {
 	const user = useRecoilValue(userState)
 	const setUser = useSetRecoilState(userState)
 
@@ -91,7 +91,8 @@ const MyPage = ({ children }: PropsWithChildren) => {
 						)}
 					</S.MyPageInfoWrap>
 				</Board>
-				{children}
+				<ScrollBtn />
+				<Aside />
 			</S.MyPageWrap>
 		</>
 	)

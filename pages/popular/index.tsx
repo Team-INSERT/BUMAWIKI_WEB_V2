@@ -1,13 +1,13 @@
 import * as getApi from '@/api/getDocs'
 import * as S from '../../layout/popular/style'
 
-import React, { PropsWithChildren } from 'react'
+import React from 'react'
 import Docs from '@/types/docs.type'
 import DocsPropsType from '@/types/static/docs.props.type'
 import { NextSeo, NextSeoProps } from 'next-seo'
-import { AccodianMenu, Board, Classify, SubFooter } from '@/components'
+import { AccodianMenu, Aside, Board, Classify, ScrollBtn, SubFooter } from '@/components'
 
-const Popular = ({ docs }: DocsPropsType, { children }: PropsWithChildren) => {
+const Popular = ({ docs }: DocsPropsType) => {
 	const seoConfig: NextSeoProps = {
 		title: `부마위키 - 인기문서`,
 		description: `부마위키 문서 중 인기있는 문서를 담은 페이지입니다.`,
@@ -50,7 +50,8 @@ const Popular = ({ docs }: DocsPropsType, { children }: PropsWithChildren) => {
 					</S.PopularListWrap>
 					<SubFooter />
 				</Board>
-				{children}
+				<ScrollBtn />
+				<Aside />
 			</S.PopularWrap>
 		</>
 	)
