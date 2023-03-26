@@ -42,10 +42,7 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 	})
 
 	const onClickChangeDocsName = async () => {
-		if (!docsName.length) {
-			alert('내용이 없습니다.')
-			return
-		}
+		if (!docsName.length) return alert('내용이 없습니다.')
 		updateDocsTitleMutation.mutate({ title: router.pathname as string, docsName })
 	}
 
