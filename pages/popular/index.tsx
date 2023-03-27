@@ -62,7 +62,7 @@ export async function getStaticProps() {
 
 	return {
 		props: {
-			docs: popular,
+			docs: popular.slice(0, 30),
 		},
 	}
 }

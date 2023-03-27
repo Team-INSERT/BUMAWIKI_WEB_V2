@@ -1,4 +1,4 @@
-import { getAccessToken, getUser } from '@/api/user'
+import { getAccessToken } from '@/api/user'
 import axios from 'axios'
 import { Storage } from '../storage/storage'
 
@@ -9,21 +9,16 @@ const bumawikiAxios = axios.create({
 
 bumawikiAxios.interceptors.request.use(
 	async (config) => {
-		let isError = false
-
-		try {
-			await getUser()
-		} catch (err) {
-			isError = true
-		}
-
-		if ((!!config.headers['Authorization'] && Storage.getItem('refresh_token')) || isError) {
-			await getAccessToken()
+		if (config.headers['Authorization'] === null && Storage.getItem('refresh_token')) {
+			try {
+				await getAccessToken()
+			} catch (err) {
+				Storage.delItem('access_token')
+			}
 			const res = await getAccessToken()
 			Storage.setItem('access_token', res.accessToken)
 			config.headers['Authorization'] = res.accessToken
 		}
-
 		return config
 	},
 	(error) => {
