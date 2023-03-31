@@ -3,7 +3,6 @@ const autoClosingTag = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 
 	if (e.target.value[e.target.selectionStart - 1] === '>') {
 		let text = e.target.value.slice(0, e.target.selectionStart)
-
 		const tag = text.substring(text.lastIndexOf('<') + 1, text.length)
 		const isWrongTag = text.substring(text.lastIndexOf('<'), text.length)
 
