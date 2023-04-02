@@ -187,7 +187,9 @@ const Create = () => {
 						<S.CreateTableTRTextContent>
 							<S.CreateTableTRTitle>문서 내용</S.CreateTableTRTitle>
 							<S.CreateTableTRTextarea
-								onKeyDown={(e) => util.onKeyDownUseTab(e)}
+								onKeyDown={(e) => {
+									util.onKeyDownUseTab(e)
+								}}
 								onChange={(e) => setDocs({ ...docs, contents: util.autoClosingTag(e) })}
 								value={docs.contents}
 							/>
