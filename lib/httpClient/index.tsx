@@ -1,6 +1,6 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
+import { requestInterceptors, responseInterceptors } from '@/lib/interceptor'
 import { Storage } from '@/lib/storage'
-import { requestInterceptors, responseInterceptors } from '../interceptor'
 
 export interface HttpClientConfig {
 	baseURL?: string
@@ -54,24 +54,6 @@ export class HttpClient {
 		})
 	}
 
-	self(requestConfig?: AxiosRequestConfig) {
-		return this.api.get('/self', {
-			...HttpClient.clientConfig,
-			...requestConfig,
-		})
-	}
-
-	token(requestConfig?: AxiosRequestConfig) {
-		return this.api.post(
-			'/token',
-			{},
-			{
-				...HttpClient.clientConfig,
-				...requestConfig,
-			}
-		)
-	}
-
 	private setting() {
 		HttpClient.setCommonInterceptors(this.api)
 	}
@@ -95,11 +77,25 @@ export class HttpClient {
 }
 
 const axiosConfig: HttpClientConfig = {
-	baseURL: config.baseURL,
+	baseURL: 'http://bumawiki.kro.kr/',
 	timeout: 10000,
 }
 
+// eslint-disable-next-line
 export default {
-	oauth: new HttpClient('/api/oauth', axiosConfig),
-	member: new HttpClient('/api/member', axiosConfig),
+	static: new HttpClient('/api/docs', axiosConfig),
+	docs: new HttpClient('/api/docs/find/title', axiosConfig),
+	refreshToken: new HttpClient('/api/auth/refresh/access', axiosConfig),
+	myuser: new HttpClient('/api/user', axiosConfig),
+	user: new HttpClient('/api/user/id', axiosConfig),
+	oauth: new HttpClient('/api/auth/oauth/bsm', axiosConfig),
+	logout: new HttpClient('/api/auth/bsm/logout', axiosConfig),
+	create: new HttpClient('/api/docs/create', axiosConfig),
+	update: new HttpClient('/api/docs/update', axiosConfig),
+	version: new HttpClient('/api/docs/find/:title/version', axiosConfig),
+	lastModified: new HttpClient('/api/docs/find/modified', axiosConfig),
+	search: new HttpClient('/api/docs/find/all/title', axiosConfig),
+	updateTitle: new HttpClient('/api/docs/update/title', axiosConfig),
+	delete: new HttpClient('/api/docs/delete/:id', axiosConfig),
+	authority: new HttpClient('/api/set/authority', axiosConfig),
 }
