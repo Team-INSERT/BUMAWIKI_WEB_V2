@@ -109,7 +109,8 @@ export const SubHeaderSectionWrap = styled.div<{ margin?: string }>`
 	align-items: center;
 
 	@media (max-width: 500px) {
-		margin-left: 4vw;
+		margin-left: 1.4vw;
+		font-size: 8px;
 	}
 `
 
@@ -140,6 +141,10 @@ export const HeaderSearchWrap = styled.div`
 export const HeaderSearchForm = styled.form`
 	display: flex;
 	justify-content: center;
+
+	@media (max-width: 500px) {
+		display: none;
+	}
 `
 
 export const HeaderSearchInput = styled.input`

@@ -10,7 +10,7 @@ import { headerInitState, subheaderInitState } from '@/state/headerInitState'
 const Header = () => {
 	const [search, setSearch] = React.useState('')
 	const [isHover, setIsHover] = React.useState(false)
-	const { user: userInfo, isLogined, logout } = useUser()
+	const { isLogined } = useUser()
 	const router = useRouter()
 
 	const navigateSearchResult = () => {

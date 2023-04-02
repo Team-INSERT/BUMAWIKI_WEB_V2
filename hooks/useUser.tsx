@@ -20,14 +20,7 @@ const useUser = (options?: UseUserOptions) => {
 		data: userInfo,
 		remove,
 		isLoading,
-	} = useQuery<UserType>(
-		'getUser',
-		async () => {
-			api.getAccessToken()
-			return api.getUser()
-		},
-		{ enabled: !!Storage.getItem('access_token') }
-	)
+	} = useQuery<UserType>('getUser', async () => api.getUser(), { enabled: !!Storage.getItem('access_token') })
 
 	const logout = () => {
 		api.onLogoutUser()

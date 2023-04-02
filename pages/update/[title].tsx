@@ -19,6 +19,7 @@ import { NextSeo, NextSeoProps } from 'next-seo'
 import { Aside, Board, ScrollBtn, SubFooter } from '@/components'
 import Image from 'next/image'
 import theme from '@/styles/theme'
+import DragDrop, { IFileTypes } from '@/components/DragDrop'
 
 interface SinglDocsPropsType {
 	defaultDocs: Docs
@@ -30,24 +31,26 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 	const user = useRecoilValue(userState)
 	const textareaRef = React.useRef<HTMLTextAreaElement>(null)
 
+	const [parentFiles, setParentFiles] = React.useState<IFileTypes[]>([])
 	const [docs, setDocs] = React.useState<UpdateDocsType>({
 		title: defaultDocs?.title,
 		contents: decodeContents(defaultDocs?.contents || ''),
 		files: [],
 	})
-	const [fileInput, setFileInput] = React.useState([''])
 	const [isOnAutoComplete, setIsOnAutoComplete] = React.useState(JSON.parse(Storage.getItem('autoComplete') || 'true'))
+
+	const setFiles = (file: any) => {
+		setParentFiles(file)
+	}
 
 	const { mutate } = useMutation(editApi.updateDocs as MutationFunction, {
 		onSuccess: () => {
 			alert('문서가 편집되었습니다!')
 			router.push(`/docs/${title}`)
-			console.log('asdnaslkdn')
 		},
 		onError: (err) => {
 			if (err instanceof AxiosError) {
 				const { status, message, error } = err?.response?.data
-				console.log(status, message, err)
 				if (status === 403) {
 					if (message === 'Cannot Change Your Docs') return alert('자기 자신의 문서는 편집할 수 없습니다.')
 					if (error === 'Forbidden') return alert('읽기전용 사용자는 문서를 편집할 수 없습니다.')
@@ -72,7 +75,7 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 			}),
 			{ contentType: 'application/json' }
 		)
-		docs.files.forEach((file) => data.append('files', file, file.name))
+		parentFiles.forEach((file) => data.append('files', file.object, file.object.name))
 
 		mutate({ data, title })
 	}
@@ -109,22 +112,8 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 					</S.DocsTitleWrap>
 					<S.DocsExampleImage src="/images/references.png" alt="문서작성법" />
 					<S.DocsLine />
+					<DragDrop getFiles={setFiles} />
 					<S.DocsContentsWrap>
-						{fileInput.map((index) => (
-							<input
-								key={index}
-								type="file"
-								accept="image/*"
-								onChange={(e) => {
-									if (e.target.files) setDocs({ ...docs, files: [...docs.files, e.target.files[0]] })
-								}}
-							/>
-						))}
-						<S.FileAddWrap onClick={() => setFileInput([...fileInput, ''])}>
-							<S.FileAddButton>+</S.FileAddButton>
-							<S.FileAddText>사진 더 선택하기</S.FileAddText>
-						</S.FileAddWrap>
-						<S.DocsNeedFileText>문서에 필요한 사진태그 개수 : {docs.files.length}개</S.DocsNeedFileText>
 						<S.AutoCompleteToggleWrap onClick={onClickAutoComplete}>
 							<S.AutoCompleteToggleText>자동완성</S.AutoCompleteToggleText>
 							<S.AutoCompleteToggleButton color={isOnAutoComplete ? theme.primary : theme.white}>

@@ -102,13 +102,13 @@ export const CreateTableTRColorInput = styled.input`
 `
 
 export const FrameInputBox = styled.div`
-	display:flex;
+	display: flex;
 `
 
 export const FrameText = styled.div`
-	font-size:15px;
-	font-weight:700;
-	padding:2px;
+	font-size: 15px;
+	font-weight: 700;
+	padding: 2px;
 `
 
 export const FrameInputDiv = styled.div`
@@ -122,10 +122,10 @@ export const FrameInputDiv = styled.div`
 `
 
 export const FrameInput = styled.input`
-	width:80px;
-	margin-left:10px;
-	margin-top:0px;
-	height:20px;
+	width: 80px;
+	margin-left: 10px;
+	margin-top: 0px;
+	height: 20px;
 `
 
 export const CreateFrameButton = styled.button`
@@ -198,6 +198,20 @@ export const CreateTableTRInputContents = styled.input`
 	}
 `
 
+export const CreateTableRadioBox = styled.div`
+	@media (max-width: 500px) {
+		display: none;
+	}
+`
+
+export const CreateTableSelectBox = styled.select`
+	@media (min-width: 500px) {
+		display: none;
+	}
+`
+
+export const CreateTableSelectOption = styled.option``
+
 export const CreateTableRadio = styled.input`
 	margin-left: 6px;
 	margin-right: 30px;
@@ -233,7 +247,7 @@ export const CreateTableTRExample = styled.div`
 `
 
 export const CreateTableTRFile = styled.div`
-	height: 100px;
+	height: fit-content;
 	display: flex;
 	width: 100%;
 	align-items: center;

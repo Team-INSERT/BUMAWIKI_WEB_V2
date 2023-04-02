@@ -14,18 +14,24 @@ import { NextSeo, NextSeoProps } from 'next-seo'
 import useUser from '@/hooks/useUser'
 import { Aside, Board, ScrollBtn, SubFooter } from '@/components'
 import createFormInitState from '@/state/createFormInitState'
+import DragDrop, { IFileTypes } from '@/components/DragDrop'
 
 const Create = () => {
 	const router = useRouter()
 	const { query } = router
 	const years = util.getAllYear()
 
+	const [parentFiles, setParentFiles] = React.useState<IFileTypes[]>([])
 	const [size, setSize] = React.useState<Frame>(sizeInitState)
 	const [docs, setDocs] = React.useState<CreateDocsType>({
 		title: (query.name as string) || '',
 		...createInitState,
 	})
 	const { user: userInfo, isLogined } = useUser()
+
+	const setFiles = (file: any) => {
+		setParentFiles(file)
+	}
 
 	const { mutate } = useMutation(api.createDocs, {
 		onSuccess: (data) => {
@@ -66,7 +72,7 @@ const Create = () => {
 		setDocs({ ...docs, contents: frame })
 	}
 
-	const changeDocsType = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const changeDocsType = (e: React.ChangeEvent<HTMLInputElement | HTMLOptionElement>) => {
 		const type = e.target.id
 		if (type === 'FRAME') return setDocs({ ...docs, docsType: type, title: `틀:${docs.title}` })
 		return setDocs({ ...docs, docsType: type, title: docs.title.replace('틀:', ''), contents: '' })
@@ -108,11 +114,18 @@ const Create = () => {
 									</div>
 								)}
 								{createFormInitState.map((info, index) => (
-									<div key={index}>
+									<S.CreateTableRadioBox key={index}>
 										<label htmlFor={info.id}>{info.title}</label>
 										<S.CreateTableRadio type="radio" onChange={(e) => changeDocsType(e)} id={info.id} name="radio" />
-									</div>
+									</S.CreateTableRadioBox>
 								))}
+								<S.CreateTableSelectBox>
+									{createFormInitState.map((info, index) => (
+										<S.CreateTableSelectOption key={index} onChange={(e) => changeDocsType(e as React.ChangeEvent<HTMLOptionElement>)} id={info.id}>
+											{info.title}
+										</S.CreateTableSelectOption>
+									))}
+								</S.CreateTableSelectBox>
 							</S.CreateTableTRContents>
 						</S.CreateTableTR>
 						<S.CreateTableTR>
@@ -143,18 +156,7 @@ const Create = () => {
 						</S.CreateTableTRExample>
 						<S.CreateTableTRFile>
 							<S.CreateTableTRTitle>이미지</S.CreateTableTRTitle>
-							<S.FileInputWrap>
-								{[1, 2, 3].map((key) => (
-									<input
-										key={key}
-										type="file"
-										accept="image/*"
-										onChange={(e) => {
-											if (e.target.files) setDocs({ ...docs, files: [...docs.files, e.target.files[0]] })
-										}}
-									/>
-								))}
-							</S.FileInputWrap>
+							<DragDrop getFiles={setFiles} />
 						</S.CreateTableTRFile>
 						{docs.docsType === 'FRAME' && (
 							<S.CreateTableTRFrame>
