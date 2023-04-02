@@ -1,5 +1,5 @@
 import * as util from '@/utils'
-import * as S from '../../../../layout/version/detail/style'
+import * as S from '@/layout/version/detail/style'
 import * as getApi from '@/api/getDocs'
 
 import React from 'react'
