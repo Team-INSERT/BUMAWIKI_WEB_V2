@@ -1,10 +1,11 @@
 import * as S from './style'
-import * as api from '@/api/editDocs'
 
 import React from 'react'
 import { MutationFunction, useMutation, useQueryClient } from 'react-query'
 import { useRouter } from 'next/router'
 import useUser from '@/hooks/useUser'
+import httpClient from '@/lib/httpClient'
+import { Storage } from '@/lib/storage'
 
 interface DetailBtnProps {
 	docsId: number
@@ -17,13 +18,29 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 	const queryClient = useQueryClient()
 	const { user: userInfo, isLogined } = useUser()
 
-	const updateDocsTitleMutation = useMutation(api.updateDocsTitle, {
-		onSuccess: (res) => {
-			alert('문서 이름이 변경되었습니다!')
-			queryClient.invalidateQueries('lastModifiedDocs')
-			router.push(`/docs/${res.data.title}`)
+	const updateDocsTitleConfig = {
+		headers: {
+			Authorization: Storage.getItem('access_token'),
 		},
-	})
+	}
+
+	const updateDocsTitleMutation = useMutation(
+		() =>
+			httpClient.updateTitle.putByTitle(
+				router.pathname,
+				{
+					title: docsName,
+				},
+				updateDocsTitleConfig
+			),
+		{
+			onSuccess: (res) => {
+				alert('문서 이름이 변경되었습니다!')
+				queryClient.invalidateQueries('lastModifiedDocs')
+				router.push(`/docs/${res.data.title}`)
+			},
+		}
+	)
 
 	const onClickNavigatePage = (type: string) => {
 		if (type === 'VERSION') router.push(`/version/${query.title}`)
@@ -31,7 +48,7 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 		else router.push(`/update/${query.title}`)
 	}
 
-	const deleteDocsTitleMutation = useMutation(api.deleteDocs as MutationFunction, {
+	const deleteDocsTitleMutation = useMutation(() => httpClient.delete.deleteById(docsId), {
 		onSuccess: () => {
 			alert('문서가 삭제되었습니다!')
 			router.push('/')
@@ -40,12 +57,12 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 
 	const onClickChangeDocsName = async () => {
 		if (!docsName.length) return alert('내용이 없습니다.')
-		updateDocsTitleMutation.mutate({ title: router.pathname as string, docsName })
+		updateDocsTitleMutation.mutate()
 	}
 
 	const onClickDeleteDocs = async () => {
 		const result = window.confirm('정말 삭제하시겠습니까?')
-		if (result) deleteDocsTitleMutation.mutate(docsId)
+		if (result) deleteDocsTitleMutation.mutate()
 	}
 
 	return (
