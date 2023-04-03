@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { requestInterceptors, responseInterceptors } from '@/lib/interceptor'
 import { Storage } from '@/lib/storage'
 
@@ -33,6 +33,13 @@ export class HttpClient {
 		})
 	}
 
+	getInQuery(param: string, data: string | number, requestConfig?: AxiosRequestConfig) {
+		return this.api.get(`?${param}=${data}`, {
+			...HttpClient.clientConfig,
+			...requestConfig,
+		})
+	}
+
 	post(data: unknown, requestConfig?: AxiosRequestConfig) {
 		return this.api.post('', data, {
 			...HttpClient.clientConfig,
@@ -47,8 +54,22 @@ export class HttpClient {
 		})
 	}
 
+	putByTitle(title: string, data: unknown, requestConfig?: AxiosRequestConfig) {
+		return this.api.put(`/${title}`, data, {
+			...HttpClient.clientConfig,
+			...requestConfig,
+		})
+	}
+
 	delete(requestConfig?: AxiosRequestConfig) {
 		return this.api.delete('', {
+			...HttpClient.clientConfig,
+			...requestConfig,
+		})
+	}
+
+	deleteById(id: number, requestConfig?: AxiosRequestConfig) {
+		return this.api.delete(`/${id}`, {
 			...HttpClient.clientConfig,
 			...requestConfig,
 		})
@@ -83,19 +104,19 @@ const axiosConfig: HttpClientConfig = {
 
 // eslint-disable-next-line
 export default {
-	static: new HttpClient('/api/docs', axiosConfig),
-	docs: new HttpClient('/api/docs/find/title', axiosConfig),
-	refreshToken: new HttpClient('/api/auth/refresh/access', axiosConfig),
-	myuser: new HttpClient('/api/user', axiosConfig),
-	user: new HttpClient('/api/user/id', axiosConfig),
-	oauth: new HttpClient('/api/auth/oauth/bsm', axiosConfig),
-	logout: new HttpClient('/api/auth/bsm/logout', axiosConfig),
-	create: new HttpClient('/api/docs/create', axiosConfig),
-	update: new HttpClient('/api/docs/update', axiosConfig),
-	version: new HttpClient('/api/docs/find/:title/version', axiosConfig),
-	lastModified: new HttpClient('/api/docs/find/modified', axiosConfig),
-	search: new HttpClient('/api/docs/find/all/title', axiosConfig),
-	updateTitle: new HttpClient('/api/docs/update/title', axiosConfig),
-	delete: new HttpClient('/api/docs/delete/:id', axiosConfig),
-	authority: new HttpClient('/api/set/authority', axiosConfig),
+	static: new HttpClient('api/docs', axiosConfig),
+	docs: new HttpClient('api/docs/find/title', axiosConfig),
+	refreshToken: new HttpClient('api/auth/refresh/access', axiosConfig),
+	myuser: new HttpClient('api/user', axiosConfig),
+	user: new HttpClient('api/user/id', axiosConfig),
+	oauth: new HttpClient('api/auth/oauth/bsm', axiosConfig),
+	logout: new HttpClient('api/auth/bsm/logout', axiosConfig),
+	create: new HttpClient('api/docs/create', axiosConfig),
+	update: new HttpClient('api/docs/update', axiosConfig),
+	version: new HttpClient('api/docs/find/:title/version', axiosConfig),
+	lastModified: new HttpClient('api/docs/find/modified', axiosConfig),
+	search: new HttpClient('api/docs/find/all/title', axiosConfig),
+	updateTitle: new HttpClient('api/docs/update/title', axiosConfig),
+	delete: new HttpClient('api/docs/delete/:id', axiosConfig),
+	authority: new HttpClient('api/set/authority', axiosConfig),
 }
