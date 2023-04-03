@@ -2,11 +2,12 @@ import * as api from '@/api/user'
 
 import React from 'react'
 import userState, { initUserState } from '@/context/userState'
-import { Storage } from '@/lib/storage/storage'
+import { Storage } from '@/lib/storage/'
 import UserType from '@/types/user.type'
 import { useRouter } from 'next/router'
 import { useQuery } from 'react-query'
 import { useRecoilState } from 'recoil'
+import httpClient from '@/lib/httpClient'
 
 interface UseUserOptions {
 	authorizedPage?: boolean
@@ -20,10 +21,14 @@ const useUser = (options?: UseUserOptions) => {
 		data: userInfo,
 		remove,
 		isLoading,
-	} = useQuery<UserType>('getUser', async () => api.getUser(), { enabled: !!Storage.getItem('access_token') })
+	} = useQuery<UserType>('getUser', async () => (await httpClient.myuser.get()).data, { enabled: !!Storage.getItem('access_token') })
 
 	const logout = () => {
-		api.onLogoutUser()
+		httpClient.logout.delete({
+			headers: {
+				refresh_token: Storage.getItem('refresh_token'),
+			},
+		})
 		setUser(initUserState)
 		remove()
 	}
