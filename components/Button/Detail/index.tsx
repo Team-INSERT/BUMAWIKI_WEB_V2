@@ -24,23 +24,23 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 		},
 	}
 
-	const updateDocsTitleMutation = useMutation(
-		() =>
-			httpClient.updateTitle.putByTitle(
-				router.pathname,
-				{
-					title: docsName,
-				},
-				updateDocsTitleConfig
-			),
-		{
-			onSuccess: (res) => {
-				alert('문서 이름이 변경되었습니다!')
-				queryClient.invalidateQueries('lastModifiedDocs')
-				router.push(`/docs/${res.data.title}`)
+	const onUpdateDocsTitle = async () => {
+		return httpClient.updateTitle.putByTitle(
+			router.pathname,
+			{
+				title: docsName,
 			},
-		}
-	)
+			updateDocsTitleConfig
+		)
+	}
+
+	const updateDocsTitleMutation = useMutation(onUpdateDocsTitle, {
+		onSuccess: (res) => {
+			alert('문서 이름이 변경되었습니다!')
+			queryClient.invalidateQueries('lastModifiedDocs')
+			router.push(`/docs/${res.data.title}`)
+		},
+	})
 
 	const onClickNavigatePage = (type: string) => {
 		if (type === 'VERSION') router.push(`/version/${query.title}`)
