@@ -1,9 +1,10 @@
 import * as S from './style'
 
 import React from 'react'
-import { MutationFunction, useMutation, useQueryClient } from 'react-query'
+import userState from '@/context/userState'
+import { useMutation, useQueryClient } from 'react-query'
+import { useRecoilValue } from 'recoil'
 import { useRouter } from 'next/router'
-import useUser from '@/hooks/useUser'
 import httpClient from '@/lib/httpClient'
 import { Storage } from '@/lib/storage'
 
@@ -13,28 +14,33 @@ interface DetailBtnProps {
 
 const DetailBtn = ({ docsId }: DetailBtnProps) => {
 	const router = useRouter()
-	const { query } = router
+	const user = useRecoilValue(userState)
 	const [docsName, setDocsName] = React.useState('')
+	const [docsType, setDocsType] = React.useState('')
 	const queryClient = useQueryClient()
-	const { user: userInfo, isLogined } = useUser()
 
-	const updateDocsTitleConfig = {
-		headers: {
-			Authorization: Storage.getItem('access_token'),
+	const updateDocsTitleMutation = useMutation(() => httpClient.updateTitle.putByTitle(router.pathname, docsName), {
+		onSuccess: (res) => {
+			alert('문서 이름이 변경되었습니다!')
+			queryClient.invalidateQueries('lastModifiedDocs')
+			router.push(`/docs/${res.data.title}`)
 		},
+	})
+
+	const onUpdateType = async () => {
+		return (
+			await httpClient.updateType.put(
+				{ id: docsId, docsType },
+				{
+					headers: {
+						Authorization: Storage.getItem('access_token'),
+					},
+				}
+			)
+		).data
 	}
 
-	const onUpdateDocsTitle = async () => {
-		return httpClient.updateTitle.putByTitle(
-			router.pathname,
-			{
-				title: docsName,
-			},
-			updateDocsTitleConfig
-		)
-	}
-
-	const updateDocsTitleMutation = useMutation(onUpdateDocsTitle, {
+	const updateDocsTypeMutation = useMutation(onUpdateType, {
 		onSuccess: (res) => {
 			alert('문서 이름이 변경되었습니다!')
 			queryClient.invalidateQueries('lastModifiedDocs')
@@ -43,32 +49,55 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 	})
 
 	const onClickNavigatePage = (type: string) => {
-		if (type === 'VERSION') router.push(`/version/${query.title}`)
-		else if (type === 'UPDATE' && !isLogined) alert('로그인 후 편집하실 수 있습니다!')
-		else router.push(`/update/${query.title}`)
+		if (type === 'VERSION') return router.push(`/version/${router.pathname}`)
+		if (type === 'UPDATE' && !user.id) return alert('로그인 후 편집하실 수 있습니다!')
+		console.log(router)
+		router.push(`/update/${router.query.title}`)
 	}
 
-	const deleteDocsTitleMutation = useMutation(() => httpClient.delete.deleteById(docsId), {
-		onSuccess: () => {
-			alert('문서가 삭제되었습니다!')
-			router.push('/')
-		},
-	})
+	const deleteDocsTitleMutation = useMutation(
+		() =>
+			httpClient.deleteDocs.deleteById(docsId, {
+				headers: {
+					Authorization: Storage.getItem('access_token'),
+				},
+			}),
+		{
+			onSuccess: () => {
+				alert('문서가 삭제되었습니다!')
+				router.push('/')
+			},
+		}
+	)
 
 	const onClickChangeDocsName = async () => {
-		if (!docsName.length) return alert('내용이 없습니다.')
+		if (!docsName.length) {
+			alert('내용이 없습니다.')
+			return
+		}
 		updateDocsTitleMutation.mutate()
 	}
 
-	const onClickDeleteDocs = async () => {
-		const result = window.confirm('정말 삭제하시겠습니까?')
-		if (result) deleteDocsTitleMutation.mutate()
+	const onClickChangeDocsType = async () => {
+		if (!docsType.length) {
+			alert('내용이 없습니다.')
+			return
+		}
+		updateDocsTypeMutation.mutate()
 	}
+
+	const onClickDeleteDocs = () => window.confirm('정말 삭제하시겠습니까?') && deleteDocsTitleMutation.mutate()
 
 	return (
 		<S.DetailButtonWrap>
-			{userInfo.authority === 'ADMIN' && (
+			{user.authority === 'ADMIN' ? (
 				<>
+					<S.DetailInput value={docsType} onChange={(e) => setDocsType(e.target.value)} />
+					<S.DetailWrap onClick={onClickChangeDocsType}>
+						<S.DetailButton>
+							<S.DetailText>타입변경</S.DetailText>
+						</S.DetailButton>
+					</S.DetailWrap>
 					<S.DetailWrap onClick={onClickDeleteDocs}>
 						<S.DetailButton>
 							<S.DetailText>삭제</S.DetailText>
@@ -81,6 +110,8 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 						</S.DetailButton>
 					</S.DetailWrap>
 				</>
+			) : (
+				''
 			)}
 			<S.DetailLinkWrap onClick={() => onClickNavigatePage('UPDATE')}>
 				<S.DetailButton>
