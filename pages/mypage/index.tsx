@@ -7,15 +7,24 @@ import React from 'react'
 import { useMutation } from 'react-query'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import Contributors from '@/types/contributors.type'
-import { Storage } from '@/lib/storage/storage'
+import { Storage } from '@/lib/storage/'
 import { NextSeo, NextSeoProps } from 'next-seo'
 import { AccodianMenu, Aside, Board, Classify, ScrollBtn } from '@/components'
+import httpClient from '@/lib/httpClient'
 
 const MyPage = () => {
 	const user = useRecoilValue(userState)
 	const setUser = useSetRecoilState(userState)
 
-	const { mutate } = useMutation(api.onLogoutUser, {
+	const onLogout = async () => {
+		await httpClient.logout.delete({
+			headers: {
+				refresh_token: Storage.getItem('refresh_token'),
+			},
+		})
+	}
+
+	const { mutate } = useMutation(onLogout, {
 		onSuccess: () => {
 			Storage.delItem('access_token')
 			Storage.delItem('refresh_token')

@@ -14,12 +14,14 @@ import { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import Docs from '@/types/docs.type'
 import { GetStaticProps } from 'next'
-import { Storage } from '@/lib/storage/storage'
+import { Storage } from '@/lib/storage/'
 import { NextSeo, NextSeoProps } from 'next-seo'
 import { Aside, Board, ScrollBtn, SubFooter } from '@/components'
 import Image from 'next/image'
 import theme from '@/styles/theme'
 import DragDrop, { IFileTypes } from '@/components/DragDrop'
+import httpClient from '@/lib/httpClient'
+import FileListArray from '@/types/filelistArray.type'
 
 interface SinglDocsPropsType {
 	defaultDocs: Docs
@@ -39,11 +41,11 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 	})
 	const [isOnAutoComplete, setIsOnAutoComplete] = React.useState(JSON.parse(Storage.getItem('autoComplete') || 'true'))
 
-	const setFiles = (file: any) => {
+	const setFiles = (file: FileListArray[]) => {
 		setParentFiles(file)
 	}
 
-	const { mutate } = useMutation(editApi.updateDocs as MutationFunction, {
+	const { mutate } = useMutation((data) => httpClient.update.putByTitle(docs.title, data), {
 		onSuccess: () => {
 			alert('문서가 편집되었습니다!')
 			router.push(`/docs/${title}`)
@@ -77,7 +79,7 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 		)
 		parentFiles.forEach((file) => data.append('files', file.object, file.object.name))
 
-		mutate({ data, title })
+		mutate(data)
 	}
 
 	const onClickUpdateDocs = async () => {
@@ -156,7 +158,9 @@ export const getStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
 	const { params } = context
 
-	const res = await getApi.getDocs(params?.title as string)
+	const res = await httpClient.docs.getById({
+		url: (params?.title as string) || '',
+	})
 
 	return {
 		props: {

@@ -1,4 +1,3 @@
-import * as api from '@/api/getDocs'
 import * as util from '@/utils'
 import * as S from '../../layout/search/style'
 
@@ -8,6 +7,7 @@ import { useRouter } from 'next/router'
 import { GetStaticProps } from 'next'
 import { NextSeo, NextSeoProps } from 'next-seo'
 import { Aside, Board, Classify, ScrollBtn, SubFooter } from '@/components'
+import httpClient from '@/lib/httpClient'
 
 interface SingleDocsPropsType {
 	results: Docs[]
@@ -33,8 +33,8 @@ const Search = ({ results, redirect, searchValue }: SingleDocsPropsType) => {
 		},
 	}
 
-	React.useLayoutEffect(() => {
-		if (redirect) router.push(`docs/${results[0].title}`)
+	React.useEffect(() => {
+		if (redirect) router.push(`/docs/${results[0].title}`)
 	}, [redirect, results, router])
 
 	return (
@@ -91,7 +91,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
 	const search = context?.params?.search
 	let redirect = false
 
-	const res = await api.getFindDocs(search as string)
+	const res = (
+		await httpClient.search.getById({
+			url: (search as string) || '',
+		})
+	).data
 	if (res.length === 1) redirect = true
 
 	return {

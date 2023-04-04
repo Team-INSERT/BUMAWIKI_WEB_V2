@@ -5,6 +5,7 @@ import React from 'react'
 import Docs from '@/types/docs.type'
 import { NextSeo, NextSeoProps } from 'next-seo'
 import { AccodianMenu, Aside, Board, Classify, ScrollBtn, SubFooter } from '@/components'
+import httpClient from '@/lib/httpClient'
 
 interface ClubDocsPropsType {
 	docs: {
@@ -72,8 +73,16 @@ const Club = ({ docs }: ClubDocsPropsType) => {
 }
 
 export async function getStaticProps() {
-	const major_club = await getApi.getBaseDocs('club')
-	const custom_club = await getApi.getBaseDocs('free_club')
+	const major_club = (
+		await httpClient.static.getById({
+			url: 'club',
+		})
+	).data
+	const custom_club = (
+		await httpClient.static.getById({
+			url: 'free_club',
+		})
+	).data
 
 	return {
 		props: {

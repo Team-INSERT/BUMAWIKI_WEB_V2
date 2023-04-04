@@ -6,6 +6,7 @@ import Docs from '@/types/docs.type'
 import DocsPropsType from '@/types/static/docs.props.type'
 import { NextSeo, NextSeoProps } from 'next-seo'
 import { AccodianMenu, Aside, Board, Classify, ScrollBtn, SubFooter } from '@/components'
+import httpClient from '@/lib/httpClient'
 
 const Frame = ({ docs }: DocsPropsType) => {
 	const seoConfig: NextSeoProps = {
@@ -56,7 +57,11 @@ const Frame = ({ docs }: DocsPropsType) => {
 }
 
 export async function getStaticProps() {
-	const frame = await docs.getBaseDocs('frame')
+	const frame = (
+		await httpClient.static.getById({
+			url: 'frame',
+		})
+	).data
 
 	return {
 		props: {

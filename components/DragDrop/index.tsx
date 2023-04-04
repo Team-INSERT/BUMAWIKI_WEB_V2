@@ -1,3 +1,4 @@
+import FileListArray from '@/types/filelistArray.type'
 import React from 'react'
 import * as S from './style'
 
@@ -6,7 +7,11 @@ export interface IFileTypes {
 	object: File
 }
 
-const DragDrop = ({ getFiles }: any) => {
+interface DragDropFunctionPropsType {
+	getFiles: (file: FileListArray[]) => void
+}
+
+const DragDrop = ({ getFiles }: DragDropFunctionPropsType) => {
 	const [isDragging, setIsDragging] = React.useState<boolean>(false)
 	const [files, setFiles] = React.useState<IFileTypes[]>([])
 
@@ -15,6 +20,8 @@ const DragDrop = ({ getFiles }: any) => {
 
 	React.useEffect(() => {
 		getFiles(files)
+
+		// eslint-disable-next-line
 	}, [files])
 
 	const handleFilterFile = React.useCallback((id: number): void => setFiles(files.filter((file: IFileTypes) => file.id !== id)), [files])

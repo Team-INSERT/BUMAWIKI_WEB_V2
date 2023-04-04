@@ -1,4 +1,3 @@
-import * as docs from '@/api/getDocs'
 import * as S from '../../layout/accident/style'
 import * as util from '@/utils'
 
@@ -7,6 +6,7 @@ import Docs from '@/types/docs.type'
 import DocsPropsType from '@/types/static/docs.props.type'
 import { NextSeo, NextSeoProps } from 'next-seo'
 import { AccodianMenu, Aside, Board, Classify, ScrollBtn, SubFooter } from '@/components'
+import httpClient from '@/lib/httpClient'
 
 const Accident = ({ docs, years }: DocsPropsType) => {
 	const seoConfig: NextSeoProps = {
@@ -60,12 +60,14 @@ const Accident = ({ docs, years }: DocsPropsType) => {
 }
 
 export async function getStaticProps() {
-	const accident = await docs.getBaseDocs('accident')
+	const accident = await httpClient.static.getById({
+		url: 'accident',
+	})
 	const years = util.getAllYear()
 
 	return {
 		props: {
-			docs: accident,
+			docs: accident.data,
 			years,
 		},
 	}

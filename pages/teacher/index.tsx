@@ -5,6 +5,7 @@ import React from 'react'
 import Docs from '@/types/docs.type'
 import { NextSeo, NextSeoProps } from 'next-seo'
 import { AccodianMenu, Aside, Board, Classify, ScrollBtn, SubFooter } from '@/components'
+import httpClient from '@/lib/httpClient'
 
 interface TeacherDocsPropsType {
 	docs: {
@@ -83,9 +84,21 @@ const Teacher = ({ docs }: TeacherDocsPropsType) => {
 }
 
 export async function getStaticProps() {
-	const common_teacher = await getApi.getBaseDocs('teacher')
-	const major_teacher = await getApi.getBaseDocs('major_teacher')
-	const mentor_teacher = await getApi.getBaseDocs('mentor_teacher')
+	const common_teacher = (
+		await httpClient.static.getById({
+			url: 'teacher',
+		})
+	).data
+	const major_teacher = (
+		await httpClient.static.getById({
+			url: 'major_student',
+		})
+	).data
+	const mentor_teacher = (
+		await httpClient.static.getById({
+			url: 'mentor_teacher',
+		})
+	).data
 
 	return {
 		props: {
