@@ -60,9 +60,7 @@ const Accident = ({ docs, years }: DocsPropsType) => {
 }
 
 export async function getStaticProps() {
-	const accident = await httpClient.static.getById({
-		url: 'accident',
-	})
+	const accident = await httpClient.static.getByTitle('accident')
 	const years = util.getAllYear()
 
 	return {
