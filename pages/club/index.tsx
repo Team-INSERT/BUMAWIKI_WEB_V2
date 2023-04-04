@@ -73,16 +73,8 @@ const Club = ({ docs }: ClubDocsPropsType) => {
 }
 
 export async function getStaticProps() {
-	const major_club = (
-		await httpClient.static.getById({
-			url: 'club',
-		})
-	).data
-	const custom_club = (
-		await httpClient.static.getById({
-			url: 'free_club',
-		})
-	).data
+	const major_club = (await httpClient.static.getByTitle('club')).data
+	const custom_club = (await httpClient.static.getByTitle('free_club')).data
 
 	return {
 		props: {
