@@ -33,6 +33,13 @@ export class HttpClient {
 		})
 	}
 
+	getByTitle(url: string, requestConfig?: AxiosRequestConfig) {
+		return this.api.get(`/${url}`, {
+			...HttpClient.clientConfig,
+			...requestConfig,
+		})
+	}
+
 	getInQuery(param: string, data: string | number, requestConfig?: AxiosRequestConfig) {
 		return this.api.get(`?${param}=${data}`, {
 			...HttpClient.clientConfig,
@@ -113,10 +120,11 @@ export default {
 	logout: new HttpClient('api/auth/bsm/logout', axiosConfig),
 	create: new HttpClient('api/docs/create', axiosConfig),
 	update: new HttpClient('api/docs/update', axiosConfig),
+	updateType: new HttpClient('api/docs/update/docsType', axiosConfig),
 	version: new HttpClient('api/docs/find/:title/version', axiosConfig),
 	lastModified: new HttpClient('api/docs/find/modified', axiosConfig),
 	search: new HttpClient('api/docs/find/all/title', axiosConfig),
 	updateTitle: new HttpClient('api/docs/update/title', axiosConfig),
-	delete: new HttpClient('api/docs/delete/:id', axiosConfig),
+	deleteDocs: new HttpClient('api/docs/delete/', axiosConfig),
 	authority: new HttpClient('api/set/authority', axiosConfig),
 }
