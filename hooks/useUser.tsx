@@ -1,5 +1,3 @@
-import * as api from '@/api/user'
-
 import React from 'react'
 import userState, { initUserState } from '@/context/userState'
 import { Storage } from '@/lib/storage/'
@@ -17,11 +15,17 @@ const useUser = (options?: UseUserOptions) => {
 	const [user, setUser] = useRecoilState(userState)
 	const router = useRouter()
 
-	const {
-		data: userInfo,
-		remove,
-		isLoading,
-	} = useQuery<UserType>('getUser', async () => (await httpClient.myuser.get()).data, { enabled: !!Storage.getItem('access_token') })
+	const getUser = async () => {
+		return (
+			await httpClient.myuser.get({
+				headers: {
+					Authorization: Storage.getItem('access_token'),
+				},
+			})
+		).data
+	}
+
+	const { data: userInfo, remove, isLoading } = useQuery<UserType>('getUser', getUser, { enabled: !!Storage.getItem('access_token') })
 
 	const logout = () => {
 		httpClient.logout.delete({
@@ -33,9 +37,7 @@ const useUser = (options?: UseUserOptions) => {
 		remove()
 	}
 
-	React.useEffect(() => {
-		if (userInfo) setUser(userInfo)
-	}, [router.query, setUser, userInfo])
+	React.useEffect(() => userInfo && setUser(userInfo), [router.query, setUser, userInfo])
 
 	React.useEffect(() => {
 		if (options?.authorizedPage && !isLoading && !userInfo) {
