@@ -4,7 +4,7 @@ import * as S from '../../layout/mypage/style'
 
 import userState, { initUserState } from '@/context/userState'
 import React from 'react'
-import { useMutation } from 'react-query'
+import { QueryClient, useMutation } from 'react-query'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import Contributors from '@/types/contributors.type'
 import { Storage } from '@/lib/storage/'
@@ -15,10 +15,11 @@ import httpClient from '@/lib/httpClient'
 const MyPage = () => {
 	const user = useRecoilValue(userState)
 	const setUser = useSetRecoilState(userState)
+	const queryClient = new QueryClient()
 
 	const onLogout = async () => {
 		await httpClient.logout.delete({
-			headers: {
+			data: {
 				refresh_token: Storage.getItem('refresh_token'),
 			},
 		})
@@ -26,6 +27,7 @@ const MyPage = () => {
 
 	const { mutate } = useMutation(onLogout, {
 		onSuccess: () => {
+			queryClient.invalidateQueries('getUser')
 			Storage.delItem('access_token')
 			Storage.delItem('refresh_token')
 			setUser(initUserState)
