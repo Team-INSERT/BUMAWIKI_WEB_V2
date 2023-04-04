@@ -1,13 +1,11 @@
 import * as util from '@/utils'
 import * as S from '../../layout/update/style'
-import * as getApi from '@/api/getDocs'
-import * as editApi from '@/api/editDocs'
 
 import Check from 'assets/check.svg'
 import userState from '@/context/userState'
 import React from 'react'
 import { useRecoilValue } from 'recoil'
-import { MutationFunction, useMutation } from 'react-query'
+import { useMutation } from 'react-query'
 import UpdateDocsType from '@/types/update.type.'
 import { decodeContents, encodeContents } from '@/utils/document/requestContents'
 import { AxiosError } from 'axios'
@@ -62,7 +60,7 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 	})
 
 	const onClickAutoComplete = () => {
-		localStorage.setItem('autoComplete', `${!isOnAutoComplete}`)
+		Storage.setItem('autoComplete', `${!isOnAutoComplete}`)
 		setIsOnAutoComplete(!isOnAutoComplete)
 		if (textareaRef.current) textareaRef.current.focus()
 	}
@@ -155,12 +153,18 @@ export const getStaticPaths = async () => {
 	}
 }
 
+const getApiDocs = async (docsName: string) => {
+	try {
+		return (await httpClient.docs.getByTitle(docsName)).data
+	} catch (err) {
+		return false
+	}
+}
+
 export const getStaticProps: GetStaticProps = async (context) => {
 	const { params } = context
 
-	const res = await httpClient.docs.getById({
-		url: (params?.title as string) || '',
-	})
+	const res = await getApiDocs(params?.title as string)
 
 	return {
 		props: {

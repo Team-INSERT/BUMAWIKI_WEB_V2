@@ -57,11 +57,7 @@ const Frame = ({ docs }: DocsPropsType) => {
 }
 
 export async function getStaticProps() {
-	const frame = (
-		await httpClient.static.getById({
-			url: 'frame',
-		})
-	).data
+	const frame = (await httpClient.static.getByTitle('frame')).data
 
 	return {
 		props: {

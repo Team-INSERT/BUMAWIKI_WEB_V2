@@ -73,11 +73,7 @@ export const getStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
 	const { params } = context
 
-	const res = (
-		await httpClient.version.getById({
-			url: params?.docs as string,
-		})
-	).data
+	const res = (await httpClient.version.getByTitle((params?.docs as string) || '')).data
 
 	return {
 		props: {

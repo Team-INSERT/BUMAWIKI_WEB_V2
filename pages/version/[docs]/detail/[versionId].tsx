@@ -83,11 +83,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 	const versionId = context?.params?.versionId
 	const docs = context?.params?.docs
 
-	const res = (
-		await httpClient.version.getById({
-			url: (docs as string) || '',
-		})
-	).data
+	const res = (await httpClient.version.getByTitle((docs as string) || '')).data
 	const versionDocsArray = res.versionDocsResponseDto.reverse()
 
 	return {

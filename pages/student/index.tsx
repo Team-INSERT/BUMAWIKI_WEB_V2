@@ -62,11 +62,7 @@ const Student = ({ docs, years }: DocsPropsType) => {
 }
 
 export async function getStaticProps() {
-	const student = (
-		await httpClient.static.getById({
-			url: 'student',
-		})
-	).data
+	const student = (await httpClient.static.getByTitle('student')).data
 	const years = util.getAllYear()
 
 	return {

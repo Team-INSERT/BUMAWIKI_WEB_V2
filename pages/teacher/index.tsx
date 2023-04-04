@@ -84,21 +84,9 @@ const Teacher = ({ docs }: TeacherDocsPropsType) => {
 }
 
 export async function getStaticProps() {
-	const common_teacher = (
-		await httpClient.static.getById({
-			url: 'teacher',
-		})
-	).data
-	const major_teacher = (
-		await httpClient.static.getById({
-			url: 'major_student',
-		})
-	).data
-	const mentor_teacher = (
-		await httpClient.static.getById({
-			url: 'mentor_teacher',
-		})
-	).data
+	const common_teacher = (await httpClient.static.getByTitle('teacher')).data
+	const major_teacher = (await httpClient.static.getByTitle('major_teacher')).data
+	const mentor_teacher = (await httpClient.static.getByTitle('mentor_teacher')).data
 
 	return {
 		props: {

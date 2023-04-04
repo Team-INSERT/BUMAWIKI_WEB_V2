@@ -75,11 +75,7 @@ export const getStaticPaths = async () => {
 
 const getApiDocs = async (docsName: string) => {
 	try {
-		return (
-			await httpClient.docs.getById({
-				url: docsName,
-			})
-		).data
+		return (await httpClient.docs.getByTitle(docsName)).data
 	} catch (err) {
 		return false
 	}
