@@ -91,11 +91,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 	const search = context?.params?.search
 	let redirect = false
 
-	const res = (
-		await httpClient.search.getById({
-			url: (search as string) || '',
-		})
-	).data
+	const res = (await httpClient.search.getByTitle(search as string)).data
 	if (res.length === 1) redirect = true
 
 	return {
