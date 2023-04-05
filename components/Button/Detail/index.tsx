@@ -55,20 +55,22 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 		router.push(`/update/${router.query.title}`)
 	}
 
-	const deleteDocsTitleMutation = useMutation(
-		() =>
-			httpClient.deleteDocs.deleteById(docsId, {
+	const onDeleteDocsTitle = async () => {
+		return (
+			await httpClient.deleteDocs.deleteById(docsId, {
 				headers: {
 					Authorization: Storage.getItem('access_token'),
 				},
-			}),
-		{
-			onSuccess: () => {
-				alert('문서가 삭제되었습니다!')
-				router.push('/')
-			},
-		}
-	)
+			})
+		).data
+	}
+
+	const deleteDocsTitleMutation = useMutation(onDeleteDocsTitle, {
+		onSuccess: () => {
+			alert('문서가 삭제되었습니다!')
+			router.push('/')
+		},
+	})
 
 	const onClickChangeDocsName = async () => {
 		if (!docsName.length) {
@@ -86,7 +88,9 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 		updateDocsTypeMutation.mutate()
 	}
 
-	const onClickDeleteDocs = () => window.confirm('정말 삭제하시겠습니까?') && deleteDocsTitleMutation.mutate()
+	const onClickDeleteDocs = () => {
+		if (window.confirm('정말 삭제하시겠습니까?')) deleteDocsTitleMutation.mutate()
+	}
 
 	return (
 		<S.DetailButtonWrap>
