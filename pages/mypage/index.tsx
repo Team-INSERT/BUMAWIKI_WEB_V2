@@ -11,10 +11,10 @@ import { Storage } from '@/lib/storage/'
 import { NextSeo, NextSeoProps } from 'next-seo'
 import { AccodianMenu, Aside, Board, Classify, ScrollBtn } from '@/components'
 import httpClient from '@/lib/httpClient'
+import useUser from '@/hooks/useUser'
 
 const MyPage = () => {
-	const user = useRecoilValue(userState)
-	const setUser = useSetRecoilState(userState)
+	const { user, isLogined, logout } = useUser()
 	const queryClient = new QueryClient()
 
 	const onLogout = async () => {
@@ -30,7 +30,7 @@ const MyPage = () => {
 			queryClient.invalidateQueries('getUser')
 			Storage.delItem('access_token')
 			Storage.delItem('refresh_token')
-			setUser(initUserState)
+			logout()
 		},
 	})
 

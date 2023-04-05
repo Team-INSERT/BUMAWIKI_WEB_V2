@@ -20,6 +20,7 @@ import theme from '@/styles/theme'
 import DragDrop, { IFileTypes } from '@/components/DragDrop'
 import httpClient from '@/lib/httpClient'
 import FileListArray from '@/types/filelistArray.type'
+import useUser from '@/hooks/useUser'
 
 interface SinglDocsPropsType {
 	defaultDocs: Docs
@@ -28,7 +29,7 @@ interface SinglDocsPropsType {
 
 const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 	const router = useRouter()
-	const user = useRecoilValue(userState)
+	const { user } = useUser()
 	const textareaRef = React.useRef<HTMLTextAreaElement>(null)
 
 	const [parentFiles, setParentFiles] = React.useState<IFileTypes[]>([])
