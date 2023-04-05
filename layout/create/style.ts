@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const CreateWrap = styled.div`
 	display: flex;
@@ -10,6 +10,73 @@ export const CreateTitleWrap = styled.div`
 	display: flex;
 	align-items: center;
 `
+
+//=======================================================
+
+export const CreateTB = styled.table`
+	width: 68vw;
+
+	@media (max-width: 500px) {
+		width: 90vw;
+	}
+	background-color:#ccc;
+`
+
+export const CreateTR = styled.tr`
+	height:40px;
+	background-color:white;
+`
+
+export const CreateTD = styled.td`
+	width: 100%;
+	height: 90%;
+	padding-left: 20px;
+	border: none;
+	font-family: 'Open Sans', sans-serif;
+	white-space: pre-wrap;
+	font-size: 14px;
+	overflow: scroll;
+
+	@media (max-width: 500px) {
+		font-size: 10px;
+	}
+	/* height: 100%; */
+`
+
+export const CreateTDTitle = styled.td`
+	width:8%;
+	background-color: #274168;
+	color: white;
+	text-align:center;
+	font-weight: 800;
+
+	@media (max-width: 500px) {
+		font-size: 12px;
+		width: 70px;
+	}
+`
+
+export const CreateTDDisplay = styled.td`
+	display:flex;
+`
+
+export const CreateTDDiv = styled.td`
+	width: 100%;
+	/* height: 90%; */
+	/* padding-left: 20px; */
+	border: none;
+	font-family: 'Open Sans', sans-serif;
+	white-space: pre-wrap;
+	font-size: 14px;
+	overflow: scroll;
+
+	@media (max-width: 500px) {
+		font-size: 10px;
+	}
+	height:400px;
+`
+
+//========================================================
 
 export const CreateTitleText = styled.span`
 	color: #274168;
@@ -48,9 +115,9 @@ export const CreateTableTRInput = styled.input`
 
 export const CreateTableTRTextarea = styled.textarea`
 	width: 100%;
-	height: 90%;
+	height: 400px;
 	outline: none;
-	padding-left: 20px;
+	/* padding-left: 20px; */
 	resize: none;
 	border: none;
 	font-family: 'Open Sans', sans-serif;
@@ -302,8 +369,7 @@ export const CreateSubmit = styled.div`
 export const CreateWarn = styled.span`
 	color: red;
 	font-weight: 800;
-	margin-top: 10px;
-	margin-right: auto;
+	margin: 10px auto 0 0;
 
 	@media (max-width: 500px) {
 		font-size: 8px;
@@ -324,3 +390,41 @@ export const CreateButton = styled.button`
 		width: 200px;
 	}
 `
+
+///
+
+// export const Test = styled.div`
+// 	display: flex;
+// 	justify-content: center;
+// 	align-items: center;
+// `
+
+/*
+<PatentTest isLogin="true" />
+*/
+
+// export const ParentTest = styled(Test)`
+// 	background-color: ${props => props.isLogin ? 'blue' : 'black'};
+// `
+
+// export const ParentTest1 = styled(Test)`
+// 	background-color: ${({ isLogin }) => isLogin ? 'blue' : 'black'};
+// `
+
+// interface ParentTest2Type {
+// 	isLogin: string
+// }
+
+// export const ParentTest2 = styled(Test) <{ isLogin: string }>`
+// 	${({ isLogin }) => isLogin && css`
+// 		background-color: blue;
+// 		display: flrx;
+// 		ava;dlbb
+// 		d
+// 		bda
+// 		bda
+// 		ba
+// 		bad
+// 	`}
+
+// `
