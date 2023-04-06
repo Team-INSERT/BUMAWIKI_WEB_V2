@@ -8,6 +8,7 @@ import { decodeContents } from '@/utils/document/requestContents'
 import { GetStaticProps } from 'next'
 import { NextSeo, NextSeoProps } from 'next-seo'
 import { AccodianMenu, Aside, Board, Classify, ScrollBtn, SubFooter } from '@/components'
+import httpClient from '@/lib/httpClient'
 
 interface VersionDetailPropsType {
 	title: string
@@ -82,7 +83,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 	const versionId = context?.params?.versionId
 	const docs = context?.params?.docs
 
-	const res = await getApi.getVersionDocs(docs as string)
+	const res = (await httpClient.version.getByTitle((docs as string) || '')).data
 	const versionDocsArray = res.versionDocsResponseDto.reverse()
 
 	return {

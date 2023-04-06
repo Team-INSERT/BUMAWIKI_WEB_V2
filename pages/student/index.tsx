@@ -7,6 +7,7 @@ import Docs from '@/types/docs.type'
 import DocsPropsType from '@/types/static/docs.props.type'
 import { NextSeo, NextSeoProps } from 'next-seo'
 import { AccodianMenu, Aside, Board, Classify, ScrollBtn, SubFooter } from '@/components'
+import httpClient from '@/lib/httpClient'
 
 const Student = ({ docs, years }: DocsPropsType) => {
 	const seoConfig: NextSeoProps = {
@@ -61,7 +62,7 @@ const Student = ({ docs, years }: DocsPropsType) => {
 }
 
 export async function getStaticProps() {
-	const student = await getApi.getBaseDocs('student')
+	const student = (await httpClient.static.getByTitle('student')).data
 	const years = util.getAllYear()
 
 	return {

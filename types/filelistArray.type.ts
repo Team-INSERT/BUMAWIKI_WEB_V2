@@ -1,5 +1,6 @@
-interface FileListArray extends File {
-	name: string
+interface FileListArray {
+	id: number
+	object: File
 }
 
 export default FileListArray

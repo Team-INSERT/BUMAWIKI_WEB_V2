@@ -9,6 +9,7 @@ import { GetStaticProps } from 'next'
 import { NextSeo, NextSeoProps } from 'next-seo'
 import docsInitState from '@/state/docsInitState'
 import { AccodianMenu, Aside, Board, Classify, DetailBtn, ScrollBtn, SubFooter } from '@/components'
+import httpClient from '@/lib/httpClient'
 
 interface SingleDocsPropsType {
 	docs: Docs
@@ -74,7 +75,7 @@ export const getStaticPaths = async () => {
 
 const getApiDocs = async (docsName: string) => {
 	try {
-		return await api.getDocs(docsName)
+		return (await httpClient.docs.getByTitle(docsName)).data
 	} catch (err) {
 		return false
 	}

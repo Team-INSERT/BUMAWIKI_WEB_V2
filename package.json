@@ -6,7 +6,8 @@
 		"dev": "next dev",
 		"build": "next build && next export",
 		"start": "next start",
-		"lint": "next lint"
+		"lint": "next lint",
+		"postbuild": "next-sitemap"
 	},
 	"dependencies": {
 		"@testing-library/jest-dom": "^5.16.5",
@@ -23,6 +24,7 @@
 		"moment": "^2.29.4",
 		"next": "13.2.3",
 		"next-seo": "^5.15.0",
+		"next-sitemap": "^4.0.6",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"react-helmet": "^6.1.0",
