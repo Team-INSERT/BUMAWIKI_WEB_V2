@@ -55,7 +55,7 @@ const Create = () => {
 		if (['?', '/', '"', '\\'].includes(docs.title)) return alert('문서명에는 물음표나 쌍따옴표, 슬래시나 역슬래시를 넣을 수 없습니다.')
 		if (!isLogined) return alert('로그인 후 이용 가능한 서비스입니다.')
 		if (!docs.enroll) return alert('연도를 선택해주세요!')
-		if (!docs.title.length) return alert('문서의 이름을 정해주세요!')
+		if (!docs.title) return alert('문서의 이름을 정해주세요!')
 		if (!docs.docsType) return alert('문서의 분류를 선택해주세요!')
 
 		const { title, enroll, contents, docsType } = docs
