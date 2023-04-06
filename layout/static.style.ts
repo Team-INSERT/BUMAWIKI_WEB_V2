@@ -1,18 +1,18 @@
 import Link from 'next/link'
 import styled from 'styled-components'
 
-export const StudentWrap = styled.div`
+export const StaticWrap = styled.div`
 	display: flex;
 `
 
-export const StudentTitleWrap = styled.div`
+export const StaticTitleWrap = styled.div`
 	width: 100%;
 	height: 80px;
 	display: flex;
 	align-items: center;
 `
 
-export const StudentTitleText = styled.span`
+export const StaticTitleText = styled.span`
 	color: #274168;
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 800;
@@ -20,14 +20,14 @@ export const StudentTitleText = styled.span`
 	margin-left: 30px;
 `
 
-export const StudentClassify = styled.div`
+export const StaticClassify = styled.div`
 	display: flex;
 	justify-content: center;
 	margin-top: 25px;
 	margin-bottom: 30px;
 `
 
-export const StudentLine = styled.div`
+export const StaticLine = styled.div`
 	width: 68vw;
 	height: 1.5px;
 	background-color: #ccc;
@@ -37,7 +37,7 @@ export const StudentLine = styled.div`
 	}
 `
 
-export const StudentListWrap = styled.div`
+export const StaticListWrap = styled.div`
 	width: 90%;
 	height: fit-content;
 	display: flex;
@@ -45,18 +45,18 @@ export const StudentListWrap = styled.div`
 	margin-top: 20px;
 `
 
-export const StudentList = styled.ul`
+export const StaticList = styled.ul`
 	margin: 30px 0 0 50px;
 	font-weight: 600;
 `
 
-export const StudentLink = styled(Link)`
+export const StaticLink = styled(Link)`
 	color: #0038ff;
 	text-decoration: none;
 	cursor: pointer;
 `
 
-export const StudentListItem = styled.li`
+export const StaticListItem = styled.li`
 	margin-bottom: 18px;
 	color: #0038ff;
 `

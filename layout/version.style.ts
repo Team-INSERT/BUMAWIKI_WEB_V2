@@ -1,10 +1,28 @@
+import Link from 'next/link'
 import styled from 'styled-components'
 
-export const DocsWrap = styled.div`
+export const VersionList = styled.li`
+	display: flex;
+	margin-bottom: 30px;
+
+	span {
+		display: block;
+		width: 300px;
+		font-weight: 600;
+	}
+`
+
+export const VersionLink = styled(Link)`
+	font-weight: 600;
+	text-decoration: none;
+	color: blue;
+`
+
+export const VersionWrap = styled.div`
 	display: flex;
 `
 
-export const DocsLine = styled.div`
+export const VersionLine = styled.div`
 	width: 68vw;
 	height: 1.5px;
 	background-color: #ccc;
@@ -13,14 +31,14 @@ export const DocsLine = styled.div`
 		width: 90vw;
 	}
 `
-export const DocsTitleWrap = styled.div`
+export const VersionTitleWrap = styled.div`
 	width: 100%;
 	height: 80px;
 	display: flex;
 	align-items: center;
 `
 
-export const DocsTitleText = styled.span`
+export const VersionTitleText = styled.span`
 	color: #274168;
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 800;
@@ -32,7 +50,7 @@ export const DocsTitleText = styled.span`
 	}
 `
 
-export const DocsMenu = styled.div`
+export const VersionMenu = styled.div`
 	margin-left: auto;
 	margin-right: 2vw;
 `
@@ -44,7 +62,7 @@ export const Classify = styled.div`
 	margin-bottom: 30px;
 `
 
-export const DocsContentsWrap = styled.div`
+export const VersionContentsWrap = styled.div`
 	width: 90%;
 	height: fit-content;
 	display: flex;
@@ -52,7 +70,7 @@ export const DocsContentsWrap = styled.div`
 	margin-top: 20px;
 `
 
-export const DocsContentsLoadWrap = styled.div`
+export const VersionContentsLoadWrap = styled.div`
 	display: flex;
 	flex-direction: column;
 `
@@ -63,7 +81,7 @@ export const LastUpdateDate = styled.span`
 	margin-left: auto;
 `
 
-export const DocsContents = styled.div`
+export const VersionContents = styled.div`
 	margin: 20px 0 20px 0;
 	white-space: pre-wrap;
 
