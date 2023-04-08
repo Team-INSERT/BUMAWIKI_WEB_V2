@@ -8,6 +8,7 @@ import { VersionDocs } from '@/types/version.type'
 import { GetStaticProps } from 'next'
 import { NextSeo, NextSeoProps } from 'next-seo'
 import { Aside, Board, ScrollBtn, SubFooter } from '@/components'
+import httpClient from '@/lib/httpClient'
 
 interface SingleDocsPropsType {
 	version: VersionDocs[]
@@ -72,7 +73,7 @@ export const getStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
 	const { params } = context
 
-	const res = await getApi.getVersionDocs(params?.docs as string)
+	const res = (await httpClient.version.getByTitle((params?.docs as string) || '')).data
 
 	return {
 		props: {

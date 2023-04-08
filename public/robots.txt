@@ -1,0 +1,10 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /exclude
+
+# Host
+Host: http://bumawiki.kro.kr
+
+# Sitemaps
+Sitemap: http://bumawiki.kro.kr/sitemap.xml

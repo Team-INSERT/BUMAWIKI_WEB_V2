@@ -6,6 +6,7 @@ import Docs from '@/types/docs.type'
 import DocsPropsType from '@/types/static/docs.props.type'
 import { NextSeo, NextSeoProps } from 'next-seo'
 import AccidentLayout from '@/layout/AccidentLayout'
+import httpClient from '@/lib/httpClient'
 
 const Accident = (props: DocsPropsType) => {
 	const seoConfig: NextSeoProps = {
@@ -31,12 +32,12 @@ const Accident = (props: DocsPropsType) => {
 }
 
 export async function getStaticProps() {
-	const accident = await docs.getBaseDocs('accident')
+	const accident = await httpClient.static.getByTitle('accident')
 	const years = util.getAllYear()
 
 	return {
 		props: {
-			docs: accident,
+			docs: accident.data,
 			years,
 		},
 	}

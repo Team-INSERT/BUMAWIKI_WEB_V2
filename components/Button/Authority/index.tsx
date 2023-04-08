@@ -3,6 +3,7 @@ import * as api from '@/api/user'
 
 import React from 'react'
 import { useMutation } from 'react-query'
+import httpClient from '@/lib/httpClient'
 
 interface AuthorityProps {
 	email: string
@@ -13,7 +14,7 @@ interface AuthorityApiProps extends AuthorityProps {
 }
 
 const Authority = ({ email }: AuthorityProps) => {
-	const { mutate } = useMutation(({ email, authority }: AuthorityApiProps) => api.updateUserAuthority(email, authority), {
+	const { mutate } = useMutation(({ email, authority }: AuthorityApiProps) => httpClient.authority.put({ email, authority }), {
 		onSuccess: () => alert('유저 권한이 변경되었습니다!'),
 	})
 

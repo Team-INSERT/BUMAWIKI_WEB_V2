@@ -1,12 +1,11 @@
-import * as api from '@/api/user'
-
 import React from 'react'
 import userState, { initUserState } from '@/context/userState'
-import { Storage } from '@/lib/storage/storage'
+import { Storage } from '@/lib/storage/'
 import UserType from '@/types/user.type'
 import { useRouter } from 'next/router'
 import { useQuery } from 'react-query'
 import { useRecoilState } from 'recoil'
+import httpClient from '@/lib/httpClient'
 
 interface UseUserOptions {
 	authorizedPage?: boolean
@@ -16,21 +15,29 @@ const useUser = (options?: UseUserOptions) => {
 	const [user, setUser] = useRecoilState(userState)
 	const router = useRouter()
 
-	const {
-		data: userInfo,
-		remove,
-		isLoading,
-	} = useQuery<UserType>('getUser', async () => api.getUser(), { enabled: !!Storage.getItem('access_token') })
+	const getUser = async () => {
+		return (
+			await httpClient.myuser.get({
+				headers: {
+					Authorization: Storage.getItem('access_token'),
+				},
+			})
+		).data
+	}
+
+	const { data: userInfo, remove, isLoading } = useQuery<UserType>('getUser', getUser, { enabled: !!Storage.getItem('access_token') })
 
 	const logout = () => {
-		api.onLogoutUser()
+		httpClient.logout.delete({
+			headers: {
+				refresh_token: Storage.getItem('refresh_token'),
+			},
+		})
 		setUser(initUserState)
 		remove()
 	}
 
-	React.useEffect(() => {
-		if (userInfo) setUser(userInfo)
-	}, [router.query, setUser, userInfo])
+	React.useEffect(() => userInfo && setUser(userInfo), [router.query, setUser, userInfo])
 
 	React.useEffect(() => {
 		if (options?.authorizedPage && !isLoading && !userInfo) {

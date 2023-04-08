@@ -10,13 +10,13 @@ export const HeaderContainer = styled.div`
 export const HeaderWrap = styled.div`
 	display: flex;
 	align-items: center;
-	width: 100vw;
+	width: 100.15vw;
 	height: 6.5vh;
 	background-color: #274168;
 `
 
 export const SubHeaderWrap = styled.div<{ isHover: boolean }>`
-	width: 100vw;
+	width: 100.15vw;
 	height: 22vh;
 	display: flex;
 	top: 6.5vh;

@@ -1,9 +1,8 @@
-import * as getApi from '@/api/getDocs'
-
 import React from 'react'
 import Docs from '@/types/docs.type'
 import { NextSeo, NextSeoProps } from 'next-seo'
 import ClubLayout from '@/layout/ClubLayout'
+import httpClient from '@/lib/httpClient'
 
 interface ClubDocsPropsType {
 	major_club: Docs[]
@@ -34,8 +33,8 @@ const Club = (props: ClubDocsPropsType) => {
 }
 
 export async function getStaticProps() {
-	const major_club = await getApi.getBaseDocs('club')
-	const custom_club = await getApi.getBaseDocs('free_club')
+	const major_club = (await httpClient.static.getByTitle('club')).data
+	const custom_club = (await httpClient.static.getByTitle('free_club')).data
 
 	return {
 		props: {

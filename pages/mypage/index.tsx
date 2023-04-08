@@ -1,21 +1,31 @@
 import * as api from '@/api/user'
-import * as util from '@/utils'
 
-import userState, { initUserState } from '@/context/userState'
+import httpClient from '@/lib/httpClient'
+import useUser from '@/hooks/useUser'
 import React from 'react'
-import { useMutation } from 'react-query'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
-import Contributors from '@/types/contributors.type'
-import { Storage } from '@/lib/storage/storage'
+import { QueryClient, useMutation } from 'react-query'
+import { Storage } from '@/lib/storage/'
 import { NextSeo, NextSeoProps } from 'next-seo'
 import MyPageLayout from '@/layout/MyPageLayout'
 
 const MyPage = () => {
-	const { mutate } = useMutation(api.onLogoutUser, {
+	const { user, isLogined, logout } = useUser()
+	const queryClient = new QueryClient()
+
+	const onLogout = async () => {
+		await httpClient.logout.delete({
+			data: {
+				refresh_token: Storage.getItem('refresh_token'),
+			},
+		})
+	}
+
+	const { mutate } = useMutation(onLogout, {
 		onSuccess: () => {
+			queryClient.invalidateQueries('getUser')
 			Storage.delItem('access_token')
 			Storage.delItem('refresh_token')
-			setUser(initUserState)
+			logout()
 		},
 	})
 

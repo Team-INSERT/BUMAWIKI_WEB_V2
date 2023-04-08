@@ -1,12 +1,25 @@
 import * as api from '@/api/user'
+import httpClient from '@/lib/httpClient'
+import { useRouter } from 'next/router'
 
 import React from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 
 const OAuth = () => {
 	const queryClient = useQueryClient()
+	const router = useRouter()
 
-	const { mutate } = useMutation(() => api.onLoginUser(window.location.search.replace('?code=', '')), {
+	const onLogin = async () => {
+		return (
+			await httpClient.oauth.post(null, {
+				headers: {
+					authCode: router.query.code,
+				},
+			})
+		).data
+	}
+
+	const { mutate } = useMutation(onLogin, {
 		onSuccess: (data) => {
 			localStorage.setItem('access_token', data.accessToken)
 			localStorage.setItem('refresh_token', data.refreshToken)

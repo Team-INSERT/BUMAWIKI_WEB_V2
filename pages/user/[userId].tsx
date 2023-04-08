@@ -9,11 +9,20 @@ import UserType from '@/types/user.type'
 import { useRouter } from 'next/router'
 import { NextSeo, NextSeoProps } from 'next-seo'
 import { AccodianMenu, Aside, Board, Classify, ScrollBtn } from '@/components'
+import httpClient from '@/lib/httpClient'
 
 const User = () => {
 	const [user, setUser] = React.useState<UserType>()
 	const router = useRouter()
-	useQuery('otherUser', () => api.getOtherUser(parseInt(router.query.userId as string)), {
+
+	const onGetUser = async () => {
+		return (
+			await httpClient.user.getById({
+				url: (router.query.userId as string) || '-1',
+			})
+		).data
+	}
+	useQuery('otherUser', onGetUser, {
 		onSuccess: (data) => setUser(data),
 	})
 
