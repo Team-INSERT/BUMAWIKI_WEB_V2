@@ -1,20 +1,19 @@
 import * as api from '@/api/editDocs'
 import * as util from '@/utils'
-import * as S from '../../layout/create/style'
 
 import React from 'react'
 import { useMutation } from 'react-query'
 import CreateDocsType from '@/types/create.type'
-import Frame from '@/types/frame.type'
+import FrameType from '@/types/frame.type'
 import sizeInitState from '@/state/sizeInitState'
 import { useRouter } from 'next/router'
 import createInitState from '@/state/createInitState'
 import createDocsForm from '@/utils/document/createDocsForm'
 import { NextSeo, NextSeoProps } from 'next-seo'
 import useUser from '@/hooks/useUser'
-import { Aside, Board, ScrollBtn, SubFooter } from '@/components'
 import createFormInitState from '@/state/createFormInitState'
-import DragDrop, { IFileTypes } from '@/components/DragDrop'
+import { IFileTypes } from '@/components/DragDrop'
+import CreateLayout from '@/layout/CreateLayout'
 
 const Create = () => {
 	const router = useRouter()
@@ -22,14 +21,14 @@ const Create = () => {
 	const years = util.getAllYear()
 
 	const [parentFiles, setParentFiles] = React.useState<IFileTypes[]>([])
-	const [size, setSize] = React.useState<Frame>(sizeInitState)
+	const [size, setSize] = React.useState<FrameType>(sizeInitState)
 	const [docs, setDocs] = React.useState<CreateDocsType>({
 		title: (query.name as string) || '',
 		...createInitState,
 	})
 	const { user: userInfo, isLogined } = useUser()
 
-	const setFiles = (file: any) => {
+	const setFiles = (file: IFileTypes[]) => {
 		setParentFiles(file)
 	}
 
@@ -56,7 +55,7 @@ const Create = () => {
 				enroll,
 				contents,
 				docsType,
-				files,
+				files: parentFiles,
 			})
 		)
 	}
@@ -96,131 +95,19 @@ const Create = () => {
 	return (
 		<>
 			<NextSeo {...seoConfig} />
-			<S.CreateWrap>
-				<Board>
-					<S.CreateTitleWrap>
-						<S.CreateTitleText>문서 생성</S.CreateTitleText>
-					</S.CreateTitleWrap>
-					<S.CreateTB>
-						<tbody>
-							<S.CreateTR>
-								<S.CreateTDTitle>분류</S.CreateTDTitle>
-								<S.CreateTDDisplay>
-									{userInfo.authority === 'ADMIN' && (
-										<>
-											<label htmlFor="STUDENT">학생</label>
-											<S.CreateTableRadio type="radio" onChange={(e) => setDocs({ ...docs, docsType: e.target.id })} id="STUDENT" name="radio" />
-											<label htmlFor="READONLY">관리자</label>
-											<S.CreateTableRadio type="radio" onChange={(e) => setDocs({ ...docs, docsType: e.target.id })} id="READONLY" name="radio" />
-										</>
-									)}
-									{createFormInitState.map((info, index) => (
-										<S.CreateTableRadioBox key={index}>
-											<label htmlFor={info.id}>{info.title}</label>
-											<S.CreateTableRadio type="radio" onChange={(e) => changeDocsType(e)} id={info.id} name="radio" />
-										</S.CreateTableRadioBox>
-									))}
-									<S.CreateTableSelectBox>
-										{createFormInitState.map((info, index) => (
-											<S.CreateTableSelectOption key={index} onChange={(e) => changeDocsType(e as React.ChangeEvent<HTMLOptionElement>)} id={info.id}>
-												{info.title}
-											</S.CreateTableSelectOption>
-										))}
-									</S.CreateTableSelectBox>
-								</S.CreateTDDisplay>
-							</S.CreateTR>
-							<S.CreateTR>
-								<S.CreateTDTitle>문서 이름</S.CreateTDTitle>
-								<S.CreateTD>
-									<S.CreateTableTRInputContents onChange={(e) => setDocs({ ...docs, title: e.target.value })} value={docs.title} />
-								</S.CreateTD>
-							</S.CreateTR>
-							<S.CreateTR>
-								<S.CreateTDTitle>연도</S.CreateTDTitle>
-								<S.CreateTDDisplay>
-									{years.map((year, index) => (
-										<div key={index}>
-											<S.EnrollLabel htmlFor={`${year}`}>{year}년</S.EnrollLabel>
-											<S.CreateTableRadio
-												type="radio"
-												onChange={(e) => setDocs({ ...docs, enroll: parseInt(e.target.id) })}
-												id={`${year}`}
-												name="radios"
-											/>
-										</div>
-									))}
-								</S.CreateTDDisplay>
-							</S.CreateTR>
-							<S.CreateTR>
-								<S.CreateTDTitle>예시</S.CreateTDTitle>
-								<S.CreateTD>
-									<S.ExampleImage src="/images/references.png" alt="문서 양식" />
-								</S.CreateTD>
-							</S.CreateTR>
-							<S.CreateTR>
-								<S.CreateTDTitle>이미지</S.CreateTDTitle>
-								<S.CreateTD>
-									<DragDrop getFiles={setFiles} />
-								</S.CreateTD>
-							</S.CreateTR>
-							{docs.docsType === 'FRAME' && (
-								<S.CreateTR>
-									<S.CreateTDTitle>틀 규격</S.CreateTDTitle>
-									<S.CreateTD>
-										<S.FrameInputBox>
-											<S.FrameInputWrap>
-												<S.FrameText>열</S.FrameText>
-												<S.FrameInput
-													type="number"
-													min="2"
-													max="5"
-													value={size.column}
-													onChange={(e) => setSize({ ...size, column: parseInt(e.target.value) })}
-												/>
-												<S.FrameText>행</S.FrameText>
-												<S.FrameInput
-													type="number"
-													min="2"
-													max="10"
-													value={size.row}
-													onChange={(e) => setSize({ ...size, row: parseInt(e.target.value) })}
-												/>
-											</S.FrameInputWrap>
-										</S.FrameInputBox>
-										<S.CreateFrameButton onClick={() => makeFrame()}>틀생성/초기화</S.CreateFrameButton>
-									</S.CreateTD>
-								</S.CreateTR>
-							)}
-							<S.CreateTR>
-								<S.CreateTDTitle>문서 내용</S.CreateTDTitle>
-								<S.CreateTD>
-									<S.CreateTableTRTextarea
-										onKeyDown={(e) => {
-											util.onKeyDownUseTab(e)
-										}}
-										onChange={(e) => setDocs({ ...docs, contents: util.autoClosingTag(e) })}
-										value={docs.contents}
-									/>
-								</S.CreateTD>
-							</S.CreateTR>
-							<S.CreateTR>
-								<S.CreateTDTitle>미리보기</S.CreateTDTitle>
-								<S.CreateTDDiv
-									dangerouslySetInnerHTML={{
-										__html: util.documentation(docs.contents),
-									}}></S.CreateTDDiv>
-							</S.CreateTR>
-						</tbody>
-					</S.CreateTB>
-					<S.CreateSubmit>
-						<S.CreateWarn>※ 필독! 문서 내 부적절한 내용을 서술하는 사용자는 부마위키 이용에 제한을 받을 수 있습니다 ※</S.CreateWarn>
-						<S.CreateButton onClick={onClickCreateDocs}>문서 생성</S.CreateButton>
-					</S.CreateSubmit>
-					<SubFooter />
-				</Board>
-				<ScrollBtn />
-				<Aside />
-			</S.CreateWrap>
+			<CreateLayout
+				userInfo={userInfo}
+				setDocs={setDocs}
+				docs={docs}
+				createForm={createFormInitState}
+				years={years}
+				getFiles={setFiles}
+				size={size}
+				setSize={setSize}
+				makeFrame={makeFrame}
+				onClickCreateDocs={onClickCreateDocs}
+				changeDocsType={changeDocsType}
+			/>
 		</>
 	)
 }
