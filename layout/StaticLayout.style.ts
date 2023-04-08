@@ -60,3 +60,16 @@ export const StaticListItem = styled.li`
 	margin-bottom: 18px;
 	color: #0038ff;
 `
+
+export const StaticWarnText = styled.span`
+	font-weight: 700;
+	margin: 20px 0 10px 30px;
+	margin-right: auto;
+	font-size: 13px;
+	color: red;
+`
+
+export const StaticDetailList = styled.ul`
+	margin: 30px 0 0 50px;
+	font-weight: 600;
+`

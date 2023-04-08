@@ -1,8 +1,17 @@
 import React from 'react'
+import * as util from '@/utils'
 import * as S from './MyPageLayout.style'
 import { AccodianMenu, Aside, Board, Classify, ScrollBtn } from '@/components'
+import Contributors from '@/types/contributors.type'
+import UserType from '@/types/user.type'
+import { UseMutateFunction } from 'react-query'
 
-const MyPageLayout = () => {
+interface MyPageLayoutPropsType {
+	user: UserType
+	mutate: UseMutateFunction<void, unknown, void, unknown>
+}
+
+const MyPageLayout = ({ user, mutate }: MyPageLayoutPropsType) => {
 	return (
 		<S.MyPageWrap>
 			<Board>

@@ -18,7 +18,7 @@ const getAccessToken = async () => {
 export const requestInterceptors = (requestConfig: AxiosRequestConfig) => {
 	if (!Storage.getItem('access_token')) getAccessToken()
 
-	// if (requestConfig.headers) requestConfig.headers.Authorization = Storage.getItem('access_token')
+	if (requestConfig.headers) requestConfig.headers.Authorization = Storage.getItem('access_token')
 
 	const urlParams = requestConfig.url?.split('/:') || []
 	if (urlParams.length < 2) return requestConfig

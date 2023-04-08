@@ -1,5 +1,5 @@
-import * as api from '@/api/user'
 import httpClient from '@/lib/httpClient'
+import { NextSeo, NextSeoProps } from 'next-seo'
 import { useRouter } from 'next/router'
 
 import React from 'react'
@@ -35,7 +35,12 @@ const OAuth = () => {
 		// eslint-disable-next-line
 	}, [])
 
-	return <></>
+	const seoConfig: NextSeoProps = {
+		title: `부마위키 - 로그인`,
+		description: `부마위키의 로그인페이지입니다.`,
+	}
+
+	return <NextSeo {...seoConfig} />
 }
 
 export default OAuth

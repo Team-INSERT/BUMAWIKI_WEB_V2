@@ -9,7 +9,7 @@ import { NextSeo, NextSeoProps } from 'next-seo'
 import MyPageLayout from '@/layout/MyPageLayout'
 
 const MyPage = () => {
-	const { user, isLogined, logout } = useUser()
+	const { user, logout } = useUser()
 	const queryClient = new QueryClient()
 
 	const onLogout = async () => {
@@ -47,7 +47,7 @@ const MyPage = () => {
 	return (
 		<>
 			<NextSeo {...seoConfig} />
-			<MyPageLayout />
+			<MyPageLayout user={user} mutate={mutate} />
 		</>
 	)
 }
