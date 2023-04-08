@@ -1,5 +1,4 @@
 import { IFileTypes } from '@/components/DragDrop'
-import FileListArray from '@/types/filelistArray.type'
 import { encodeContents } from './requestContents'
 
 interface CreateDocsFormType {
