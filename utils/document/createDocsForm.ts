@@ -1,3 +1,4 @@
+import { IFileTypes } from '@/components/DragDrop'
 import FileListArray from '@/types/filelistArray.type'
 import { encodeContents } from './requestContents'
 
@@ -6,7 +7,7 @@ interface CreateDocsFormType {
 	enroll: number
 	contents: string
 	docsType: string
-	files: FileListArray[]
+	files: IFileTypes[]
 }
 
 const createDocsForm = ({ title, enroll, contents, docsType, files }: CreateDocsFormType) => {
@@ -18,7 +19,7 @@ const createDocsForm = ({ title, enroll, contents, docsType, files }: CreateDocs
 			type: 'application/json',
 		})
 	)
-	files.reverse().forEach((file) => data.append('files', file, file.name))
+	files.reverse().forEach((file) => data.append('files', file.object, file.object.name))
 
 	return data
 }
