@@ -7,6 +7,7 @@ import { QueryClient, useMutation } from 'react-query'
 import { Storage } from '@/lib/storage/'
 import { NextSeo, NextSeoProps } from 'next-seo'
 import MyPageLayout from '@/layout/MyPageLayout'
+import { initUserState } from '@/context/userState'
 
 const MyPage = () => {
 	const { user, logout } = useUser()
@@ -47,7 +48,7 @@ const MyPage = () => {
 	return (
 		<>
 			<NextSeo {...seoConfig} />
-			<MyPageLayout user={user} mutate={mutate} />
+			<MyPageLayout user={user || initUserState} mutate={mutate} />
 		</>
 	)
 }

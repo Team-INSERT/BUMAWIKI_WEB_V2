@@ -40,7 +40,7 @@ const MyPageLayout = ({ user, mutate }: MyPageLayoutPropsType) => {
 							)}
 						</S.MyPageInfoLoadWrap>
 					</AccodianMenu>
-					{user.id ? (
+					{user.id && (
 						<AccodianMenu name={'기여한 문서'}>
 							<S.ContributeWrap>
 								<span>이 유저가 기여한 문서의 정보들이다.</span>
@@ -56,8 +56,6 @@ const MyPageLayout = ({ user, mutate }: MyPageLayoutPropsType) => {
 								</S.ContributeList>
 							</S.ContributeWrap>
 						</AccodianMenu>
-					) : (
-						''
 					)}
 				</S.MyPageInfoWrap>
 			</Board>
