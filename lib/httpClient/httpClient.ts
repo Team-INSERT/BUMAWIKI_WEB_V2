@@ -1,11 +1,13 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
-import { getAccessToken, requestInterceptors, responseInterceptors } from '@/lib/interceptor'
+import { requestInterceptors, responseInterceptors } from '@/lib/interceptor'
 import { Storage } from '@/lib/storage'
+import { getAccessToken } from './getAccessToken'
+import { QueryClient } from 'react-query'
 
 export interface HttpClientConfig {
 	baseURL?: string
 	timeout?: number
-	headers?: { Token?: string }
+	headers?: { Authorization?: string }
 }
 
 export class HttpClient {
@@ -18,7 +20,7 @@ export class HttpClient {
 			...axiosConfig,
 			baseURL: `${axiosConfig.baseURL}${url}`,
 		})
-		HttpClient.clientConfig = { headers: { Token: '' } }
+		HttpClient.clientConfig = { headers: { Authorization: '' } }
 		this.setting()
 	}
 
@@ -84,10 +86,13 @@ export class HttpClient {
 
 	private setting() {
 		HttpClient.setCommonInterceptors(this.api)
-		this.api.interceptors.request.use(
-			(config) => config,
+		const queryClient = new QueryClient()
+
+		this.api.interceptors.response.use(
+			(response) => response,
 			(error) => {
 				Storage.delItem('access_token')
+				queryClient.invalidateQueries('getUser')
 				getAccessToken()
 				return Promise.reject(error)
 			}
@@ -98,7 +103,7 @@ export class HttpClient {
 		const accessToken = Storage.getItem('access_token')
 		HttpClient.clientConfig.headers = {
 			...HttpClient.clientConfig.headers,
-			Token: accessToken || undefined,
+			Authorization: accessToken || undefined,
 		}
 	}
 

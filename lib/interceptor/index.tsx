@@ -1,19 +1,6 @@
 import { Storage } from '@/lib/storage'
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
-
-export const getAccessToken = async () => {
-	try {
-		const res = (
-			await axios.put('/auth/refresh/access', {
-				refresh_token: Storage.getItem('refresh_token'),
-			})
-		).data
-		Storage.setItem('access_token', res.accessToken)
-	} catch (err) {
-		console.log(err)
-		Storage.delItem('refresh_token')
-	}
-}
+import { AxiosRequestConfig, AxiosResponse } from 'axios'
+import { getAccessToken } from '../httpClient/getAccessToken'
 
 export const requestInterceptors = (requestConfig: AxiosRequestConfig) => {
 	if (!Storage.getItem('access_token')) getAccessToken()
@@ -22,8 +9,6 @@ export const requestInterceptors = (requestConfig: AxiosRequestConfig) => {
 
 	const urlParams = requestConfig.url?.split('/:') || []
 	if (urlParams.length < 2) return requestConfig
-
-	console.log(urlParams)
 
 	const paramParsedUrl = urlParams
 		?.map((paramKey) => {

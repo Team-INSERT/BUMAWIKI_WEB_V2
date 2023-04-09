@@ -4,6 +4,7 @@ import * as S from './DocsLayout.style'
 import * as util from '@/utils'
 import Docs from '@/types/docs.type'
 import { decodeContents } from '@/utils/document/requestContents'
+import bumawikiEditor from 'bumawiki-editor'
 
 interface DocsLayoutPropsType {
 	docs: Docs
@@ -29,7 +30,7 @@ const DocsLayout = ({ docs }: DocsLayoutPropsType) => {
 						<AccodianMenu name="내용">
 							<S.DocsContents
 								dangerouslySetInnerHTML={{
-									__html: util.documentation(decodeContents(docs?.contents || '')),
+									__html: bumawikiEditor(decodeContents(docs?.contents || '')),
 								}}></S.DocsContents>
 						</AccodianMenu>
 					</S.DocsContentsLoadWrap>

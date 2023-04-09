@@ -6,26 +6,34 @@ import { useRouter } from 'next/router'
 import { useQuery } from 'react-query'
 import { useRecoilState } from 'recoil'
 import httpClient from '@/lib/httpClient'
+import { getAccessToken } from '@/lib/httpClient/getAccessToken'
 
 interface UseUserOptions {
 	authorizedPage?: boolean
+}
+
+const getUser = async () => {
+	return (
+		await httpClient.myuser.get({
+			headers: {
+				Authorization: Storage.getItem('access_token'),
+			},
+		})
+	).data
 }
 
 const useUser = (options?: UseUserOptions) => {
 	const [user, setUser] = useRecoilState(userState)
 	const router = useRouter()
 
-	const getUser = async () => {
-		return (
-			await httpClient.myuser.get({
-				headers: {
-					Authorization: Storage.getItem('access_token'),
-				},
-			})
-		).data
-	}
-
-	const { data: userInfo, remove, isLoading } = useQuery<UserType>('getUser', getUser, { enabled: !!Storage.getItem('access_token') })
+	const {
+		data: userInfo,
+		remove,
+		isLoading,
+	} = useQuery<UserType>('getUser', getUser, {
+		retry: 1,
+		onError: () => getAccessToken(),
+	})
 
 	const logout = () => {
 		httpClient.logout.delete({
