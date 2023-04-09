@@ -24,8 +24,8 @@ const SearchLayout = ({ searchValue, results }: SearchLayoutPropsType) => {
 					<S.SearchList>
 						{results && (
 							<>
-								{results.map((result: Docs, index) => (
-									<S.SearchListItem key={index}>
+								{results.map((result: Docs) => (
+									<S.SearchListItem key={result.id}>
 										<S.SearchLink href={`/docs/${result.title}`}>
 											{result.title}&nbsp;
 											{result.docsType === 'FRAME' ? null : (

@@ -22,8 +22,8 @@ const AccidentLayout = ({ years, docs }: AccidentLayoutPropsType) => {
 				<S.StaticListWrap>
 					{years.map((year) => (
 						<AccodianMenu name={`${year}년 사건/사고`} key={year} isOpen={true}>
-							{docs.map((accident: Docs, index) => (
-								<S.StaticList key={index}>
+							{docs.map((accident: Docs) => (
+								<S.StaticList key={accident.id}>
 									{accident.enroll === year && (
 										<S.StaticListItem>
 											<S.StaticLink href={`/docs/${accident.title}`}>{accident.title}</S.StaticLink>

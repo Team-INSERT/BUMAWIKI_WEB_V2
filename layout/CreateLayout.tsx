@@ -54,15 +54,15 @@ const CreateLayout = ({
 										<S.CreateTableRadio type="radio" onChange={(e) => setDocs({ ...docs, docsType: e.target.id })} id="READONLY" name="radio" />
 									</>
 								)}
-								{createForm.map((info, index) => (
-									<S.CreateTableRadioBox key={index}>
+								{createForm.map((info) => (
+									<S.CreateTableRadioBox key={info.id}>
 										<label htmlFor={info.id}>{info.title}</label>
 										<S.CreateTableRadio type="radio" onChange={(e) => changeDocsType(e)} id={info.id} name="radio" />
 									</S.CreateTableRadioBox>
 								))}
 								<S.CreateTableSelectBox>
-									{createForm.map((info, index) => (
-										<S.CreateTableSelectOption key={index} onChange={(e) => changeDocsType(e as React.ChangeEvent<HTMLOptionElement>)} id={info.id}>
+									{createForm.map((info) => (
+										<S.CreateTableSelectOption key={info.id} onChange={(e) => changeDocsType(e as React.ChangeEvent<HTMLOptionElement>)} id={info.id}>
 											{info.title}
 										</S.CreateTableSelectOption>
 									))}
@@ -78,8 +78,8 @@ const CreateLayout = ({
 						<S.CreateTR>
 							<S.CreateTDTitle>연도</S.CreateTDTitle>
 							<S.CreateTDDisplay>
-								{years.map((year, index) => (
-									<div key={index}>
+								{years.map((year) => (
+									<div key={year}>
 										<S.EnrollLabel htmlFor={`${year}`}>{year}년</S.EnrollLabel>
 										<S.CreateTableRadio
 											type="radio"

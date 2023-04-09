@@ -45,8 +45,8 @@ const MyPageLayout = ({ user, mutate }: MyPageLayoutPropsType) => {
 							<S.ContributeWrap>
 								<span>이 유저가 기여한 문서의 정보들이다.</span>
 								<S.ContributeList>
-									{user.contributeDocs.map((docs: Contributors, index: number) => (
-										<span key={index}>
+									{user.contributeDocs.map((docs: Contributors) => (
+										<span key={docs.createTime}>
 											문서명 :&nbsp;
 											<S.ContributeLink href={`/docs/${docs.title}`}>{docs.title}</S.ContributeLink>
 											<br />

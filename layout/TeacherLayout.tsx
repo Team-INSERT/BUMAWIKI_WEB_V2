@@ -21,8 +21,8 @@ const TeacherLayout = ({ common_teacher, major_teacher, mentor_teacher }: Teache
 				<S.StaticList>
 					<AccodianMenu name="인문과목 선생님">
 						<S.StaticDetailList>
-							{common_teacher.map((teacher: Docs, index) => (
-								<S.StaticListItem key={index}>
+							{common_teacher.map((teacher: Docs) => (
+								<S.StaticListItem key={teacher.id}>
 									<S.StaticLink href={`/docs/${teacher.title}`}>{teacher.title}</S.StaticLink>
 								</S.StaticListItem>
 							))}
@@ -30,8 +30,8 @@ const TeacherLayout = ({ common_teacher, major_teacher, mentor_teacher }: Teache
 					</AccodianMenu>
 					<AccodianMenu name="전공과목 선생님">
 						<S.StaticDetailList>
-							{major_teacher.map((teacher: Docs, index) => (
-								<S.StaticListItem key={index}>
+							{major_teacher.map((teacher: Docs) => (
+								<S.StaticListItem key={teacher.id}>
 									<S.StaticLink href={`/docs/${teacher.title}`} className="link">
 										{teacher.title}
 									</S.StaticLink>

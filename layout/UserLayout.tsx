@@ -1,7 +1,7 @@
 import React from 'react'
 import * as S from './UserLayout.style'
 import * as util from '@/utils'
-import { AccodianMenu, Aside, Board, Classify, ScrollBtn } from '@/components'
+import { AccodianMenu, Aside, Authority, Board, Classify, ScrollBtn } from '@/components'
 import UserType from '@/types/user.type'
 import Contributors from '@/types/contributors.type'
 
@@ -14,17 +14,17 @@ const UserLayout = ({ user }: UserLayoutPropsType) => {
 		<S.UserWrap>
 			<Board>
 				<S.UserTitleWrap>
-					<S.UserTitleText>유저 : {user?.nickName}</S.UserTitleText>
+					<S.UserTitleText>유저 : {user.nickName}</S.UserTitleText>
 				</S.UserTitleWrap>
 				<Classify>{user?.authority}</Classify>
 				<S.UserLine />
 				<S.UserInfoWrap>
 					<AccodianMenu name="정보">
 						<S.UserInfoLoadWrap>
-							{/* {userInfo.authority === 'ADMIN' ? <C.Authority email={ || ''} /> : null} */}
+							{user.authority === 'ADMIN' && <Authority email={user.email} />}
 							<span>
-								이름은 {user?.nickName}이며, 부마위키의
-								{user?.authority === 'ADMIN' ? ' 관리자' : user?.authority === 'BANNED' ? ' 읽기전용 사용자' : ' 사용자'} 중 한 명이다.
+								이름은 {user.nickName}이며, 부마위키의
+								{user.authority === 'ADMIN' ? ' 관리자' : user?.authority === 'BANNED' ? ' 읽기전용 사용자' : ' 사용자'} 중 한 명이다.
 							</span>
 						</S.UserInfoLoadWrap>
 					</AccodianMenu>
@@ -32,8 +32,8 @@ const UserLayout = ({ user }: UserLayoutPropsType) => {
 						<S.ContributeWrap>
 							<span>이 유저가 기여한 문서의 정보들이다.</span>
 							<S.ContributeList>
-								{user?.contributeDocs.map((docs: Contributors, index) => (
-									<span key={index}>
+								{user?.contributeDocs.map((docs: Contributors) => (
+									<span key={docs.createTime}>
 										문서명 :&nbsp;
 										<S.ContributeLink href={`/docs/${docs.title}`}>{docs.title}</S.ContributeLink>
 										<br />

@@ -14,16 +14,16 @@ interface SingleDocsPropsType {
 	searchValue: string
 }
 
-const Search = (props: SingleDocsPropsType) => {
+const Search = ({ searchValue, redirect, results }: SingleDocsPropsType) => {
 	const router = useRouter()
 
 	const seoConfig: NextSeoProps = {
-		title: `부마위키 검색 - ${props.searchValue}`,
-		description: `부마위키의 "${props.searchValue}" 검색 결과에 관한 페이지입니다.`,
+		title: `부마위키 검색 - ${searchValue}`,
+		description: `부마위키의 "${searchValue}" 검색 결과에 관한 페이지입니다.`,
 		openGraph: {
 			type: 'website',
-			title: `부마위키 검색 - ${props.searchValue}`,
-			description: `부마위키의 "${props.searchValue}" 검색 결과에 관한 페이지입니다.`,
+			title: `부마위키 검색 - ${searchValue}`,
+			description: `부마위키의 "${searchValue}" 검색 결과에 관한 페이지입니다.`,
 			images: [
 				{
 					url: '/images/meta-img.png',
@@ -33,13 +33,13 @@ const Search = (props: SingleDocsPropsType) => {
 	}
 
 	React.useEffect(() => {
-		if (props.redirect) router.push(`/docs/${props.results[0].title}`)
-	}, [props.redirect, props.results, router])
+		if (redirect) router.push(`/docs/${results[0].title}`)
+	}, [redirect, results, router])
 
 	return (
 		<>
 			<NextSeo {...seoConfig} />
-			<SearchLayout {...props} />
+			<SearchLayout searchValue={searchValue} results={results} />
 		</>
 	)
 }

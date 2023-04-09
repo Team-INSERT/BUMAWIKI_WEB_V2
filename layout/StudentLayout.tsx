@@ -22,8 +22,8 @@ const StudentLayout = ({ docs, years }: StudentLayoutPropsType) => {
 				<S.StaticListWrap>
 					{years.map((year) => (
 						<AccodianMenu name={`${year}년도 입학생`} key={year} isOpen={true}>
-							{docs.map((student: Docs, index) => (
-								<S.StaticList key={index}>
+							{docs.map((student: Docs) => (
+								<S.StaticList key={student.id}>
 									{student.enroll === year && (
 										<S.StaticListItem>
 											<S.StaticLink href={`/docs/${student.title}`}>{student.title}</S.StaticLink>
