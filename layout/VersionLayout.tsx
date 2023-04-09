@@ -19,7 +19,7 @@ const VersionLayout = ({ docsName, version }: VersionLayoutPropsType) => {
 				<S.VersionLine />
 				<S.VersionContentsWrap>
 					<ul>
-						{version?.map((ver: VersionDocs, index: number) => (
+						{version.map((ver: VersionDocs, index: number) => (
 							<S.VersionList key={index}>
 								<span>
 									<S.VersionLink href={`/version/${docsName}/detail/${index}`}>{util.dateParser(ver.thisVersionCreatedAt)}</S.VersionLink>
