@@ -6,6 +6,7 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import useUser from '@/hooks/useUser'
 import { headerInitState, subheaderInitState } from '@/state/headerInitState'
+import { toast } from 'react-toastify'
 
 const Header = () => {
 	const [search, setSearch] = React.useState('')
@@ -15,7 +16,7 @@ const Header = () => {
 
 	const navigateSearchResult = () => {
 		if (search.length) return router.push(`/search/${search}`)
-		return alert('검색할 문서명을 입력해주세요!')
+		return toast.error('검색할 문서명을 입력해주세요!')
 	}
 
 	return (

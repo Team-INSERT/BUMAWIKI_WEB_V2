@@ -15,6 +15,9 @@ import CreateLayout from '@/layout/CreateLayout'
 import { IFileTypes } from '@/components/DragDrop'
 import httpClient from '@/lib/httpClient'
 import { Storage } from '@/lib/storage'
+import { toast } from 'react-toastify'
+import { CustomToastContainer } from '@/layout/HomeLayout.style'
+import Swal from 'sweetalert2'
 
 const Create = () => {
 	const router = useRouter()
@@ -42,21 +45,24 @@ const Create = () => {
 			}),
 		{
 			onSuccess: (res) => {
-				// alert -> modal or popup or toast 로 대체
-				alert('문서가 생성되었습니다!')
+				Swal.fire({
+					icon: 'success',
+					title: '문서 생성 완료!',
+				})
 				router.push(`/docs/${res.data.title}`)
 			},
 		}
 	)
 
 	const onClickCreateDocs = () => {
-		if (['?', '/', '"', '\\'].includes(docs.title)) return alert('문서명에는 물음표나 쌍따옴표, 슬래시나 역슬래시를 넣을 수 없습니다.')
-		if (!isLogined) return alert('로그인 후 이용 가능한 서비스입니다.')
-		if (!docs.enroll) return alert('연도를 선택해주세요!')
-		if (!docs.title) return alert('문서의 이름을 정해주세요!')
-		if (!docs.docsType) return alert('문서의 분류를 선택해주세요!')
-
 		const { title, enroll, contents, docsType } = docs
+		const isInvalid = title.includes('?') || title.includes('\\') || title.includes('//') || title.includes('"')
+
+		if (isInvalid) return toast.error('문서명에 특수문자를 넣을 수 없습니다.')
+		if (!isLogined) return toast.error('로그인 후 이용 가능한 서비스입니다.')
+		if (!enroll) return toast.error('연도를 선택해주세요!')
+		if (!title) return toast.error('문서의 이름을 정해주세요!')
+		if (!docsType) return toast.error('문서의 분류를 선택해주세요!')
 
 		mutate(
 			createDocsForm({

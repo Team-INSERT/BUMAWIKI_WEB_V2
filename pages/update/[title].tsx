@@ -13,6 +13,9 @@ import httpClient from '@/lib/httpClient'
 import FileListArray from '@/types/filelistArray.type'
 import useUser from '@/hooks/useUser'
 import UpdateLayout from '@/layout/UpdateLayout'
+import { CustomToastContainer } from '@/layout/HomeLayout.style'
+import { toast } from 'react-toastify'
+import Swal from 'sweetalert2'
 
 interface SinglDocsPropsType {
 	defaultDocs: Docs
@@ -38,15 +41,18 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 
 	const { mutate } = useMutation((data) => httpClient.update.putByTitle(docs.title, data), {
 		onSuccess: () => {
-			alert('문서가 편집되었습니다!')
+			Swal.fire({
+				icon: 'success',
+				title: '문서 편집 완료!',
+			})
 			router.push(`/docs/${title}`)
 		},
 		onError: (err) => {
 			if (err instanceof AxiosError) {
 				const { status, message, error } = err?.response?.data
 				if (status === 403) {
-					if (message === 'Cannot Change Your Docs') return alert('자기 자신의 문서는 편집할 수 없습니다.')
-					if (error === 'Forbidden') return alert('읽기전용 사용자는 문서를 편집할 수 없습니다.')
+					if (message === 'Cannot Change Your Docs') toast.error('자기 자신의 문서는 편집할 수 없습니다.')
+					if (error === 'Forbidden') toast.error('읽기전용 사용자는 문서를 편집할 수 없습니다.')
 				}
 			}
 		},
@@ -74,8 +80,11 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 	}
 
 	const onClickUpdateDocs = async () => {
-		if (!user.id) return alert('로그인 후 이용 가능한 서비스입니다.')
-		if (!docs.contents.length) return alert('문서가 비어있습니다!')
+		if (!user.id) {
+			toast.error('로그인 후 이용 가능한 서비스입니다.')
+			return
+		}
+		if (!docs.contents) toast.error('문서가 비어있습니다!')
 
 		mutateUpdateDocs()
 	}

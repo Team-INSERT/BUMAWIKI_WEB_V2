@@ -7,6 +7,9 @@ import { useRecoilValue } from 'recoil'
 import { useRouter } from 'next/router'
 import httpClient from '@/lib/httpClient'
 import { Storage } from '@/lib/storage'
+import { CustomToastContainer } from '@/layout/HomeLayout.style'
+import { toast } from 'react-toastify'
+import Swal from 'sweetalert2'
 
 interface DetailBtnProps {
 	docsId: number
@@ -21,7 +24,10 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 
 	const updateDocsTitleMutation = useMutation(() => httpClient.updateTitle.putByTitle(router.pathname, docsName), {
 		onSuccess: (res) => {
-			alert('문서 이름이 변경되었습니다!')
+			Swal.fire({
+				icon: 'success',
+				title: '문서 이름 변경 완료!',
+			})
 			queryClient.invalidateQueries('lastModifiedDocs')
 			router.push(`/docs/${res.data.title}`)
 		},
@@ -42,7 +48,10 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 
 	const updateDocsTypeMutation = useMutation(onUpdateType, {
 		onSuccess: (res) => {
-			alert('문서 이름이 변경되었습니다!')
+			Swal.fire({
+				icon: 'success',
+				title: '문서 타입 변경 완료!',
+			})
 			queryClient.invalidateQueries('lastModifiedDocs')
 			router.push(`/docs/${res.data.title}`)
 		},
@@ -66,24 +75,21 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 
 	const deleteDocsTitleMutation = useMutation(onDeleteDocsTitle, {
 		onSuccess: () => {
-			alert('문서가 삭제되었습니다!')
+			Swal.fire({
+				icon: 'success',
+				title: '문서 삭제 완료!',
+			})
 			router.push('/')
 		},
 	})
 
 	const onClickChangeDocsName = async () => {
-		if (!docsName.length) {
-			alert('내용이 없습니다.')
-			return
-		}
+		if (!docsName.length) return toast.error('내용이 없습니다.')
 		updateDocsTitleMutation.mutate()
 	}
 
 	const onClickChangeDocsType = async () => {
-		if (!docsType.length) {
-			alert('내용이 없습니다.')
-			return
-		}
+		if (!docsType.length) return toast.error('내용이 없습니다.')
 		updateDocsTypeMutation.mutate()
 	}
 
@@ -93,6 +99,7 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 
 	return (
 		<S.DetailButtonWrap>
+			<CustomToastContainer autoClose={1000} position={toast.POSITION.TOP_RIGHT} />
 			{user.authority === 'ADMIN' ? (
 				<>
 					<S.DetailInput value={docsType} onChange={(e) => setDocsType(e.target.value)} />

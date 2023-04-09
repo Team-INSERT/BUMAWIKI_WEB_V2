@@ -30,7 +30,7 @@ const DocsLayout = ({ docs }: DocsLayoutPropsType) => {
 						<AccodianMenu name="내용">
 							<S.DocsContents
 								dangerouslySetInnerHTML={{
-									__html: bumawikiEditor(decodeContents(docs?.contents || '')),
+									__html: util.documentation(decodeContents(docs?.contents || '')),
 								}}></S.DocsContents>
 						</AccodianMenu>
 					</S.DocsContentsLoadWrap>

@@ -7,6 +7,7 @@ import { useQuery } from 'react-query'
 import { useRecoilState } from 'recoil'
 import httpClient from '@/lib/httpClient'
 import { getAccessToken } from '@/lib/httpClient/getAccessToken'
+import Swal from 'sweetalert2'
 
 interface UseUserOptions {
 	authorizedPage?: boolean
@@ -49,7 +50,10 @@ const useUser = (options?: UseUserOptions) => {
 
 	React.useEffect(() => {
 		if (options?.authorizedPage && !isLoading && !userInfo) {
-			alert('로그인이 필요한 페이지입니다.')
+			Swal.fire({
+				icon: 'error',
+				title: '로그인이 필요한 페이지입니다.',
+			})
 			router.push('/')
 			// openModal()
 		}
