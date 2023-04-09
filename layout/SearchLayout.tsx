@@ -22,7 +22,7 @@ const SearchLayout = ({ searchValue, results }: SearchLayoutPropsType) => {
 				<S.SearchLine />
 				<S.SearchResult>
 					<S.SearchList>
-						{results ? (
+						{results && (
 							<>
 								{results.map((result: Docs, index) => (
 									<S.SearchListItem key={index}>
@@ -37,9 +37,8 @@ const SearchLayout = ({ searchValue, results }: SearchLayoutPropsType) => {
 									</S.SearchListItem>
 								))}
 							</>
-						) : (
-							<S.SearchCreateLink href={`/create?name=${searchValue}`}>검색 결과가 없습니다. 지금 문서를 생성해보세요</S.SearchCreateLink>
 						)}
+						{!results && <S.SearchCreateLink href={`/create?name=${searchValue}`}>검색 결과가 없습니다. 지금 문서를 생성해보세요</S.SearchCreateLink>}
 					</S.SearchList>
 				</S.SearchResult>
 				<SubFooter />
