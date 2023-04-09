@@ -23,7 +23,7 @@ const MyPageLayout = ({ user, mutate }: MyPageLayoutPropsType) => {
 				<S.MyPageInfoWrap>
 					<AccodianMenu name={'정보'}>
 						<S.MyPageInfoLoadWrap>
-							{user.id ? (
+							{user.id && (
 								<>
 									<span>
 										이름은 {user.nickName}이며, 부마위키의{' '}
@@ -37,8 +37,6 @@ const MyPageLayout = ({ user, mutate }: MyPageLayoutPropsType) => {
 										<S.LogoutText onClick={() => mutate()}>로그아웃</S.LogoutText>
 									</div>
 								</>
-							) : (
-								<span>이 유저는 로그인을 하지 않은 유저다. 로그인을 하면 문서를 생성하고 편집할 수 있다.</span>
 							)}
 						</S.MyPageInfoLoadWrap>
 					</AccodianMenu>
