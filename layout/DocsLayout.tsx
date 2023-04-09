@@ -15,9 +15,9 @@ const DocsLayout = ({ docs }: DocsLayoutPropsType) => {
 		<S.DocsWrap>
 			<Board>
 				<S.DocsTitleWrap>
-					<S.DocsTitleText>{docs?.title.replace(/&\$\^%/gi, '"')}</S.DocsTitleText>
+					<S.DocsTitleText>{docs.title.replace(/&\$\^%/gi, '"')}</S.DocsTitleText>
 					<S.DocsMenu>
-						<DetailBtn docsId={docs?.id || -1} />
+						<DetailBtn docsId={docs.id} />
 					</S.DocsMenu>
 				</S.DocsTitleWrap>
 				<S.Classify>
