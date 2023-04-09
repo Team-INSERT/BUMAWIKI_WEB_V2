@@ -43,8 +43,9 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
 	const { params } = context
+	console.log(context)
 
-	const res = (await httpClient.version.getByTitle((params?.docs as string) || '')).data
+	const res = (await httpClient.version.getByTitle(`${params?.docs as string}/version`)).data
 
 	return {
 		props: {

@@ -1,5 +1,5 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
-import { requestInterceptors, responseInterceptors } from '@/lib/interceptor'
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
+import { getAccessToken, requestInterceptors, responseInterceptors } from '@/lib/interceptor'
 import { Storage } from '@/lib/storage'
 
 export interface HttpClientConfig {
@@ -84,6 +84,14 @@ export class HttpClient {
 
 	private setting() {
 		HttpClient.setCommonInterceptors(this.api)
+		this.api.interceptors.request.use(
+			(config) => config,
+			(error) => {
+				Storage.delItem('access_token')
+				getAccessToken()
+				return Promise.reject(error)
+			}
+		)
 	}
 
 	static setAccessToken() {
@@ -121,7 +129,7 @@ export default {
 	create: new HttpClient('api/docs/create', axiosConfig),
 	update: new HttpClient('api/docs/update', axiosConfig),
 	updateType: new HttpClient('api/docs/update/docsType', axiosConfig),
-	version: new HttpClient('api/docs/find/:title/version', axiosConfig),
+	version: new HttpClient('api/docs/find/', axiosConfig),
 	lastModified: new HttpClient('api/docs/find/modified', axiosConfig),
 	search: new HttpClient('api/docs/find/all/title', axiosConfig),
 	updateTitle: new HttpClient('api/docs/update/title', axiosConfig),

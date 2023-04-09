@@ -1,7 +1,7 @@
 import { Storage } from '@/lib/storage'
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 
-const getAccessToken = async () => {
+export const getAccessToken = async () => {
 	try {
 		const res = (
 			await axios.put('/auth/refresh/access', {
@@ -22,6 +22,8 @@ export const requestInterceptors = (requestConfig: AxiosRequestConfig) => {
 
 	const urlParams = requestConfig.url?.split('/:') || []
 	if (urlParams.length < 2) return requestConfig
+
+	console.log(urlParams)
 
 	const paramParsedUrl = urlParams
 		?.map((paramKey) => {

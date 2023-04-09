@@ -12,11 +12,7 @@ const User = () => {
 	const router = useRouter()
 
 	const onGetUser = async () => {
-		return (
-			await httpClient.user.getById({
-				url: (router.query.userId as string) || '-1',
-			})
-		).data
+		return (await httpClient.user.getByTitle(router.query.userId as string)).data
 	}
 	useQuery('otherUser', onGetUser, {
 		onSuccess: (data) => setUser(data),

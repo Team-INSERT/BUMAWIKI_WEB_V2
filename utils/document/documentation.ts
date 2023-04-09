@@ -21,6 +21,8 @@ const documentation = (content: string) => {
 		.replace(/<항목>/gi, `?^li style="list-style: disc;"^?`)
 		.replace(/<어록>/gi, `?^div class="analects" ^?`)
 		.replace(/<\/어록>/gi, `?^@#@#@div^?`)
+		.replace(/<블록>/gi, `?^div class="block" ^?`)
+		.replace(/<\/블록>/gi, `?^@#@#@div^?`)
 		.replace(/<강조>/gi, `?^strong^?`)
 		.replace(/<\/강조>/gi, `?^@#@#@strong^?`)
 		.replace(/<빨강>/gi, `?^span style="color:red;"^?`)
