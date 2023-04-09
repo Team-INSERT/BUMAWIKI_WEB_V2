@@ -6,15 +6,13 @@ import DragDrop, { IFileTypes } from '@/components/DragDrop'
 import UserType from '@/types/user.type'
 import CreateDocsType from '@/types/create.type'
 import FrameType from '@/types/frame.type'
+import CreateFormType from '@/types/createForm.type'
 
 interface CreateLayoutPropsType {
 	userInfo: UserType
 	setDocs: React.Dispatch<React.SetStateAction<CreateDocsType>>
 	docs: CreateDocsType
-	createForm: {
-		id: string
-		title: string
-	}[]
+	createForm: CreateFormType[]
 	years: number[]
 	getFiles: (file: IFileTypes[]) => void
 	size: FrameType
