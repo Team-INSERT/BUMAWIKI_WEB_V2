@@ -49,7 +49,7 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 	})
 
 	const onClickNavigatePage = (type: string) => {
-		if (type === 'VERSION') return router.push(`/version/${router.pathname}`)
+		if (type === 'VERSION') return router.push(`/version/${router.query.title}`)
 		if (type === 'UPDATE' && !user.id) return alert('로그인 후 편집하실 수 있습니다!')
 		router.push(`/update/${router.query.title}`)
 	}
