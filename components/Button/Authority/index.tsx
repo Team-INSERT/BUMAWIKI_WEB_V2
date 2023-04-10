@@ -1,10 +1,10 @@
 import * as S from './style'
-import * as api from '@/api/user'
 
 import React from 'react'
 import { useMutation } from 'react-query'
 import httpClient from '@/lib/httpClient'
 import Swal from 'sweetalert2'
+import authority from '@/constants/authority.constants'
 
 interface AuthorityProps {
 	email: string
@@ -29,19 +29,19 @@ const Authority = ({ email }: AuthorityProps) => {
 
 	return (
 		<S.AuthorityButtonWrap>
-			<S.AuthorityLinkWrap onClick={() => onClickAuthorityUser('ADMIN')}>
+			<S.AuthorityLinkWrap onClick={() => onClickAuthorityUser(authority.ADMIN)}>
 				<S.AuthorityButton>
-					<S.AuthorityText>ADMIN</S.AuthorityText>
+					<S.AuthorityText>{authority.ADMIN}</S.AuthorityText>
 				</S.AuthorityButton>
 			</S.AuthorityLinkWrap>
-			<S.AuthorityLinkWrap onClick={() => onClickAuthorityUser('USER')}>
+			<S.AuthorityLinkWrap onClick={() => onClickAuthorityUser(authority.USER)}>
 				<S.AuthorityButton>
-					<S.AuthorityText>USER</S.AuthorityText>
+					<S.AuthorityText>{authority.USER}</S.AuthorityText>
 				</S.AuthorityButton>
 			</S.AuthorityLinkWrap>
-			<S.AuthorityLinkWrap onClick={() => onClickAuthorityUser('BANNED')}>
+			<S.AuthorityLinkWrap onClick={() => onClickAuthorityUser(authority.READONLY)}>
 				<S.AuthorityButton>
-					<S.AuthorityText>BANNED</S.AuthorityText>
+					<S.AuthorityText>{authority.READONLY}</S.AuthorityText>
 				</S.AuthorityButton>
 			</S.AuthorityLinkWrap>
 		</S.AuthorityButtonWrap>

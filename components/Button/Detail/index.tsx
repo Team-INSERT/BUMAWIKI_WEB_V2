@@ -10,6 +10,7 @@ import { Storage } from '@/lib/storage'
 import { CustomToastContainer } from '@/layout/HomeLayout.style'
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
+import authority from '@/constants/authority.constants'
 
 interface DetailBtnProps {
 	docsId: number
@@ -100,7 +101,7 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 	return (
 		<S.DetailButtonWrap>
 			<CustomToastContainer autoClose={1000} position={toast.POSITION.TOP_RIGHT} />
-			{user.authority === 'ADMIN' ? (
+			{user.authority === authority.ADMIN ? (
 				<>
 					<S.DetailInput value={docsType} onChange={(e) => setDocsType(e.target.value)} />
 					<S.DetailWrap onClick={onClickChangeDocsType}>
