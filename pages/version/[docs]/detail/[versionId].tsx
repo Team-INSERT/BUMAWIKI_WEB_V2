@@ -45,18 +45,17 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-	const versionId = context?.params?.versionId
-	const docs = context?.params?.docs
+	const { params } = context
 
-	const res = (await httpClient.version.getByTitle((docs as string) || '')).data
+	const res = (await httpClient.version.getByTitle((params?.docs as string) || '')).data
 	const versionDocsArray = res.versionDocsResponseDto.reverse()
 
 	return {
 		props: {
 			title: res.docsResponseDto.title,
 			docsType: res.docsResponseDto.docsType,
-			docs: versionDocsArray[parseInt(versionId as string)],
-			versionId,
+			docs: versionDocsArray[parseInt(params?.versionId as string)],
+			versionId: params?.versionId,
 		},
 	}
 }

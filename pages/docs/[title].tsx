@@ -1,5 +1,4 @@
 import * as util from '@/utils'
-import * as api from '@/api/getDocs'
 
 import React from 'react'
 import Docs from '@/types/docs.type'
