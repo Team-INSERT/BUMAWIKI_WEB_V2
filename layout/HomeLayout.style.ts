@@ -1,4 +1,12 @@
+import { ToastContainer } from 'react-toastify'
 import styled from 'styled-components'
+
+export const CustomToastContainer = styled(ToastContainer)`
+	.Toastify__toast {
+		color: black;
+		font-size: 14px;
+	}
+`
 
 export const HomeWrap = styled.div`
 	display: flex;

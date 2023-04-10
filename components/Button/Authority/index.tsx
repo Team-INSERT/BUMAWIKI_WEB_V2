@@ -4,6 +4,7 @@ import * as api from '@/api/user'
 import React from 'react'
 import { useMutation } from 'react-query'
 import httpClient from '@/lib/httpClient'
+import Swal from 'sweetalert2'
 
 interface AuthorityProps {
 	email: string
@@ -15,7 +16,11 @@ interface AuthorityApiProps extends AuthorityProps {
 
 const Authority = ({ email }: AuthorityProps) => {
 	const { mutate } = useMutation(({ email, authority }: AuthorityApiProps) => httpClient.authority.put({ email, authority }), {
-		onSuccess: () => alert('유저 권한이 변경되었습니다!'),
+		onSuccess: () =>
+			Swal.fire({
+				icon: 'success',
+				title: '유저 권한이 변경되었습니다!',
+			}),
 	})
 
 	const onClickAuthorityUser = (authority: string) => {

@@ -1,4 +1,4 @@
-import FileListArray from '@/types/filelistArray.type'
+import { IFileTypes } from '@/components/DragDrop'
 import { encodeContents } from './requestContents'
 
 interface CreateDocsFormType {
@@ -6,7 +6,7 @@ interface CreateDocsFormType {
 	enroll: number
 	contents: string
 	docsType: string
-	files: FileListArray[]
+	files: IFileTypes[]
 }
 
 const createDocsForm = ({ title, enroll, contents, docsType, files }: CreateDocsFormType) => {

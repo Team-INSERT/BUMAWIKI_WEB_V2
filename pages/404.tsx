@@ -1,4 +1,4 @@
-import * as S from '../layout/index.style'
+import * as S from '../layout/HomeLayout.style'
 
 import React from 'react'
 import { NextSeo, NextSeoProps } from 'next-seo'

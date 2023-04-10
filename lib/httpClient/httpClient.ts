@@ -1,11 +1,13 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 import { requestInterceptors, responseInterceptors } from '@/lib/interceptor'
 import { Storage } from '@/lib/storage'
+import { getAccessToken } from './getAccessToken'
+import { QueryClient } from 'react-query'
 
 export interface HttpClientConfig {
 	baseURL?: string
 	timeout?: number
-	headers?: { Token?: string }
+	headers?: { Authorization?: string }
 }
 
 export class HttpClient {
@@ -18,7 +20,7 @@ export class HttpClient {
 			...axiosConfig,
 			baseURL: `${axiosConfig.baseURL}${url}`,
 		})
-		HttpClient.clientConfig = { headers: { Token: '' } }
+		HttpClient.clientConfig = { headers: { Authorization: '' } }
 		this.setting()
 	}
 
@@ -84,13 +86,24 @@ export class HttpClient {
 
 	private setting() {
 		HttpClient.setCommonInterceptors(this.api)
+		const queryClient = new QueryClient()
+
+		this.api.interceptors.response.use(
+			(response) => response,
+			(error) => {
+				Storage.delItem('access_token')
+				queryClient.invalidateQueries('getUser')
+				getAccessToken()
+				return Promise.reject(error)
+			}
+		)
 	}
 
 	static setAccessToken() {
 		const accessToken = Storage.getItem('access_token')
 		HttpClient.clientConfig.headers = {
 			...HttpClient.clientConfig.headers,
-			Token: accessToken || undefined,
+			Authorization: accessToken || undefined,
 		}
 	}
 
@@ -121,7 +134,7 @@ export default {
 	create: new HttpClient('api/docs/create', axiosConfig),
 	update: new HttpClient('api/docs/update', axiosConfig),
 	updateType: new HttpClient('api/docs/update/docsType', axiosConfig),
-	version: new HttpClient('api/docs/find/:title/version', axiosConfig),
+	version: new HttpClient('api/docs/find/', axiosConfig),
 	lastModified: new HttpClient('api/docs/find/modified', axiosConfig),
 	search: new HttpClient('api/docs/find/all/title', axiosConfig),
 	updateTitle: new HttpClient('api/docs/update/title', axiosConfig),
