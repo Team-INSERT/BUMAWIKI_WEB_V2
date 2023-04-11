@@ -17,11 +17,14 @@ import httpClient from '@/lib/httpClient'
 import { Storage } from '@/lib/storage'
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
+import useConfig from '@/hooks/useConfig'
+import CreateFormType from '@/types/createForm.type'
 
 const Create = () => {
 	const router = useRouter()
 	const { query } = router
 	const years = util.getAllYear()
+	const { seoConfig } = useConfig('부마위키 - 문서생성', '부마위키 문서생성 페이지입니다.')
 
 	const [parentFiles, setParentFiles] = React.useState<IFileTypes[]>([])
 	const [size, setSize] = React.useState<FrameType>(sizeInitState)
@@ -31,30 +34,22 @@ const Create = () => {
 	})
 	const { user: userInfo, isLogined } = useUser()
 
-	const setFiles = (file: IFileTypes[]) => {
-		setParentFiles(file)
+	const onCreatePost = async (data: CreateFormType) => {
+		return (await httpClient.create.post(data)).data
 	}
 
-	const { mutate } = useMutation(
-		(data) =>
-			httpClient.create.post(data, {
-				headers: {
-					Authorization: Storage.getItem('access_token'),
-				},
-			}),
-		{
-			onSuccess: (res) => {
-				Swal.fire({
-					icon: 'success',
-					title: '문서 생성 완료!',
-				})
-				router.push(`/docs/${res.data.title}`)
-			},
-		}
-	)
+	const { mutate } = useMutation(onCreatePost, {
+		onSuccess: (data) => {
+			Swal.fire({
+				icon: 'success',
+				title: '문서 생성 완료!',
+			})
+			router.push(`/docs/${data.title}`)
+		},
+	})
 
 	const onClickCreateDocs = () => {
-		const { title, enroll, contents, docsType } = docs
+		const { title, enroll, docsType } = docs
 		const isInvalid = title.includes('?') || title.includes('\\') || title.includes('//') || title.includes('"')
 
 		if (isInvalid) return toast.error('문서명에 특수문자를 넣을 수 없습니다.')
@@ -63,15 +58,11 @@ const Create = () => {
 		if (!title) return toast.error('문서의 이름을 정해주세요!')
 		if (!docsType) return toast.error('문서의 분류를 선택해주세요!')
 
-		mutate(
-			createDocsForm({
-				title,
-				enroll,
-				contents,
-				docsType,
-				files: parentFiles,
-			})
-		)
+		const data = createDocsForm({
+			...docs,
+			files: parentFiles,
+		})
+		mutate(data)
 	}
 
 	const makeFrame = () => {
@@ -91,21 +82,6 @@ const Create = () => {
 		return setDocs({ ...docs, docsType: type, title: docs.title.replace('틀:', ''), contents: '' })
 	}
 
-	const seoConfig: NextSeoProps = {
-		title: '부마위키 - 문서생성',
-		description: '부마위키 문서생성 페이지입니다.',
-		openGraph: {
-			type: 'website',
-			title: '부마위키 - 문서생성',
-			description: '부마위키 문서생성 페이지입니다.',
-			images: [
-				{
-					url: '/images/meta-img.png',
-				},
-			],
-		},
-	}
-
 	return (
 		<>
 			<NextSeo {...seoConfig} />
@@ -115,7 +91,7 @@ const Create = () => {
 				docs={docs}
 				createForm={createFormInitState}
 				years={years}
-				getFiles={setFiles}
+				getFiles={(file: IFileTypes[]) => setParentFiles(file)}
 				size={size}
 				setSize={setSize}
 				makeFrame={makeFrame}
