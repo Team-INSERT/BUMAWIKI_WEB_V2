@@ -7,6 +7,7 @@ import NextLogo from 'assets/next.svg'
 import httpClient from '@/lib/httpClient'
 import Docs from '@/types/docs.type'
 import { useQuery } from 'react-query'
+import { getAccessToken } from '@/lib/httpClient/getAccessToken'
 
 const Aside = () => {
 	const [page, setPage] = React.useState(0)
@@ -20,6 +21,7 @@ const Aside = () => {
 		onSuccess: (data) => {
 			setLastModifiedDocs(data)
 		},
+		onError: () => getAccessToken(),
 	})
 
 	React.useEffect(() => {
