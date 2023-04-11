@@ -1,44 +1,55 @@
 import React from 'react'
-import { useQuery } from 'react-query'
 import UserType from '@/types/user.type'
-import { useRouter } from 'next/router'
-import { NextSeo, NextSeoProps } from 'next-seo'
+import { NextSeo } from 'next-seo'
 import httpClient from '@/lib/httpClient'
 import UserLayout from '@/layout/UserLayout'
 import { initUserState } from '@/context/userState'
+import { GetStaticProps } from 'next'
+import useConfig from '@/hooks/useConfig'
 
-const User = () => {
-	const [user, setUser] = React.useState<UserType>()
-	const router = useRouter()
+interface UserPropsType {
+	user: UserType
+}
 
-	const onGetUser = async () => {
-		return (await httpClient.user.getByTitle(router.query.userId as string)).data
-	}
-	useQuery('otherUser', onGetUser, {
-		onSuccess: (data) => setUser(data),
+const User = ({ user }: UserPropsType) => {
+	const { seoConfig } = useConfig({
+		title: `부마위키 유저 - ${user.nickName}`,
+		description: `부마위키 유저 "${user.nickName}" 페이지입니다.`,
 	})
-
-	const seoConfig: NextSeoProps = {
-		title: `부마위키 유저 - ${user?.nickName}`,
-		description: `부마위키 유저 "${user?.nickName}" 페이지입니다.`,
-		openGraph: {
-			type: 'website',
-			title: `부마위키 유저 - ${user?.nickName}`,
-			description: `부마위키 유저 "${user?.nickName}" 페이지입니다.`,
-			images: [
-				{
-					url: '/images/meta-img.png',
-				},
-			],
-		},
-	}
 
 	return (
 		<>
 			<NextSeo {...seoConfig} />
-			<UserLayout user={user || initUserState} />
+			<UserLayout user={user} />
 		</>
 	)
+}
+
+const getApiDocs = async (userId: string) => {
+	try {
+		return (await httpClient.user.getByTitle(userId)).data
+	} catch (err) {
+		return false
+	}
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
+	const { params } = context
+
+	const res = await getApiDocs(params?.userId as string)
+
+	if (!res)
+		return {
+			props: {
+				user: initUserState,
+			},
+		}
+
+	return {
+		props: {
+			user: res,
+		},
+	}
 }
 
 export default User

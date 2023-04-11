@@ -38,11 +38,12 @@ const useUser = (options?: UseUserOptions) => {
 
 	const logout = () => {
 		httpClient.logout.delete({
-			headers: {
+			data: {
 				refresh_token: Storage.getItem('refresh_token'),
 			},
 		})
 		setUser(initUserState)
+
 		remove()
 	}
 

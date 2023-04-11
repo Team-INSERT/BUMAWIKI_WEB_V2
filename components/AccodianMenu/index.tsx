@@ -5,7 +5,7 @@ import ArrowRight from 'assets/arrow_right.svg'
 import React from 'react'
 import AccodianType from '@/types/accodian.type'
 
-const AccodianMenu = ({ children, name, isOpen }: AccodianType) => {
+const AccodianMenu = ({ children, name }: AccodianType) => {
 	const [detail, setDetail] = React.useState<boolean>(true)
 	const [opacity, setOpacity] = React.useState<number>(1)
 

@@ -14,8 +14,7 @@ const Aside = () => {
 	React.useEffect(() => {
 		;(async () => {
 			try {
-				const res = await httpClient.lastModified.getInQuery('page', page)
-				setLastModifiedDocs(res.data)
+				setLastModifiedDocs((await httpClient.lastModified.getInQuery('page', page)).data)
 			} catch (err) {
 				console.log(err)
 			}
