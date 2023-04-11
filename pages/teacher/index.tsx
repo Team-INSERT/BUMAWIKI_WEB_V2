@@ -3,6 +3,7 @@ import Docs from '@/types/docs.type'
 import { NextSeo, NextSeoProps } from 'next-seo'
 import httpClient from '@/lib/httpClient'
 import TeacherLayout from '@/layout/TeacherLayout'
+import useConfig from '@/hooks/useConfig'
 
 interface TeacherDocsPropsType {
 	common_teacher: Docs[]
@@ -11,20 +12,7 @@ interface TeacherDocsPropsType {
 }
 
 const Teacher = (props: TeacherDocsPropsType) => {
-	const seoConfig: NextSeoProps = {
-		title: `부마위키 - 선생님`,
-		description: `교내의 모든 선생님을 담은 페이지입니다.`,
-		openGraph: {
-			type: 'website',
-			title: `부마위키 - 선생님`,
-			description: `교내의 모든 선생님을 담은 페이지입니다.`,
-			images: [
-				{
-					url: '/images/meta-img.png',
-				},
-			],
-		},
-	}
+	const { seoConfig } = useConfig('부마위키 - 선생님', '교내의 모든 선생님에 대한 정보를 담은 페이지입니다.')
 
 	return (
 		<>

@@ -1,22 +1,10 @@
 import React from 'react'
-import { NextSeo, NextSeoProps } from 'next-seo'
+import { NextSeo } from 'next-seo'
 import HomeLayout from '@/layout/HomeLayout'
+import useConfig from '@/hooks/useConfig'
 
 const Home = () => {
-	const seoConfig: NextSeoProps = {
-		title: `부마위키 - 대문`,
-		description: `역사의 고서, 부마위키`,
-		openGraph: {
-			type: 'website',
-			title: `부마위키 - 대문`,
-			description: `역사의 고서, 부마위키`,
-			images: [
-				{
-					url: '/images/meta-img.png',
-				},
-			],
-		},
-	}
+	const { seoConfig } = useConfig('부마위키 - 대문', '역사의 고서, 부마위키')
 
 	return (
 		<>

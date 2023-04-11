@@ -1,4 +1,5 @@
 import httpClient from '@/lib/httpClient'
+import { Storage } from '@/lib/storage'
 import { NextSeo, NextSeoProps } from 'next-seo'
 import { useRouter } from 'next/router'
 
@@ -21,9 +22,8 @@ const OAuth = () => {
 
 	const { mutate } = useMutation(onLogin, {
 		onSuccess: (data) => {
-			localStorage.setItem('access_token', data.accessToken)
-			localStorage.setItem('refresh_token', data.refreshToken)
-			localStorage.setItem('isLogin', 'true')
+			Storage.setItem('access_token', data.accessToken)
+			Storage.setItem('refresh_token', data.refreshToken)
 			queryClient.invalidateQueries('getUser')
 			window.history.go(-2)
 		},

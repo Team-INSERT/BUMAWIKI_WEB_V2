@@ -3,30 +3,18 @@ import * as util from '@/utils'
 import React from 'react'
 import Docs from '@/types/docs.type'
 import { GetStaticProps } from 'next'
-import { NextSeo, NextSeoProps } from 'next-seo'
+import { NextSeo } from 'next-seo'
 import docsInitState from '@/state/docsInitState'
 import DocsLayout from '@/layout/DocsLayout'
 import httpClient from '@/lib/httpClient'
+import useConfig from '@/hooks/useConfig'
 
 interface SingleDocsPropsType {
 	docs: Docs
 }
 
 const Doc = ({ docs }: SingleDocsPropsType) => {
-	const seoConfig: NextSeoProps = {
-		title: `부마위키 - ${docs.title} (${util.typeEditor(docs.docsType)})`,
-		description: `${docs.contents.slice(0, 16)}...`,
-		openGraph: {
-			type: 'website',
-			title: `부마위키 - ${docs.title} (${util.typeEditor(docs.docsType)})`,
-			description: `${docs.contents.slice(0, 16)}...`,
-			images: [
-				{
-					url: '/images/meta-img.png',
-				},
-			],
-		},
-	}
+	const { seoConfig } = useConfig(`부마위키 - ${docs.title} (${util.typeEditor(docs.docsType)})`, `${docs.contents.slice(0, 16)}...`)
 
 	return (
 		<>

@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import Docs from '@/types/docs.type'
 import { GetStaticProps } from 'next'
 import { Storage } from '@/lib/storage/'
-import { NextSeo, NextSeoProps } from 'next-seo'
+import { NextSeo } from 'next-seo'
 import { IFileTypes } from '@/components/DragDrop'
 import httpClient from '@/lib/httpClient'
 import FileListArray from '@/types/filelistArray.type'
@@ -15,6 +15,8 @@ import useUser from '@/hooks/useUser'
 import UpdateLayout from '@/layout/UpdateLayout'
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
+import useConfig from '@/hooks/useConfig'
+import exception from '@/constants/exception.constants'
 
 interface SinglDocsPropsType {
 	defaultDocs: Docs
@@ -24,6 +26,7 @@ interface SinglDocsPropsType {
 const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 	const router = useRouter()
 	const { user } = useUser()
+	const { seoConfig } = useConfig(`부마위키 문서편집 - ${defaultDocs.title}`, `"${defaultDocs.title}" 문서편집 페이지입니다.`)
 	const textareaRef = React.useRef<HTMLTextAreaElement>(null)
 
 	const [parentFiles, setParentFiles] = React.useState<IFileTypes[]>([])
@@ -50,7 +53,7 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 			if (err instanceof AxiosError) {
 				const { status, message, error } = err.response?.data
 				if (status === 403) {
-					if (message === 'Cannot Change Your Docs') toast.error('자기 자신의 문서는 편집할 수 없습니다.')
+					if (message === exception.code.DOCS_403_2) toast.error('자기 자신의 문서는 편집할 수 없습니다.')
 					if (error === 'Forbidden') toast.error('읽기전용 사용자는 문서를 편집할 수 없습니다.')
 				}
 			}
@@ -86,21 +89,6 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 		if (!docs.contents) toast.error('문서가 비어있습니다!')
 
 		mutateUpdateDocs()
-	}
-
-	const seoConfig: NextSeoProps = {
-		title: `부마위키 문서편집 - ${defaultDocs.title}`,
-		description: `"${defaultDocs.title}" 문서편집 페이지입니다.`,
-		openGraph: {
-			type: 'website',
-			title: `부마위키 문서편집 - ${defaultDocs.title}`,
-			description: `"${defaultDocs.title}" 문서편집 페이지입니다.`,
-			images: [
-				{
-					url: '/images/meta-img.png',
-				},
-			],
-		},
 	}
 
 	return (

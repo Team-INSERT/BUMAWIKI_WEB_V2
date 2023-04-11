@@ -1,10 +1,10 @@
 import React from 'react'
 import { VersionDocsService } from '@/types/version.type'
-import { decodeContents } from '@/utils/document/requestContents'
 import { GetStaticProps } from 'next'
-import { NextSeo, NextSeoProps } from 'next-seo'
+import { NextSeo } from 'next-seo'
 import httpClient from '@/lib/httpClient'
 import VersionDetailLayout from '@/layout/VersionDetailLayout'
+import useConfig from '@/hooks/useConfig'
 
 interface VersionDetailPropsType {
 	title: string
@@ -14,20 +14,7 @@ interface VersionDetailPropsType {
 }
 
 const VersionDetail = (props: VersionDetailPropsType) => {
-	const seoConfig: NextSeoProps = {
-		title: `부마위키 문서 기록 - ${props.title}:${props.versionId}`,
-		description: `"${props.title}" 문서의 예전 기록 페이지입니다.`,
-		openGraph: {
-			type: 'website',
-			title: `부마위키 문서 기록 - ${props.title}:${props.versionId}`,
-			description: `"${props.title}" 문서의 예전 기록 페이지입니다.`,
-			images: [
-				{
-					url: '/images/meta-img.png',
-				},
-			],
-		},
-	}
+	const { seoConfig } = useConfig(`부마위키 문서 기록 - ${props.title}:${props.versionId}`, `"${props.title}" 문서의 예전 기록 페이지입니다.`)
 
 	return (
 		<>

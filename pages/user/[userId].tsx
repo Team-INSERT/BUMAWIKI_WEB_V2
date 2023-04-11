@@ -1,30 +1,18 @@
 import React from 'react'
 import UserType from '@/types/user.type'
-import { NextSeo, NextSeoProps } from 'next-seo'
+import { NextSeo } from 'next-seo'
 import httpClient from '@/lib/httpClient'
 import UserLayout from '@/layout/UserLayout'
 import { initUserState } from '@/context/userState'
 import { GetStaticProps } from 'next'
+import useConfig from '@/hooks/useConfig'
 
 interface UserPropsType {
 	user: UserType
 }
 
 const User = ({ user }: UserPropsType) => {
-	const seoConfig: NextSeoProps = {
-		title: `부마위키 유저 - ${user.nickName}`,
-		description: `부마위키 유저 "${user.nickName}" 페이지입니다.`,
-		openGraph: {
-			type: 'website',
-			title: `부마위키 유저 - ${user.nickName}`,
-			description: `부마위키 유저 "${user.nickName}" 페이지입니다.`,
-			images: [
-				{
-					url: '/images/meta-img.png',
-				},
-			],
-		},
-	}
+	const { seoConfig } = useConfig(`부마위키 유저 - ${user.nickName}`, `부마위키 유저 "${user.nickName}" 페이지입니다.`)
 
 	return (
 		<>

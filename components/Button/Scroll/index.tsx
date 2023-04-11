@@ -5,12 +5,8 @@ import ScrollUp from 'assets/scroll_up.svg'
 import React from 'react'
 
 const ScrollBtn = () => {
-	const scrollToTop = () => {
-		window.scroll({ top: 0, behavior: 'smooth' })
-	}
-	const scrollToBottom = () => {
-		window.scroll({ top: document.documentElement.scrollHeight, behavior: 'smooth' })
-	}
+	const scrollToTop = () => window.scroll({ top: 0, behavior: 'smooth' })
+	const scrollToBottom = () => window.scroll({ top: document.documentElement.scrollHeight, behavior: 'smooth' })
 
 	return (
 		<S.ScrollButtonWrap>

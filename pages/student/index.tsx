@@ -2,25 +2,13 @@ import * as util from '@/utils'
 
 import React from 'react'
 import DocsPropsType from '@/types/static/docs.props.type'
-import { NextSeo, NextSeoProps } from 'next-seo'
+import { NextSeo } from 'next-seo'
 import httpClient from '@/lib/httpClient'
 import StudentLayout from '@/layout/StudentLayout'
+import useConfig from '@/hooks/useConfig'
 
 const Student = (props: DocsPropsType) => {
-	const seoConfig: NextSeoProps = {
-		title: `부마위키 - 학생`,
-		description: `교내의 모든 학생을 담은 페이지입니다.`,
-		openGraph: {
-			type: 'website',
-			title: `부마위키 - 학생`,
-			description: `교내의 모든 학생을 담은 페이지입니다.`,
-			images: [
-				{
-					url: '/images/meta-img.png',
-				},
-			],
-		},
-	}
+	const { seoConfig } = useConfig('부마위키 - 학생', '교내의 모든 학생을 담은 페이지입니다.')
 
 	return (
 		<>
