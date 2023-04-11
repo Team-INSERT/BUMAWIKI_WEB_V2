@@ -2,7 +2,7 @@ import * as S from './style'
 
 import React from 'react'
 import userState from '@/context/userState'
-import { useMutation, useQueryClient } from 'react-query'
+import { useMutation } from 'react-query'
 import { useRecoilValue } from 'recoil'
 import { useRouter } from 'next/router'
 import httpClient from '@/lib/httpClient'
@@ -11,6 +11,10 @@ import { CustomToastContainer } from '@/layout/HomeLayout.style'
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
 import authority from '@/constants/authority.constants'
+import useUpdateTitleMutation from '@/features/UpdateTitle'
+import useUpdateTypeMutation from '@/features/UpdateType'
+import useUser from '@/hooks/useUser'
+import useDeleteDocsMutation from '@/features/DeleteDocs'
 
 interface DetailBtnProps {
 	docsId: number
@@ -18,84 +22,32 @@ interface DetailBtnProps {
 
 const DetailBtn = ({ docsId }: DetailBtnProps) => {
 	const router = useRouter()
-	const user = useRecoilValue(userState)
+	const { user, isLogined } = useUser()
 	const [docsName, setDocsName] = React.useState('')
 	const [docsType, setDocsType] = React.useState('')
-	const queryClient = useQueryClient()
 
-	const updateDocsTitleMutation = useMutation(() => httpClient.updateTitle.putByTitle(router.pathname, docsName), {
-		onSuccess: (res) => {
-			Swal.fire({
-				icon: 'success',
-				title: '문서 이름 변경 완료!',
-			})
-			queryClient.invalidateQueries('lastModifiedDocs')
-			router.push(`/docs/${res.data.title}`)
-		},
-	})
+	const updateTitle = useUpdateTitleMutation(docsName)
+	const updateType = useUpdateTypeMutation(docsId, docsType)
+	const deleteDocs = useDeleteDocsMutation(docsId)
 
-	const onUpdateType = async () => {
-		return (
-			await httpClient.updateType.put(
-				{ id: docsId, docsType },
-				{
-					headers: {
-						Authorization: Storage.getItem('access_token'),
-					},
-				}
-			)
-		).data
+	const onChangeTitle = async () => {
+		if (!docsName) return toast.error('내용이 없습니다.')
+		updateTitle.mutate()
 	}
 
-	const updateDocsTypeMutation = useMutation(onUpdateType, {
-		onSuccess: (res) => {
-			Swal.fire({
-				icon: 'success',
-				title: '문서 타입 변경 완료!',
-			})
-			queryClient.invalidateQueries('lastModifiedDocs')
-			router.push(`/docs/${res.data.title}`)
-		},
-	})
+	const onChangeType = async () => {
+		if (!docsType) return toast.error('내용이 없습니다.')
+		updateType.mutate()
+	}
 
-	const onClickNavigatePage = (type: string) => {
+	const onDeleteDocs = () => {
+		if (window.confirm('정말 삭제하시겠습니까?')) deleteDocs.mutate()
+	}
+
+	const onNavigatePage = (type: string) => {
 		if (type === 'VERSION') return router.push(`/version/${router.query.title}`)
-		if (type === 'UPDATE' && !user.id) return alert('로그인 후 편집하실 수 있습니다!')
+		if (type === 'UPDATE' && !isLogined) return alert('로그인 후 편집하실 수 있습니다!')
 		router.push(`/update/${router.query.title}`)
-	}
-
-	const onDeleteDocsTitle = async () => {
-		return (
-			await httpClient.deleteDocs.deleteById(docsId, {
-				headers: {
-					Authorization: Storage.getItem('access_token'),
-				},
-			})
-		).data
-	}
-
-	const deleteDocsTitleMutation = useMutation(onDeleteDocsTitle, {
-		onSuccess: () => {
-			Swal.fire({
-				icon: 'success',
-				title: '문서 삭제 완료!',
-			})
-			router.push('/')
-		},
-	})
-
-	const onClickChangeDocsName = async () => {
-		if (!docsName.length) return toast.error('내용이 없습니다.')
-		updateDocsTitleMutation.mutate()
-	}
-
-	const onClickChangeDocsType = async () => {
-		if (!docsType.length) return toast.error('내용이 없습니다.')
-		updateDocsTypeMutation.mutate()
-	}
-
-	const onClickDeleteDocs = () => {
-		if (window.confirm('정말 삭제하시겠습니까?')) deleteDocsTitleMutation.mutate()
 	}
 
 	return (
@@ -104,18 +56,18 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 			{user.authority === authority.ADMIN ? (
 				<>
 					<S.DetailInput value={docsType} onChange={(e) => setDocsType(e.target.value)} />
-					<S.DetailWrap onClick={onClickChangeDocsType}>
+					<S.DetailWrap onClick={onChangeType}>
 						<S.DetailButton>
 							<S.DetailText>타입변경</S.DetailText>
 						</S.DetailButton>
 					</S.DetailWrap>
-					<S.DetailWrap onClick={onClickDeleteDocs}>
+					<S.DetailWrap onClick={onDeleteDocs}>
 						<S.DetailButton>
 							<S.DetailText>삭제</S.DetailText>
 						</S.DetailButton>
 					</S.DetailWrap>
 					<S.DetailInput value={docsName} onChange={(e) => setDocsName(e.target.value)} />
-					<S.DetailWrap onClick={onClickChangeDocsName}>
+					<S.DetailWrap onClick={onChangeTitle}>
 						<S.DetailButton>
 							<S.DetailText>변경</S.DetailText>
 						</S.DetailButton>
@@ -124,12 +76,12 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 			) : (
 				''
 			)}
-			<S.DetailLinkWrap onClick={() => onClickNavigatePage('UPDATE')}>
+			<S.DetailLinkWrap onClick={() => onNavigatePage('UPDATE')}>
 				<S.DetailButton>
 					<S.DetailText>편집</S.DetailText>
 				</S.DetailButton>
 			</S.DetailLinkWrap>
-			<S.DetailLinkWrap onClick={() => onClickNavigatePage('VERSION')}>
+			<S.DetailLinkWrap onClick={() => onNavigatePage('VERSION')}>
 				<S.DetailButton>
 					<S.DetailText>기록</S.DetailText>
 				</S.DetailButton>
