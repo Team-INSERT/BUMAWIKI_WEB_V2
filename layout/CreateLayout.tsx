@@ -107,27 +107,29 @@ const CreateLayout = ({
 							<S.CreateTR>
 								<S.CreateTDTitle>틀 규격</S.CreateTDTitle>
 								<S.CreateTD>
-									<S.FrameInputBox>
-										<S.FrameInputWrap>
-											<S.FrameText>열</S.FrameText>
-											<S.FrameInput
-												type="number"
-												min="2"
-												max="5"
-												value={size.column}
-												onChange={(e) => setSize({ ...size, column: parseInt(e.target.value) })}
-											/>
-											<S.FrameText>행</S.FrameText>
-											<S.FrameInput
-												type="number"
-												min="2"
-												max="10"
-												value={size.row}
-												onChange={(e) => setSize({ ...size, row: parseInt(e.target.value) })}
-											/>
-										</S.FrameInputWrap>
-									</S.FrameInputBox>
-									<S.CreateFrameButton onClick={() => makeFrame()}>틀생성/초기화</S.CreateFrameButton>
+									<S.FrameWrap>
+										<S.FrameInputBox>
+											<S.FrameInputWrap>
+												<S.FrameText>열</S.FrameText>
+												<S.FrameInput
+													type="number"
+													min="2"
+													max="5"
+													value={size.column}
+													onChange={(e) => setSize({ ...size, column: parseInt(e.target.value) })}
+												/>
+												<S.FrameText>행</S.FrameText>
+												<S.FrameInput
+													type="number"
+													min="2"
+													max="10"
+													value={size.row}
+													onChange={(e) => setSize({ ...size, row: parseInt(e.target.value) })}
+												/>
+											</S.FrameInputWrap>
+										</S.FrameInputBox>
+										<S.CreateFrameButton onClick={() => makeFrame()}>틀생성/초기화</S.CreateFrameButton>
+									</S.FrameWrap>
 								</S.CreateTD>
 							</S.CreateTR>
 						)}

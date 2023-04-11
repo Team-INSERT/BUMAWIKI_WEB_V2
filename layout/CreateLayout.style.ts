@@ -33,7 +33,6 @@ export const CreateTD = styled.td`
 	font-family: 'Open Sans', sans-serif;
 	white-space: pre-wrap;
 	font-size: 14px;
-	overflow: scroll;
 
 	@media (max-width: 500px) {
 		font-size: 10px;
@@ -42,7 +41,7 @@ export const CreateTD = styled.td`
 `
 
 export const CreateTDTitle = styled.td`
-	width: 8%;
+	width: 7.5%;
 	background-color: #274168;
 	color: white;
 	text-align: center;
@@ -56,22 +55,46 @@ export const CreateTDTitle = styled.td`
 
 export const CreateTDDisplay = styled.td`
 	display: flex;
-`
-
-export const CreateTDDiv = styled.td`
-	width: 100%;
-	/* height: 90%; */
-	/* padding-left: 20px; */
+	height:40px;
+	align-items:center;
+	/* background-color:red; */
+	padding-left: 20px;
 	border: none;
 	font-family: 'Open Sans', sans-serif;
 	white-space: pre-wrap;
 	font-size: 14px;
-	overflow: scroll;
 
 	@media (max-width: 500px) {
 		font-size: 10px;
 	}
+	
+	label {
+		font-size:16px;
+		font-weight:700;
+		@media (max-width: 500px) {
+			font-size: 6px;
+		}
+	}
+`
+
+export const CreateTDDiv = styled.td`
+	width: 100%;
 	height: 400px;
+	padding:20px;
+	border: none;
+	font-family: 'Open Sans', sans-serif;
+	white-space: pre-wrap;
+	overflow: scroll;
+
+	vertical-align:top;
+
+	@media (max-width: 500px) {
+		font-size: 10px;
+	}
+`
+
+export const FrameWrap = styled.div`
+	padding:10px;
 `
 
 //========================================================
@@ -115,7 +138,7 @@ export const CreateTableTRTextarea = styled.textarea`
 	width: 100%;
 	height: 400px;
 	outline: none;
-	/* padding-left: 20px; */
+	padding-top:20px;
 	resize: none;
 	border: none;
 	font-family: 'Open Sans', sans-serif;
@@ -173,6 +196,7 @@ export const FrameInputBox = styled.div`
 export const FrameText = styled.div`
 	font-size: 15px;
 	font-weight: 700;
+	margin-right:5px;
 	padding: 2px;
 `
 
@@ -187,9 +211,8 @@ export const FrameInputDiv = styled.div`
 `
 
 export const FrameInput = styled.input`
-	width: 80px;
-	margin-left: 10px;
-	margin-top: 0px;
+	width: 90px;
+	margin: 0 10px 0 10px;
 	height: 20px;
 `
 
@@ -247,7 +270,6 @@ export const CreateTableTRInputContents = styled.input`
 	height: 100%;
 	border: none;
 	outline: none;
-	padding-left: 20px;
 	font-size: 16px;
 	display: flex;
 	align-items: center;
