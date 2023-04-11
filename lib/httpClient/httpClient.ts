@@ -93,7 +93,7 @@ export class HttpClient {
 			(response) => response,
 			(error) => {
 				const { status, code } = error.response.data
-				if (status === 403 && code === exception.TOKEN_403_3) Storage.delItem('refresh_token')
+				if (status === 403 && code === exception.code.TOKEN_403_3) Storage.delItem('refresh_token')
 				Storage.delItem('access_token')
 				queryClient.invalidateQueries('getUser')
 				getAccessToken()
