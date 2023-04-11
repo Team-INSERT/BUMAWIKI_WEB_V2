@@ -3,6 +3,7 @@ import { requestInterceptors, responseInterceptors } from '@/lib/interceptor'
 import { Storage } from '@/lib/storage'
 import { getAccessToken } from './getAccessToken'
 import { QueryClient } from 'react-query'
+import exception from '@/constants/exception.constants'
 
 export interface HttpClientConfig {
 	baseURL?: string
@@ -91,6 +92,8 @@ export class HttpClient {
 		this.api.interceptors.response.use(
 			(response) => response,
 			(error) => {
+				const { status, code } = error.response.data
+				if (status === 403 && code === exception.TOKEN_403_3) Storage.delItem('refresh_token')
 				Storage.delItem('access_token')
 				queryClient.invalidateQueries('getUser')
 				getAccessToken()
