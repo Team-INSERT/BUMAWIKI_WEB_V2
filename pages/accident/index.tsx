@@ -1,10 +1,9 @@
-import * as docs from '@/api/getDocs'
 import * as util from '@/utils'
 
 import React from 'react'
 import DocsPropsType from '@/types/static/docs.props.type'
 import { NextSeo } from 'next-seo'
-import AccidentLayout from '@/layout/AccidentLayout'
+import AccidentLayout from '@/layout/static/AccidentLayout'
 import httpClient from '@/lib/httpClient'
 import useConfig from '@/hooks/useConfig'
 

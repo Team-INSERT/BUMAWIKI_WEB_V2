@@ -1,7 +1,7 @@
 import React from 'react'
 import Docs from '@/types/docs.type'
-import { NextSeo, NextSeoProps } from 'next-seo'
-import ClubLayout from '@/layout/ClubLayout'
+import { NextSeo } from 'next-seo'
+import ClubLayout from '@/layout/static/ClubLayout'
 import httpClient from '@/lib/httpClient'
 import useConfig from '@/hooks/useConfig'
 

@@ -1,8 +1,8 @@
 import React from 'react'
 import Docs from '@/types/docs.type'
-import { NextSeo, NextSeoProps } from 'next-seo'
+import { NextSeo } from 'next-seo'
 import httpClient from '@/lib/httpClient'
-import TeacherLayout from '@/layout/TeacherLayout'
+import TeacherLayout from '@/layout/static/TeacherLayout'
 import useConfig from '@/hooks/useConfig'
 
 interface TeacherDocsPropsType {

@@ -4,7 +4,7 @@ import React from 'react'
 import DocsPropsType from '@/types/static/docs.props.type'
 import { NextSeo } from 'next-seo'
 import httpClient from '@/lib/httpClient'
-import StudentLayout from '@/layout/StudentLayout'
+import StudentLayout from '@/layout/static/StudentLayout'
 import useConfig from '@/hooks/useConfig'
 
 const Student = (props: DocsPropsType) => {

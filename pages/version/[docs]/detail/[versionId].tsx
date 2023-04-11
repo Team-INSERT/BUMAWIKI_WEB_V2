@@ -3,7 +3,7 @@ import { VersionDocsService } from '@/types/version.type'
 import { GetStaticProps } from 'next'
 import { NextSeo } from 'next-seo'
 import httpClient from '@/lib/httpClient'
-import VersionDetailLayout from '@/layout/VersionDetailLayout'
+import VersionDetailLayout from '@/layout/version/VersionDetailLayout'
 import useConfig from '@/hooks/useConfig'
 
 interface VersionDetailPropsType {
