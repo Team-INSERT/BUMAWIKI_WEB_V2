@@ -1,3 +1,4 @@
+import useConfig from '@/hooks/useConfig'
 import httpClient from '@/lib/httpClient'
 import { Storage } from '@/lib/storage'
 import { NextSeo, NextSeoProps } from 'next-seo'
@@ -9,6 +10,10 @@ import { useMutation, useQueryClient } from 'react-query'
 const OAuth = () => {
 	const queryClient = useQueryClient()
 	const router = useRouter()
+	const { seoConfig } = useConfig({
+		title: `부마위키 - 로그인`,
+		description: `부마위키의 로그인페이지입니다.`,
+	})
 
 	const onLogin = async () => {
 		return (
@@ -34,11 +39,6 @@ const OAuth = () => {
 		mutate()
 		// eslint-disable-next-line
 	}, [])
-
-	const seoConfig: NextSeoProps = {
-		title: `부마위키 - 로그인`,
-		description: `부마위키의 로그인페이지입니다.`,
-	}
 
 	return <NextSeo {...seoConfig} />
 }

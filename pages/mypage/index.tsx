@@ -8,7 +8,10 @@ import useConfig from '@/hooks/useConfig'
 
 const MyPage = () => {
 	const { user, logout } = useUser()
-	const { seoConfig } = useConfig('부마위키 - 마이페이지', '부마위키의 마이페이지입니다.')
+	const { seoConfig } = useConfig({
+		title: '부마위키 - 마이페이지',
+		description: '부마위키의 마이페이지입니다.',
+	})
 	const queryClient = new QueryClient()
 
 	const onLogout = async () => {

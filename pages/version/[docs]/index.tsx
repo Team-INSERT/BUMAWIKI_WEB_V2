@@ -12,7 +12,10 @@ interface SingleDocsPropsType {
 }
 
 const Version = (props: SingleDocsPropsType) => {
-	const { seoConfig } = useConfig(`부마위키 문서 수정 기록 - ${props.docsName}`, `"${props.docsName}" 문서의 수정 기록 페이지입니다.`)
+	const { seoConfig } = useConfig({
+		title: `부마위키 문서 수정 기록 - ${props.docsName}`,
+		description: `"${props.docsName}" 문서의 수정 기록 페이지입니다.`,
+	})
 
 	return (
 		<>
@@ -20,13 +23,6 @@ const Version = (props: SingleDocsPropsType) => {
 			<VersionLayout {...props} />
 		</>
 	)
-}
-
-export const getStaticPaths = async () => {
-	return {
-		paths: [],
-		fallback: true,
-	}
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {

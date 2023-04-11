@@ -8,7 +8,10 @@ import StudentLayout from '@/layout/StudentLayout'
 import useConfig from '@/hooks/useConfig'
 
 const Student = (props: DocsPropsType) => {
-	const { seoConfig } = useConfig('부마위키 - 학생', '교내의 모든 학생을 담은 페이지입니다.')
+	const { seoConfig } = useConfig({
+		title: '부마위키 - 학생',
+		description: '교내의 모든 학생을 담은 페이지입니다.',
+	})
 
 	return (
 		<>

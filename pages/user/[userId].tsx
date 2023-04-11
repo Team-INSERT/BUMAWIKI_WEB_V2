@@ -12,7 +12,10 @@ interface UserPropsType {
 }
 
 const User = ({ user }: UserPropsType) => {
-	const { seoConfig } = useConfig(`부마위키 유저 - ${user.nickName}`, `부마위키 유저 "${user.nickName}" 페이지입니다.`)
+	const { seoConfig } = useConfig({
+		title: `부마위키 유저 - ${user.nickName}`,
+		description: `부마위키 유저 "${user.nickName}" 페이지입니다.`,
+	})
 
 	return (
 		<>
@@ -20,13 +23,6 @@ const User = ({ user }: UserPropsType) => {
 			<UserLayout user={user} />
 		</>
 	)
-}
-
-export const getStaticPaths = async () => {
-	return {
-		paths: [],
-		fallback: 'blocking',
-	}
 }
 
 const getApiDocs = async (userId: string) => {

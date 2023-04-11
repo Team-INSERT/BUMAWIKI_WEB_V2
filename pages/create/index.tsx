@@ -23,7 +23,10 @@ const Create = () => {
 	const router = useRouter()
 	const { query } = router
 	const years = util.getAllYear()
-	const { seoConfig } = useConfig('부마위키 - 문서생성', '부마위키 문서생성 페이지입니다.')
+	const { seoConfig } = useConfig({
+		title: '부마위키 - 문서생성',
+		description: '부마위키 문서생성 페이지입니다.',
+	})
 
 	const [parentFiles, setParentFiles] = React.useState<IFileTypes[]>([])
 	const [size, setSize] = React.useState<FrameType>(sizeInitState)

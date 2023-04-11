@@ -26,7 +26,10 @@ interface SinglDocsPropsType {
 const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 	const router = useRouter()
 	const { user } = useUser()
-	const { seoConfig } = useConfig(`부마위키 문서편집 - ${defaultDocs.title}`, `"${defaultDocs.title}" 문서편집 페이지입니다.`)
+	const { seoConfig } = useConfig({
+		title: `부마위키 문서편집 - ${defaultDocs.title}`,
+		description: `"${defaultDocs.title}" 문서편집 페이지입니다.`,
+	})
 	const textareaRef = React.useRef<HTMLTextAreaElement>(null)
 
 	const [parentFiles, setParentFiles] = React.useState<IFileTypes[]>([])
@@ -105,13 +108,6 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 			/>
 		</>
 	)
-}
-
-export const getStaticPaths = async () => {
-	return {
-		paths: [],
-		fallback: 'blocking',
-	}
 }
 
 const getApiDocs = async (docsName: string) => {

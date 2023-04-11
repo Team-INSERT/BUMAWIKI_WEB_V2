@@ -12,7 +12,10 @@ interface TeacherDocsPropsType {
 }
 
 const Teacher = (props: TeacherDocsPropsType) => {
-	const { seoConfig } = useConfig('부마위키 - 선생님', '교내의 모든 선생님에 대한 정보를 담은 페이지입니다.')
+	const { seoConfig } = useConfig({
+		title: '부마위키 - 선생님',
+		description: '교내의 모든 선생님에 대한 정보를 담은 페이지입니다.',
+	})
 
 	return (
 		<>

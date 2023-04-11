@@ -15,7 +15,10 @@ interface SingleDocsPropsType {
 
 const Search = ({ searchValue, redirect, results }: SingleDocsPropsType) => {
 	const router = useRouter()
-	const { seoConfig } = useConfig(`부마위키 검색 - ${searchValue}`, `부마위키의 "${searchValue}" 검색 결과에 관한 페이지입니다.`)
+	const { seoConfig } = useConfig({
+		title: `부마위키 검색 - ${searchValue}`,
+		description: `부마위키의 "${searchValue}" 검색 결과에 관한 페이지입니다.`,
+	})
 
 	React.useEffect(() => {
 		if (redirect) router.push(`/docs/${results[0].title}`)

@@ -14,7 +14,10 @@ interface SingleDocsPropsType {
 }
 
 const Doc = ({ docs }: SingleDocsPropsType) => {
-	const { seoConfig } = useConfig(`부마위키 - ${docs.title} (${util.typeEditor(docs.docsType)})`, `${docs.contents.slice(0, 16)}...`)
+	const { seoConfig } = useConfig({
+		title: `부마위키 - ${docs.title} (${util.typeEditor(docs.docsType)})`,
+		description: `${docs.contents.slice(0, 16)}...`,
+	})
 
 	return (
 		<>
