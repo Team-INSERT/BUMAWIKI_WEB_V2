@@ -6,20 +6,25 @@ import PrevLogo from 'assets/prev.svg'
 import NextLogo from 'assets/next.svg'
 import httpClient from '@/lib/httpClient'
 import Docs from '@/types/docs.type'
+import { useQuery } from 'react-query'
 
 const Aside = () => {
 	const [page, setPage] = React.useState(0)
 	const [lastModifiedDocs, setLastModifiedDocs] = React.useState<Docs[]>([])
 
+	const onGetLastModifiedDocs = async () => {
+		return (await httpClient.lastModified.getInQuery('page', page)).data
+	}
+
+	const { refetch } = useQuery('getLastModifiedDocs', onGetLastModifiedDocs, {
+		onSuccess: (data) => {
+			setLastModifiedDocs(data)
+		},
+	})
+
 	React.useEffect(() => {
-		;(async () => {
-			try {
-				setLastModifiedDocs((await httpClient.lastModified.getInQuery('page', page)).data)
-			} catch (err) {
-				console.log(err)
-			}
-		})()
-	}, [page])
+		refetch()
+	}, [page, refetch])
 
 	return (
 		<S.AsideWrap>
