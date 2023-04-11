@@ -29,7 +29,7 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 	const [parentFiles, setParentFiles] = React.useState<IFileTypes[]>([])
 	const [docs, setDocs] = React.useState<UpdateDocsType>({
 		title: defaultDocs.title,
-		contents: decodeContents(defaultDocs.contents),
+		contents: decodeContents(defaultDocs.contents || ''),
 		files: [],
 	})
 	const [isOnAutoComplete, setIsOnAutoComplete] = React.useState(JSON.parse(Storage.getItem('autoComplete') || 'true'))
