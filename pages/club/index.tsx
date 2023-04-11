@@ -11,7 +11,10 @@ interface ClubDocsPropsType {
 }
 
 const Club = (props: ClubDocsPropsType) => {
-	const { seoConfig } = useConfig('부마위키 - 동아리', '교내에서 일어나는 모든 동아리를 담은 페이지입니다.')
+	const { seoConfig } = useConfig({
+		title: '부마위키 - 동아리',
+		description: '교내에서 일어나는 모든 동아리를 담은 페이지입니다.',
+	})
 
 	return (
 		<>

@@ -14,7 +14,10 @@ interface VersionDetailPropsType {
 }
 
 const VersionDetail = (props: VersionDetailPropsType) => {
-	const { seoConfig } = useConfig(`부마위키 문서 기록 - ${props.title}:${props.versionId}`, `"${props.title}" 문서의 예전 기록 페이지입니다.`)
+	const { seoConfig } = useConfig({
+		title: `부마위키 문서 기록 - ${props.title}:${props.versionId}`,
+		description: `"${props.title}" 문서의 예전 기록 페이지입니다.`,
+	})
 
 	return (
 		<>
@@ -22,13 +25,6 @@ const VersionDetail = (props: VersionDetailPropsType) => {
 			<VersionDetailLayout {...props} />
 		</>
 	)
-}
-
-export const getStaticPaths = async () => {
-	return {
-		paths: [],
-		fallback: true,
-	}
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {

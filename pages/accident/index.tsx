@@ -8,7 +8,10 @@ import httpClient from '@/lib/httpClient'
 import useConfig from '@/hooks/useConfig'
 
 const Accident = (props: DocsPropsType) => {
-	const { seoConfig } = useConfig('부마위키 - 사건/사고', '교내에서 일어나는 모든 사건/사고를 담은 페이지입니다.')
+	const { seoConfig } = useConfig({
+		title: '부마위키 - 사건/사고',
+		description: '교내에서 일어나는 모든 사건/사고를 담은 페이지입니다.',
+	})
 
 	return (
 		<>

@@ -1,6 +1,11 @@
 import { NextSeoProps } from 'next-seo'
 
-const useConfig = (title: string, description: string) => {
+interface UseConfigPropsType {
+	title: string
+	description: string
+}
+
+const useConfig = ({ title, description }: UseConfigPropsType) => {
 	const seoConfig: NextSeoProps = {
 		title,
 		description,
