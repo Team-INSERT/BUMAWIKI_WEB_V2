@@ -1,20 +1,14 @@
 import * as S from './style'
 
 import React from 'react'
-import userState from '@/context/userState'
-import { useMutation } from 'react-query'
-import { useRecoilValue } from 'recoil'
 import { useRouter } from 'next/router'
-import httpClient from '@/lib/httpClient'
-import { Storage } from '@/lib/storage'
 import { CustomToastContainer } from '@/layout/HomeLayout.style'
 import { toast } from 'react-toastify'
-import Swal from 'sweetalert2'
 import authority from '@/constants/authority.constants'
-import useUpdateTitleMutation from '@/features/UpdateTitle'
-import useUpdateTypeMutation from '@/features/UpdateType'
+import useUpdateTitleMutation from '@/features/UpdateTitleFeature'
+import useUpdateTypeMutation from '@/features/UpdateTypeFeature'
 import useUser from '@/hooks/useUser'
-import useDeleteDocsMutation from '@/features/DeleteDocs'
+import useDeleteDocsMutation from '@/features/DeleteDocsFeature'
 
 interface DetailBtnProps {
 	docsId: number
