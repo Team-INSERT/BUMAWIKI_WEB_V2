@@ -16,7 +16,6 @@ import { IFileTypes } from '@/components/DragDrop'
 import httpClient from '@/lib/httpClient'
 import { Storage } from '@/lib/storage'
 import { toast } from 'react-toastify'
-import { CustomToastContainer } from '@/layout/HomeLayout.style'
 import Swal from 'sweetalert2'
 
 const Create = () => {

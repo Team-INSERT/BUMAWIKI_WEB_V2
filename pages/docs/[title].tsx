@@ -1,5 +1,4 @@
 import * as util from '@/utils'
-import * as api from '@/api/getDocs'
 
 import React from 'react'
 import Docs from '@/types/docs.type'
@@ -15,12 +14,12 @@ interface SingleDocsPropsType {
 
 const Doc = ({ docs }: SingleDocsPropsType) => {
 	const seoConfig: NextSeoProps = {
-		title: `부마위키 - ${docs?.title} (${util.typeEditor(docs?.docsType)})`,
-		description: `${docs?.contents.slice(0, 16)}...`,
+		title: `부마위키 - ${docs.title} (${util.typeEditor(docs.docsType)})`,
+		description: `${docs.contents.slice(0, 16)}...`,
 		openGraph: {
 			type: 'website',
-			title: `부마위키 - ${docs?.title} (${util.typeEditor(docs?.docsType)})`,
-			description: `${docs?.contents.slice(0, 16)}...`,
+			title: `부마위키 - ${docs.title} (${util.typeEditor(docs.docsType)})`,
+			description: `${docs.contents.slice(0, 16)}...`,
 			images: [
 				{
 					url: '/images/meta-img.png',
@@ -40,7 +39,7 @@ const Doc = ({ docs }: SingleDocsPropsType) => {
 export const getStaticPaths = async () => {
 	return {
 		paths: [],
-		fallback: true,
+		fallback: 'blocking',
 	}
 }
 

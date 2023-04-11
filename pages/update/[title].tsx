@@ -13,7 +13,6 @@ import httpClient from '@/lib/httpClient'
 import FileListArray from '@/types/filelistArray.type'
 import useUser from '@/hooks/useUser'
 import UpdateLayout from '@/layout/UpdateLayout'
-import { CustomToastContainer } from '@/layout/HomeLayout.style'
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
 
@@ -29,8 +28,8 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 
 	const [parentFiles, setParentFiles] = React.useState<IFileTypes[]>([])
 	const [docs, setDocs] = React.useState<UpdateDocsType>({
-		title: defaultDocs?.title,
-		contents: decodeContents(defaultDocs?.contents || ''),
+		title: defaultDocs.title,
+		contents: decodeContents(defaultDocs.contents),
 		files: [],
 	})
 	const [isOnAutoComplete, setIsOnAutoComplete] = React.useState(JSON.parse(Storage.getItem('autoComplete') || 'true'))
@@ -49,7 +48,7 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 		},
 		onError: (err) => {
 			if (err instanceof AxiosError) {
-				const { status, message, error } = err?.response?.data
+				const { status, message, error } = err.response?.data
 				if (status === 403) {
 					if (message === 'Cannot Change Your Docs') toast.error('자기 자신의 문서는 편집할 수 없습니다.')
 					if (error === 'Forbidden') toast.error('읽기전용 사용자는 문서를 편집할 수 없습니다.')
@@ -90,12 +89,12 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 	}
 
 	const seoConfig: NextSeoProps = {
-		title: `부마위키 문서편집 - ${defaultDocs?.title}`,
-		description: `"${defaultDocs?.title}" 문서편집 페이지입니다.`,
+		title: `부마위키 문서편집 - ${defaultDocs.title}`,
+		description: `"${defaultDocs.title}" 문서편집 페이지입니다.`,
 		openGraph: {
 			type: 'website',
-			title: `부마위키 문서편집 - ${defaultDocs?.title}`,
-			description: `"${defaultDocs?.title}" 문서편집 페이지입니다.`,
+			title: `부마위키 문서편집 - ${defaultDocs.title}`,
+			description: `"${defaultDocs.title}" 문서편집 페이지입니다.`,
 			images: [
 				{
 					url: '/images/meta-img.png',
@@ -123,7 +122,7 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 export const getStaticPaths = async () => {
 	return {
 		paths: [],
-		fallback: true,
+		fallback: 'blocking',
 	}
 }
 
