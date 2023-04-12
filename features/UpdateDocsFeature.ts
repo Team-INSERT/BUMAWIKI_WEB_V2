@@ -19,7 +19,6 @@ interface UpdateMutateFunctionPropsType {
 }
 
 const updateDocsForm = ({ contents, files }: UpdateDocsFormType) => {
-	const FormData = require('form-data')
 	const data = new FormData()
 	data.append(
 		'request',

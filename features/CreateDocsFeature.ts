@@ -14,7 +14,6 @@ interface CreateDocsFormType {
 }
 
 const createDocsForm = ({ title, enroll, contents, docsType, files }: CreateDocsFormType) => {
-	const FormData = require('form-data')
 	const data = new FormData()
 	data.append(
 		'request',
@@ -23,7 +22,6 @@ const createDocsForm = ({ title, enroll, contents, docsType, files }: CreateDocs
 		})
 	)
 	files.reverse().forEach((file) => data.append('files', file.object, file.object.name))
-
 	return data
 }
 
