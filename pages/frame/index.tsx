@@ -1,7 +1,7 @@
 import React from 'react'
 import DocsPropsType from '@/types/static/docs.props.type'
 import { NextSeo } from 'next-seo'
-import FrameLayout from '@/layout/FrameLayout'
+import FrameLayout from '@/layout/static/FrameLayout'
 import httpClient from '@/lib/httpClient'
 import useConfig from '@/hooks/useConfig'
 

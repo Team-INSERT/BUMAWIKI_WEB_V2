@@ -1,23 +1,19 @@
 import * as util from '@/utils'
 
 import React from 'react'
-import { useMutation } from 'react-query'
 import CreateDocsType from '@/types/create.type'
 import FrameType from '@/types/frame.type'
 import sizeInitState from '@/state/sizeInitState'
 import { useRouter } from 'next/router'
 import createInitState from '@/state/createInitState'
-import createDocsForm from '@/utils/document/createDocsForm'
 import { NextSeo } from 'next-seo'
 import useUser from '@/hooks/useUser'
 import createFormInitState from '@/state/createFormInitState'
 import CreateLayout from '@/layout/CreateLayout'
 import { IFileTypes } from '@/components/DragDrop'
-import httpClient from '@/lib/httpClient'
 import { toast } from 'react-toastify'
-import Swal from 'sweetalert2'
 import useConfig from '@/hooks/useConfig'
-import CreateFormType from '@/types/createForm.type'
+import useCreateDocsMutation from '@/features/CreateDocsFeature'
 
 const Create = () => {
 	const router = useRouter()
@@ -36,19 +32,7 @@ const Create = () => {
 	})
 	const { user: userInfo, isLogined } = useUser()
 
-	const onCreatePost = async (data: CreateFormType) => {
-		return (await httpClient.create.post(data)).data
-	}
-
-	const { mutate } = useMutation(onCreatePost, {
-		onSuccess: (data) => {
-			Swal.fire({
-				icon: 'success',
-				title: '문서 생성 완료!',
-			})
-			router.push(`/docs/${data.title}`)
-		},
-	})
+	const { mutate } = useCreateDocsMutation()
 
 	const onClickCreateDocs = () => {
 		const { title, enroll, docsType } = docs
@@ -60,11 +44,7 @@ const Create = () => {
 		if (!title) return toast.error('문서의 이름을 정해주세요!')
 		if (!docsType) return toast.error('문서의 분류를 선택해주세요!')
 
-		const data = createDocsForm({
-			...docs,
-			files: parentFiles,
-		})
-		mutate(data)
+		mutate({ ...docs, files: parentFiles })
 	}
 
 	const makeFrame = () => {

@@ -1,9 +1,6 @@
 import React from 'react'
-import { useMutation } from 'react-query'
 import UpdateDocsType from '@/types/update.type.'
 import { decodeContents, encodeContents } from '@/utils/document/requestContents'
-import { AxiosError } from 'axios'
-import { useRouter } from 'next/router'
 import Docs from '@/types/docs.type'
 import { GetStaticProps } from 'next'
 import { Storage } from '@/lib/storage/'
@@ -14,84 +11,54 @@ import FileListArray from '@/types/filelistArray.type'
 import useUser from '@/hooks/useUser'
 import UpdateLayout from '@/layout/UpdateLayout'
 import { toast } from 'react-toastify'
-import Swal from 'sweetalert2'
 import useConfig from '@/hooks/useConfig'
-import exception from '@/constants/exception.constants'
+import useUpdateDocsMutation from '@/features/UpdateDocsFeature'
 
 interface SinglDocsPropsType {
 	defaultDocs: Docs
 	title: string
 }
 
-const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
-	const router = useRouter()
-	const { user } = useUser()
+const Update = ({ defaultDocs }: SinglDocsPropsType) => {
+	const { isLogined } = useUser()
+	const textareaRef = React.useRef<HTMLTextAreaElement>(null)
 	const { seoConfig } = useConfig({
 		title: `부마위키 문서편집 - ${defaultDocs.title}`,
 		description: `"${defaultDocs.title}" 문서편집 페이지입니다.`,
 	})
-	const textareaRef = React.useRef<HTMLTextAreaElement>(null)
 
 	const [parentFiles, setParentFiles] = React.useState<IFileTypes[]>([])
+	const [isOnAutoComplete, setIsOnAutoComplete] = React.useState(JSON.parse(Storage.getItem('autoComplete') || 'true'))
 	const [docs, setDocs] = React.useState<UpdateDocsType>({
 		title: defaultDocs.title,
 		contents: decodeContents(defaultDocs.contents || ''),
 		files: [],
 	})
-	const [isOnAutoComplete, setIsOnAutoComplete] = React.useState(JSON.parse(Storage.getItem('autoComplete') || 'true'))
 
-	const setFiles = (file: FileListArray[]) => {
-		setParentFiles(file)
-	}
-
-	const { mutate } = useMutation((data) => httpClient.update.putByTitle(docs.title, data), {
-		onSuccess: () => {
-			Swal.fire({
-				icon: 'success',
-				title: '문서 편집 완료!',
-			})
-			router.push(`/docs/${title}`)
-		},
-		onError: (err) => {
-			if (err instanceof AxiosError) {
-				const { status, message, error } = err.response?.data
-				if (status === 403) {
-					if (message === exception.code.DOCS_403_2) toast.error('자기 자신의 문서는 편집할 수 없습니다.')
-					if (error === 'Forbidden') toast.error('읽기전용 사용자는 문서를 편집할 수 없습니다.')
-				}
-			}
-		},
-	})
+	const { mutate } = useUpdateDocsMutation(docs.title)
 
 	const onClickAutoComplete = () => {
 		Storage.setItem('autoComplete', `${!isOnAutoComplete}`)
 		setIsOnAutoComplete(!isOnAutoComplete)
-		if (textareaRef.current) textareaRef.current.focus()
-	}
-
-	const mutateUpdateDocs = () => {
-		const FormData = require('form-data')
-		const data = new FormData()
-		data.append(
-			'request',
-			new Blob([`{ "contents": "${encodeContents(docs.contents)}" }`], {
-				type: 'application/json',
-			}),
-			{ contentType: 'application/json' }
-		)
-		parentFiles.forEach((file) => data.append('files', file.object, file.object.name))
-
-		mutate(data)
+		textareaRef?.current?.focus()
 	}
 
 	const onClickUpdateDocs = async () => {
-		if (!user.id) {
+		if (!isLogined) {
 			toast.error('로그인 후 이용 가능한 서비스입니다.')
 			return
 		}
-		if (!docs.contents) toast.error('문서가 비어있습니다!')
-
-		mutateUpdateDocs()
+		if (!docs.contents) {
+			toast.error('문서가 비어있습니다!')
+			return
+		}
+		mutate({
+			title: docs.title,
+			data: {
+				contents: docs.contents,
+				files: parentFiles,
+			},
+		})
 	}
 
 	return (
@@ -100,7 +67,7 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 			<UpdateLayout
 				docs={docs}
 				setDocs={setDocs}
-				setFiles={setFiles}
+				setFiles={(file: FileListArray[]) => setParentFiles(file)}
 				onClickAutoComplete={onClickAutoComplete}
 				isOnAutoComplete={isOnAutoComplete}
 				textareaRef={textareaRef}
@@ -108,6 +75,13 @@ const Update = ({ defaultDocs, title }: SinglDocsPropsType) => {
 			/>
 		</>
 	)
+}
+
+export const getStaticPaths = async () => {
+	return {
+		paths: [],
+		fallback: 'blocking',
+	}
 }
 
 const getApiDocs = async (docsName: string) => {

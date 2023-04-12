@@ -7,11 +7,12 @@ import UserType from '@/types/user.type'
 import { UseMutateFunction } from 'react-query'
 
 interface MyPageLayoutPropsType {
+	isLogined: boolean
 	user: UserType
 	mutate: UseMutateFunction<void, unknown, void, unknown>
 }
 
-const MyPageLayout = ({ user, mutate }: MyPageLayoutPropsType) => {
+const MyPageLayout = ({ isLogined, user, mutate }: MyPageLayoutPropsType) => {
 	return (
 		<S.MyPageWrap>
 			<Board>
@@ -23,7 +24,7 @@ const MyPageLayout = ({ user, mutate }: MyPageLayoutPropsType) => {
 				<S.MyPageInfoWrap>
 					<AccodianMenu name={'정보'}>
 						<S.MyPageInfoLoadWrap>
-							{user.id && (
+							{isLogined && (
 								<>
 									<span>
 										이름은 {user.nickName}이며, 부마위키의{' '}
@@ -40,7 +41,7 @@ const MyPageLayout = ({ user, mutate }: MyPageLayoutPropsType) => {
 							)}
 						</S.MyPageInfoLoadWrap>
 					</AccodianMenu>
-					{user.id && (
+					{isLogined && (
 						<AccodianMenu name={'기여한 문서'}>
 							<S.ContributeWrap>
 								<span>이 유저가 기여한 문서의 정보들이다.</span>
