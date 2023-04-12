@@ -20,7 +20,9 @@ const useLoginMutation = () => {
 			Storage.setItem('access_token', data.accessToken)
 			Storage.setItem('refresh_token', data.refreshToken)
 			queryClient.invalidateQueries('getUser')
-			window.history.go(-2)
+			router.back()
+			router.back()
+			// window.history.go(-2)
 		},
 		onError: () => window.history.go(-2),
 	})
