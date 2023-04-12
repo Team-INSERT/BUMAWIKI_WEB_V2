@@ -1,9 +1,6 @@
 import useLoginMutation from '@/features/LoginFeature'
 import useConfig from '@/hooks/useConfig'
-import httpClient from '@/lib/httpClient'
-import { Storage } from '@/lib/storage'
 import { NextSeo } from 'next-seo'
-import { useRouter } from 'next/router'
 
 import React from 'react'
 
@@ -17,8 +14,7 @@ const OAuth = () => {
 
 	React.useEffect(() => {
 		mutate()
-		// eslint-disable-next-line
-	}, [])
+	}, [mutate])
 
 	return <NextSeo {...seoConfig} />
 }
