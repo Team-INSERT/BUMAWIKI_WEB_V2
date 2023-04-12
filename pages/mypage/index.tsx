@@ -7,7 +7,7 @@ import { initUserState } from '@/context/userState'
 import useConfig from '@/hooks/useConfig'
 
 const MyPage = () => {
-	const { user, logout } = useUser()
+	const { user, isLogined, logout } = useUser()
 	const { seoConfig } = useConfig({
 		title: '부마위키 - 마이페이지',
 		description: '부마위키의 마이페이지입니다.',
@@ -22,7 +22,7 @@ const MyPage = () => {
 	return (
 		<>
 			<NextSeo {...seoConfig} />
-			<MyPageLayout user={user || initUserState} mutate={onLogout} />
+			<MyPageLayout isLogined={isLogined} user={user || initUserState} mutate={onLogout} />
 		</>
 	)
 }
