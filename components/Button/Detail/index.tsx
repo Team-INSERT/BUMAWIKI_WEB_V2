@@ -9,6 +9,7 @@ import useUpdateTitleMutation from '@/features/UpdateTitleFeature'
 import useUpdateTypeMutation from '@/features/UpdateTypeFeature'
 import useUser from '@/hooks/useUser'
 import useDeleteDocsMutation from '@/features/DeleteDocsFeature'
+import Swal from 'sweetalert2'
 
 interface DetailBtnProps {
 	docsId: number
@@ -35,7 +36,14 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 	}
 
 	const onDeleteDocs = () => {
-		if (window.confirm('정말 삭제하시겠습니까?')) deleteDocs.mutate()
+		Swal.fire({
+			title: '문서를 정말 삭제하시겠습니까?',
+			showDenyButton: true,
+			confirmButtonText: '네',
+			denyButtonText: '아니오',
+		}).then((result) => {
+			if (result.isConfirmed) deleteDocs.mutate()
+		})
 	}
 
 	const onNavigatePage = (type: string) => {
