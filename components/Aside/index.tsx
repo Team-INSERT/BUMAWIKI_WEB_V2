@@ -1,5 +1,5 @@
 import * as S from './style'
-import * as FC from '@/utils'
+import * as utils from '@/utils'
 
 import React from 'react'
 import PrevLogo from 'assets/prev.svg'
@@ -35,8 +35,8 @@ const Aside = () => {
 			</S.AsideTitleWrap>
 			{lastModifiedDocs.map((docs: Docs) => (
 				<S.AsideDocWrap key={docs.id}>
-					<S.AsideList href={`/docs/${docs.title}`}>{FC.asideFormat(docs.title, docs.docsType)}</S.AsideList>
-					<S.AsideLastModified>&nbsp; {FC.getLastDate(docs.lastModifiedAt)}</S.AsideLastModified>
+					<S.AsideList href={`/docs/${docs.title}`}>{utils.asideFormat(docs.title, docs.docsType)}</S.AsideList>
+					<S.AsideLastModified>&nbsp; {utils.getLastDate(docs.lastModifiedAt)}</S.AsideLastModified>
 				</S.AsideDocWrap>
 			))}
 			<S.AsidePageWrap>
