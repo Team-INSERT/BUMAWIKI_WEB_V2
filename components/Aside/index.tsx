@@ -8,6 +8,7 @@ import httpClient from '@/lib/httpClient'
 import Docs from '@/types/docs.type'
 import { useQuery } from 'react-query'
 import { getAccessToken } from '@/lib/httpClient/getAccessToken'
+import queryKey from '@/constants/queryKey.constants'
 
 const Aside = () => {
 	const [page, setPage] = React.useState(0)
@@ -17,7 +18,7 @@ const Aside = () => {
 		return (await httpClient.lastModified.getInQuery('page', page)).data
 	}
 
-	const { refetch } = useQuery('getLastModifiedDocs', onGetLastModifiedDocs, {
+	const { refetch } = useQuery([queryKey.getLastModify], onGetLastModifiedDocs, {
 		onSuccess: (data) => {
 			setLastModifiedDocs(data)
 		},
