@@ -2,43 +2,42 @@ import React from 'react'
 import * as S from './VersionLayout.style'
 import * as util from '@/utils'
 import { AccodianMenu, Aside, Board, Classify, ScrollBtn, SubFooter } from '@/components'
+import { VersionDetailPropsType } from '@/types/versionDetail.type'
 import { decodeContents } from '@/utils/document/requestContents'
-import { VersionDocsService } from '@/types/version.type'
+import theme from '@/styles/theme'
+import versionFilter from '@/utils/etc/versionFilter'
 
-interface VersionDetailLayoutPropsType {
-	title: string
-	docsType: string
-	docs: VersionDocsService
-}
-
-const VersionDetailLayout = ({ title, docsType, docs }: VersionDetailLayoutPropsType) => {
+const VersionDetailLayout = ({ info, versionId, different }: VersionDetailPropsType) => {
+	console.log(info)
 	return (
 		<S.VersionWrap>
 			<Board>
 				<S.VersionTitleWrap>
-					<S.VersionTitleText>{title}</S.VersionTitleText>
+					<S.VersionTitleText>{info.title}</S.VersionTitleText>
 				</S.VersionTitleWrap>
 				<S.Classify>
-					<Classify>{util.typeEditor(docsType)}</Classify>
+					<Classify>{util.typeEditor(info.docsType)}</Classify>
 				</S.Classify>
 				<S.VersionLine />
 				<S.VersionContentsWrap>
-					{docs && (
-						<S.VersionContentsLoadWrap>
-							<S.LastUpdateDate>
-								마지막 수정 : {util.dateParser(docs.thisVersionCreatedAt || '')} | 수정자 : {docs.nickName}
-							</S.LastUpdateDate>
-							<AccodianMenu name="코드 내용" isOpen={false}>
-								<S.VersionContents>{docs?.contents.replace(/<br>/gi, '\n').replace(/&\$\^%/gi, '"')}</S.VersionContents>
-							</AccodianMenu>
-							<AccodianMenu name="개요">
-								<S.VersionContents
-									dangerouslySetInnerHTML={{
-										__html: util.documentation(decodeContents(docs.contents)),
-									}}></S.VersionContents>
-							</AccodianMenu>
-						</S.VersionContentsLoadWrap>
-					)}
+					<S.VersionContentsLoadWrap>
+						<S.LastUpdateDate>마지막 수정 : {util.dateParser(info.thisVersionCreatedAt || '')}</S.LastUpdateDate>
+						<AccodianMenu name="개요">
+							{different.map(({ operation, text }, index) => {
+								const version = versionFilter(operation)
+								return (
+									<S.VersionContentsContainer color={version.color} key={index}>
+										<S.VersionContentsIconBox color={version.color}>{version.text}</S.VersionContentsIconBox>
+										<S.VersionContents
+											color={version.color}
+											dangerouslySetInnerHTML={{
+												__html: decodeContents(text),
+											}}></S.VersionContents>
+									</S.VersionContentsContainer>
+								)
+							})}
+						</AccodianMenu>
+					</S.VersionContentsLoadWrap>
 				</S.VersionContentsWrap>
 				<SubFooter />
 			</Board>
