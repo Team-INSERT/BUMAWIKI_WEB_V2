@@ -1,6 +1,7 @@
 import { Storage } from '@/lib/storage'
 import { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { getAccessToken } from '../httpClient/getAccessToken'
+import exception from '@/constants/exception.constants'
 
 export const requestInterceptors = (requestConfig: AxiosRequestConfig) => {
 	if (!Storage.getItem('access_token')) getAccessToken()
@@ -27,7 +28,7 @@ export const requestInterceptors = (requestConfig: AxiosRequestConfig) => {
 }
 
 export const responseInterceptors = (originalResponse: AxiosResponse) => {
-	if (originalResponse.status !== 200) getAccessToken()
+	if (originalResponse.status !== exception.status.SUCCESS) getAccessToken()
 
 	return {
 		...originalResponse,

@@ -1,26 +1,33 @@
 import * as S from './style'
-import * as FC from '@/utils'
+import * as utils from '@/utils'
 
 import React from 'react'
 import PrevLogo from 'assets/prev.svg'
 import NextLogo from 'assets/next.svg'
 import httpClient from '@/lib/httpClient'
 import Docs from '@/types/docs.type'
+import { useQuery } from 'react-query'
+import { getAccessToken } from '@/lib/httpClient/getAccessToken'
+import queryKey from '@/constants/queryKey.constants'
 
 const Aside = () => {
 	const [page, setPage] = React.useState(0)
 	const [lastModifiedDocs, setLastModifiedDocs] = React.useState<Docs[]>([])
 
+	const onGetLastModifiedDocs = async () => {
+		return (await httpClient.lastModified.getInQuery('page', page)).data
+	}
+
+	const { refetch } = useQuery([queryKey.getLastModify], onGetLastModifiedDocs, {
+		onSuccess: (data) => {
+			setLastModifiedDocs(data)
+		},
+		onError: () => getAccessToken(),
+	})
+
 	React.useEffect(() => {
-		;(async () => {
-			try {
-				const res = await httpClient.lastModified.getInQuery('page', page)
-				setLastModifiedDocs(res.data)
-			} catch (err) {
-				console.log(err)
-			}
-		})()
-	}, [page])
+		refetch()
+	}, [page, refetch])
 
 	return (
 		<S.AsideWrap>
@@ -29,8 +36,8 @@ const Aside = () => {
 			</S.AsideTitleWrap>
 			{lastModifiedDocs.map((docs: Docs) => (
 				<S.AsideDocWrap key={docs.id}>
-					<S.AsideList href={`/docs/${docs.title}`}>{FC.asideFormat(docs.title, docs.docsType)}</S.AsideList>
-					<S.AsideLastModified>&nbsp; {FC.getLastDate(docs.lastModifiedAt)}</S.AsideLastModified>
+					<S.AsideList href={`/docs/${docs.title}`}>{utils.asideFormat(docs.title, docs.docsType)}</S.AsideList>
+					<S.AsideLastModified>&nbsp; {utils.getLastDate(docs.lastModifiedAt)}</S.AsideLastModified>
 				</S.AsideDocWrap>
 			))}
 			<S.AsidePageWrap>
