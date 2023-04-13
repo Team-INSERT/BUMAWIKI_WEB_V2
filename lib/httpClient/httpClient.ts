@@ -138,6 +138,7 @@ export default {
 	update: new HttpClient('api/docs/update', axiosConfig),
 	updateType: new HttpClient('api/docs/update/docsType', axiosConfig),
 	version: new HttpClient('api/docs/find/', axiosConfig),
+	different: new HttpClient('api/docs/find/version', axiosConfig),
 	lastModified: new HttpClient('api/docs/find/modified', axiosConfig),
 	search: new HttpClient('api/docs/find/all/title', axiosConfig),
 	updateTitle: new HttpClient('api/docs/update/title', axiosConfig),
