@@ -22,7 +22,6 @@ export const DocsTitleWrap = styled.div`
 
 export const DocsTitleText = styled.span`
 	color: #274168;
-	font-family: 'Open Sans', sans-serif;
 	font-weight: 800;
 	font-size: 34px;
 	margin-left: 30px;
