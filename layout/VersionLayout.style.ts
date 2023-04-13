@@ -40,7 +40,6 @@ export const VersionTitleWrap = styled.div`
 
 export const VersionTitleText = styled.span`
 	color: #274168;
-	font-family: 'Open Sans', sans-serif;
 	font-weight: 800;
 	font-size: 34px;
 	margin-left: 30px;

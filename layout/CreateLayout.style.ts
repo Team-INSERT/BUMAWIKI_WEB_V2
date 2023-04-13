@@ -30,14 +30,12 @@ export const CreateTD = styled.td`
 	height: 90%;
 	padding-left: 20px;
 	border: none;
-	font-family: 'Open Sans', sans-serif;
 	white-space: pre-wrap;
 	font-size: 14px;
 
 	@media (max-width: 500px) {
 		font-size: 10px;
 	}
-	/* height: 100%; */
 `
 
 export const CreateTDTitle = styled.td`
@@ -57,39 +55,28 @@ export const CreateTDDisplay = styled.td`
 	display: flex;
 	height:40px;
 	align-items:center;
-	/* background-color:red; */
 	padding-left: 20px;
 	border: none;
-	font-family: 'Open Sans', sans-serif;
 	white-space: pre-wrap;
 	font-size: 14px;
 
 	@media (max-width: 500px) {
 		font-size: 10px;
 	}
-	
-	label {
-		font-size:16px;
-		font-weight:700;
-		@media (max-width: 500px) {
-			font-size: 6px;
-		}
-	}
 `
 
-export const CreateTDDiv = styled.td`
+export const CreateTDHtmlDiv = styled.td`
 	width: 100%;
 	height: 400px;
 	padding:20px;
 	border: none;
-	font-family: 'Open Sans', sans-serif;
 	white-space: pre-wrap;
 	overflow: scroll;
 
 	vertical-align:top;
 
 	@media (max-width: 500px) {
-		font-size: 10px;
+		font-size: 100px;
 	}
 `
 
@@ -97,11 +84,26 @@ export const FrameWrap = styled.div`
 	padding:10px;
 `
 
+export const CreateTableDiv = styled.div`
+`
+
+export const CreateTableBody = styled.tbody`
+`
+
+export const CreateTableLabel = styled.label`
+	font-size:16px;
+	font-weight:700;
+
+	@media (max-width: 700px) {
+		font-size: 10px;
+
+	}
+`
+
 //========================================================
 
 export const CreateTitleText = styled.span`
 	color: #274168;
-	font-family: 'Open Sans', sans-serif;
 	font-weight: 800;
 	font-size: 34px;
 	margin-left: 30px;
@@ -141,7 +143,6 @@ export const CreateTableTRTextarea = styled.textarea`
 	padding-top:20px;
 	resize: none;
 	border: none;
-	font-family: 'Open Sans', sans-serif;
 	white-space: pre-wrap;
 	font-size: 14px;
 
@@ -155,7 +156,6 @@ export const CreateTableTRDiv = styled.div`
 	height: 90%;
 	padding-left: 20px;
 	border: none;
-	font-family: 'Open Sans', sans-serif;
 	white-space: pre-wrap;
 	font-size: 14px;
 	overflow: scroll;
@@ -242,28 +242,6 @@ export const CreateTableTRTitle = styled.div`
 	}
 `
 
-export const CreateTableTRContents = styled.div`
-	font-weight: 700;
-	width: 100%;
-	height: 100%;
-	border: none;
-	outline: none;
-	padding-left: 20px;
-	font-size: 16px;
-	display: flex;
-	align-items: center;
-
-	@media (max-width: 500px) {
-		font-size: 12px;
-	}
-
-	label {
-		@media (max-width: 500px) {
-			font-size: 6px;
-		}
-	}
-`
-
 export const CreateTableTRInputContents = styled.input`
 	font-weight: 700;
 	width: 100%;
@@ -276,12 +254,6 @@ export const CreateTableTRInputContents = styled.input`
 
 	@media (max-width: 500px) {
 		font-size: 12px;
-	}
-
-	label {
-		@media (max-width: 500px) {
-			font-size: 12px;
-		}
 	}
 `
 
