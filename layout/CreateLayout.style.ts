@@ -30,19 +30,16 @@ export const CreateTD = styled.td`
 	height: 90%;
 	padding-left: 20px;
 	border: none;
-	font-family: 'Open Sans', sans-serif;
 	white-space: pre-wrap;
 	font-size: 14px;
-	overflow: scroll;
 
 	@media (max-width: 500px) {
 		font-size: 10px;
 	}
-	/* height: 100%; */
 `
 
 export const CreateTDTitle = styled.td`
-	width: 8%;
+	width: 7.5%;
 	background-color: #274168;
 	color: white;
 	text-align: center;
@@ -56,29 +53,57 @@ export const CreateTDTitle = styled.td`
 
 export const CreateTDDisplay = styled.td`
 	display: flex;
-`
-
-export const CreateTDDiv = styled.td`
-	width: 100%;
-	/* height: 90%; */
-	/* padding-left: 20px; */
+	height:40px;
+	align-items:center;
+	padding-left: 20px;
 	border: none;
-	font-family: 'Open Sans', sans-serif;
 	white-space: pre-wrap;
 	font-size: 14px;
-	overflow: scroll;
 
 	@media (max-width: 500px) {
 		font-size: 10px;
 	}
+`
+
+export const CreateTDHtmlDiv = styled.td`
+	width: 100%;
 	height: 400px;
+	padding:20px;
+	border: none;
+	white-space: pre-wrap;
+	overflow: scroll;
+
+	vertical-align:top;
+
+	@media (max-width: 500px) {
+		font-size: 100px;
+	}
+`
+
+export const FrameWrap = styled.div`
+	padding:10px;
+`
+
+export const CreateTableDiv = styled.div`
+`
+
+export const CreateTableBody = styled.tbody`
+`
+
+export const CreateTableLabel = styled.label`
+	font-size:16px;
+	font-weight:700;
+
+	@media (max-width: 700px) {
+		font-size: 10px;
+
+	}
 `
 
 //========================================================
 
 export const CreateTitleText = styled.span`
 	color: #274168;
-	font-family: 'Open Sans', sans-serif;
 	font-weight: 800;
 	font-size: 34px;
 	margin-left: 30px;
@@ -115,10 +140,9 @@ export const CreateTableTRTextarea = styled.textarea`
 	width: 100%;
 	height: 400px;
 	outline: none;
-	/* padding-left: 20px; */
+	padding-top:20px;
 	resize: none;
 	border: none;
-	font-family: 'Open Sans', sans-serif;
 	white-space: pre-wrap;
 	font-size: 14px;
 
@@ -132,7 +156,6 @@ export const CreateTableTRDiv = styled.div`
 	height: 90%;
 	padding-left: 20px;
 	border: none;
-	font-family: 'Open Sans', sans-serif;
 	white-space: pre-wrap;
 	font-size: 14px;
 	overflow: scroll;
@@ -173,6 +196,7 @@ export const FrameInputBox = styled.div`
 export const FrameText = styled.div`
 	font-size: 15px;
 	font-weight: 700;
+	margin-right:5px;
 	padding: 2px;
 `
 
@@ -187,9 +211,8 @@ export const FrameInputDiv = styled.div`
 `
 
 export const FrameInput = styled.input`
-	width: 80px;
-	margin-left: 10px;
-	margin-top: 0px;
+	width: 90px;
+	margin: 0 10px 0 10px;
 	height: 20px;
 `
 
@@ -219,47 +242,18 @@ export const CreateTableTRTitle = styled.div`
 	}
 `
 
-export const CreateTableTRContents = styled.div`
-	font-weight: 700;
-	width: 100%;
-	height: 100%;
-	border: none;
-	outline: none;
-	padding-left: 20px;
-	font-size: 16px;
-	display: flex;
-	align-items: center;
-
-	@media (max-width: 500px) {
-		font-size: 12px;
-	}
-
-	label {
-		@media (max-width: 500px) {
-			font-size: 6px;
-		}
-	}
-`
-
 export const CreateTableTRInputContents = styled.input`
 	font-weight: 700;
 	width: 100%;
 	height: 100%;
 	border: none;
 	outline: none;
-	padding-left: 20px;
 	font-size: 16px;
 	display: flex;
 	align-items: center;
 
 	@media (max-width: 500px) {
 		font-size: 12px;
-	}
-
-	label {
-		@media (max-width: 500px) {
-			font-size: 12px;
-		}
 	}
 `
 

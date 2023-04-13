@@ -42,21 +42,21 @@ const CreateLayout = ({
 					<S.CreateTitleText>문서 생성</S.CreateTitleText>
 				</S.CreateTitleWrap>
 				<S.CreateTB>
-					<tbody>
+					<S.CreateTableBody>
 						<S.CreateTR>
 							<S.CreateTDTitle>분류</S.CreateTDTitle>
 							<S.CreateTDDisplay>
 								{userInfo.authority === 'ADMIN' && (
 									<>
-										<label htmlFor="STUDENT">학생</label>
+										<S.CreateTableLabel htmlFor="STUDENT">학생</S.CreateTableLabel>
 										<S.CreateTableRadio type="radio" onChange={(e) => setDocs({ ...docs, docsType: e.target.id })} id="STUDENT" name="radio" />
-										<label htmlFor="READONLY">관리자</label>
+										<S.CreateTableLabel htmlFor="READONLY">관리자</S.CreateTableLabel>
 										<S.CreateTableRadio type="radio" onChange={(e) => setDocs({ ...docs, docsType: e.target.id })} id="READONLY" name="radio" />
 									</>
 								)}
 								{createForm.map((info) => (
 									<S.CreateTableRadioBox key={info.id}>
-										<label htmlFor={info.id}>{info.title}</label>
+										<S.CreateTableLabel htmlFor={info.id}>{info.title}</S.CreateTableLabel>
 										<S.CreateTableRadio type="radio" onChange={(e) => changeDocsType(e)} id={info.id} name="radio" />
 									</S.CreateTableRadioBox>
 								))}
@@ -79,7 +79,7 @@ const CreateLayout = ({
 							<S.CreateTDTitle>연도</S.CreateTDTitle>
 							<S.CreateTDDisplay>
 								{years.map((year) => (
-									<div key={year}>
+									<S.CreateTableDiv key={year}>
 										<S.EnrollLabel htmlFor={`${year}`}>{year}년</S.EnrollLabel>
 										<S.CreateTableRadio
 											type="radio"
@@ -87,7 +87,7 @@ const CreateLayout = ({
 											id={`${year}`}
 											name="radios"
 										/>
-									</div>
+									</S.CreateTableDiv>
 								))}
 							</S.CreateTDDisplay>
 						</S.CreateTR>
@@ -107,27 +107,29 @@ const CreateLayout = ({
 							<S.CreateTR>
 								<S.CreateTDTitle>틀 규격</S.CreateTDTitle>
 								<S.CreateTD>
-									<S.FrameInputBox>
-										<S.FrameInputWrap>
-											<S.FrameText>열</S.FrameText>
-											<S.FrameInput
-												type="number"
-												min="2"
-												max="5"
-												value={size.column}
-												onChange={(e) => setSize({ ...size, column: parseInt(e.target.value) })}
-											/>
-											<S.FrameText>행</S.FrameText>
-											<S.FrameInput
-												type="number"
-												min="2"
-												max="10"
-												value={size.row}
-												onChange={(e) => setSize({ ...size, row: parseInt(e.target.value) })}
-											/>
-										</S.FrameInputWrap>
-									</S.FrameInputBox>
-									<S.CreateFrameButton onClick={() => makeFrame()}>틀생성/초기화</S.CreateFrameButton>
+									<S.FrameWrap>
+										<S.FrameInputBox>
+											<S.FrameInputWrap>
+												<S.FrameText>열</S.FrameText>
+												<S.FrameInput
+													type="number"
+													min="2"
+													max="5"
+													value={size.column}
+													onChange={(e) => setSize({ ...size, column: parseInt(e.target.value) })}
+												/>
+												<S.FrameText>행</S.FrameText>
+												<S.FrameInput
+													type="number"
+													min="2"
+													max="10"
+													value={size.row}
+													onChange={(e) => setSize({ ...size, row: parseInt(e.target.value) })}
+												/>
+											</S.FrameInputWrap>
+										</S.FrameInputBox>
+										<S.CreateFrameButton onClick={makeFrame}>틀생성/초기화</S.CreateFrameButton>
+									</S.FrameWrap>
 								</S.CreateTD>
 							</S.CreateTR>
 						)}
@@ -145,12 +147,12 @@ const CreateLayout = ({
 						</S.CreateTR>
 						<S.CreateTR>
 							<S.CreateTDTitle>미리보기</S.CreateTDTitle>
-							<S.CreateTDDiv
+							<S.CreateTDHtmlDiv
 								dangerouslySetInnerHTML={{
 									__html: util.documentation(docs.contents),
-								}}></S.CreateTDDiv>
+								}}></S.CreateTDHtmlDiv>
 						</S.CreateTR>
-					</tbody>
+					</S.CreateTableBody>
 				</S.CreateTB>
 				<S.CreateSubmit>
 					<S.CreateWarn>※ 필독! 문서 내 부적절한 내용을 서술하는 사용자는 부마위키 이용에 제한을 받을 수 있습니다 ※</S.CreateWarn>

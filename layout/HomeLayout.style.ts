@@ -31,7 +31,6 @@ export const HomeTitleWrap = styled.div`
 
 export const HomeTitleText = styled.span`
 	color: #274168;
-	font-family: 'Open Sans', sans-serif;
 	font-weight: 800;
 	font-size: 34px;
 	margin-left: 30px;
@@ -50,7 +49,6 @@ export const HomeDescriptionWrap = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	font-family: 'Open Sans', sans-serif;
 	font-weight: 800;
 	color: #545454;
 `
@@ -121,7 +119,6 @@ export const TitleBoxMainWrap = styled.div`
 `
 
 export const TitleBoxMainTitle = styled.span`
-	font-family: 'Open Sans', sans-serif;
 	color: white;
 	font-weight: 800;
 	font-size: 24px;
@@ -194,7 +191,6 @@ export const TableContent = styled.div`
 
 export const TableText = styled.span`
 	color: #fff;
-	font-family: 'Open Sans', sans-serif;
 	font-weight: 800;
 	font-size: 18px;
 
