@@ -1,15 +1,15 @@
 import Link from 'next/link'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const VersionList = styled.li`
 	display: flex;
 	margin-bottom: 30px;
+`
 
-	span {
-		display: block;
-		width: 300px;
-		font-weight: 600;
-	}
+export const VersionBox = styled.div`
+	display: block;
+	width: 400px;
+	font-weight: 600;
 `
 
 export const VersionLink = styled(Link)`
@@ -81,12 +81,29 @@ export const LastUpdateDate = styled.span`
 	margin-left: auto;
 `
 
-export const VersionContents = styled.div`
-	margin: 20px 0 20px 0;
+export const VersionContents = styled.div<{ color: string }>`
 	white-space: pre-wrap;
+	width: 100%;
+	padding: 6px;
+	background-color: ${({ color }) => color}80;
+	opacity: 1;
 
 	img {
 		margin-top: 10px;
 		width: 80%;
 	}
+`
+
+export const VersionContentsIconBox = styled.div<{ color: string }>`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 20px;
+	font-weight: 500;
+	background-color: ${({ color }) => color};
+`
+
+export const VersionContentsContainer = styled.div`
+	display: flex;
+	height: fit-content;
 `
