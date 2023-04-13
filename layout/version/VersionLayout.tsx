@@ -7,9 +7,10 @@ import * as util from '@/utils'
 interface VersionLayoutPropsType {
 	version: VersionDocs[]
 	docsName: string
+	index: number
 }
 
-const VersionLayout = ({ docsName, version }: VersionLayoutPropsType) => {
+const VersionLayout = ({ docsName, version, index }: VersionLayoutPropsType) => {
 	return (
 		<S.VersionWrap>
 			<Board>
@@ -19,16 +20,21 @@ const VersionLayout = ({ docsName, version }: VersionLayoutPropsType) => {
 				<S.VersionLine />
 				<S.VersionContentsWrap>
 					<ul>
-						{version.map((ver: VersionDocs, index) => (
-							<S.VersionList key={ver.thisVersionCreatedAt}>
-								<span>
-									<S.VersionLink href={`/version/${docsName}/detail/${index}`}>{util.dateParser(ver.thisVersionCreatedAt)}</S.VersionLink>
-								</span>
-								<span>
-									작성자 : <S.VersionLink href={`/user/${ver.userId}`}>{ver.nickName}</S.VersionLink>
-								</span>
-							</S.VersionList>
-						))}
+						{version.map((ver: VersionDocs) => {
+							index -= 1
+							return (
+								<S.VersionList key={ver.thisVersionCreatedAt}>
+									<S.VersionBox>
+										<S.VersionLink href={`/version/${docsName}/detail/${index}`}>
+											[{index}]{util.dateParser(ver.thisVersionCreatedAt)}
+										</S.VersionLink>
+									</S.VersionBox>
+									<S.VersionBox>
+										작성자 : <S.VersionLink href={`/user/${ver.userId}`}>{ver.nickName}</S.VersionLink>
+									</S.VersionBox>
+								</S.VersionList>
+							)
+						})}
 					</ul>
 				</S.VersionContentsWrap>
 				<SubFooter />
