@@ -4,11 +4,9 @@ import * as util from '@/utils'
 import { AccodianMenu, Aside, Board, Classify, ScrollBtn, SubFooter } from '@/components'
 import { VersionDetailPropsType } from '@/types/versionDetail.type'
 import { decodeContents } from '@/utils/document/requestContents'
-import theme from '@/styles/theme'
 import versionFilter from '@/utils/etc/versionFilter'
 
-const VersionDetailLayout = ({ info, versionId, different }: VersionDetailPropsType) => {
-	console.log(info)
+const VersionDetailLayout = ({ info, different }: VersionDetailPropsType) => {
 	return (
 		<S.VersionWrap>
 			<Board>
@@ -21,7 +19,7 @@ const VersionDetailLayout = ({ info, versionId, different }: VersionDetailPropsT
 				<S.VersionLine />
 				<S.VersionContentsWrap>
 					<S.VersionContentsLoadWrap>
-						<S.LastUpdateDate>마지막 수정 : {util.dateParser(info.thisVersionCreatedAt || '')}</S.LastUpdateDate>
+						<S.LastUpdateDate>마지막 수정 : {util.dateParser(info.thisVersionCreatedAt)}</S.LastUpdateDate>
 						<AccodianMenu name="개요">
 							{different.map(({ operation, text }, index) => {
 								const version = versionFilter(operation)
