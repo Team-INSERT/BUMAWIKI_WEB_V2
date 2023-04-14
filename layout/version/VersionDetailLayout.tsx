@@ -32,7 +32,8 @@ const VersionDetailLayout = ({ info, versionId, different }: VersionDetailPropsT
 											color={version.color}
 											dangerouslySetInnerHTML={{
 												__html: decodeContents(text),
-											}}></S.VersionContents>
+											}}
+										/>
 									</S.VersionContentsContainer>
 								)
 							})}
