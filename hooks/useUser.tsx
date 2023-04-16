@@ -33,7 +33,6 @@ const useUser = (options?: UseUserOptions) => {
 		isLoading,
 	} = useQuery<UserType>('getUser', getUser, {
 		retry: 1,
-		onError: () => getAccessToken(),
 	})
 
 	const logout = () => {
