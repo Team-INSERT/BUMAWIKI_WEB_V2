@@ -8,13 +8,26 @@ export interface VersionInfoType {
 	thisVersionCreatedAt: string
 }
 
+interface VersionArrayType {
+	title: string
+	docsType: string
+	versionDocs: VersionDocsType
+	diff: VersionDetailArrayPropsType[]
+}
+
 export interface VersionDetailArrayPropsType {
 	operation: 'EQUAL' | 'INSERT' | 'DELETE'
 	text: string
 }
 
+interface VersionDocsType {
+	id: number
+	thisVersionCreatedAt: string
+	userId: number
+	nickName: string
+}
+
 export interface VersionDetailPropsType {
-	info: VersionInfoType
 	versionId: number
-	different: VersionDetailArrayPropsType[]
+	different: VersionArrayType
 }
