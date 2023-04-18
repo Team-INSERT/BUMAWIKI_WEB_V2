@@ -144,4 +144,6 @@ export default {
 	updateTitle: new HttpClient('api/docs/update/title', axiosConfig),
 	deleteDocs: new HttpClient('api/docs/delete/', axiosConfig),
 	authority: new HttpClient('api/set/authority', axiosConfig),
+	createLike: new HttpClient('api/thumbs/up/create', axiosConfig),
+	deleteLike: new HttpClient('api/thumbs/up/delete', axiosConfig),
 }

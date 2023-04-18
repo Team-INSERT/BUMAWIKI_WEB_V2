@@ -64,7 +64,7 @@ const Header = () => {
 				<S.HeaderSectionWrap>
 					{[
 						subheaderInitState.map((subheader, index) => (
-							<S.SubHeaderSectionWrap margin={index === 2 ? '1vw' : ''} key={index}>
+							<S.SubHeaderSectionWrap margin={index === 2 ? '3vw' : ''} key={index}>
 								{subheader.map((info, index) => (
 									<S.SubHeaderSection href={info.href} target={info.target} key={index}>
 										<S.HeaderSectionText display="true">{info.title}</S.HeaderSectionText>

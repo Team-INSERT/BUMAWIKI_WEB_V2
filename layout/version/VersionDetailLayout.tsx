@@ -27,12 +27,7 @@ const VersionDetailLayout = ({ different }: VersionDetailPropsType) => {
 								return (
 									<S.VersionContentsContainer color={version.color} key={index}>
 										<S.VersionContentsIconBox color={version.color}>{version.text}</S.VersionContentsIconBox>
-										<S.VersionContents
-											color={version.color}
-											dangerouslySetInnerHTML={{
-												__html: decodeContents(text),
-											}}
-										/>
+										<S.VersionContents color={version.color}>{decodeContents(text)}</S.VersionContents>
 									</S.VersionContentsContainer>
 								)
 							})}

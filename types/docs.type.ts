@@ -6,6 +6,7 @@ interface Docs {
 	docsType: string
 	view: number
 	lastModifiedAt: string
+	thumbsUpsCounts: number
 }
 
 export default Docs
