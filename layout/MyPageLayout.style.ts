@@ -64,9 +64,16 @@ export const ContributeList = styled.div`
 	}
 `
 
+export const ContributeListText = styled.span`
+	margin: 10px 0 10px 0;
+	font-weight: 500;
+	line-height: 24px;
+`
+
 export const LogoutText = styled.span`
 	color: blue;
 	font-weight: 700;
+	margin-top: 16px;
 	cursor: pointer;
 `
 

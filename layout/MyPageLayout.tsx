@@ -25,17 +25,10 @@ const MyPageLayout = ({ isLogined, user, mutate }: MyPageLayoutPropsType) => {
 						<S.MyPageInfoLoadWrap>
 							{isLogined && (
 								<>
-									<span>
-										이름은 {user.nickName}이며, 부마위키의{' '}
-										{user.authority === 'ADMIN' ? '관리자' : user.authority === 'BANNED' ? '읽기전용 사용자' : '사용자'} 중 한 명이다.
-									</span>
-									<span>
-										이 유저의 아이디는 {user.id}이며, 이메일은 {user.email}이다.
-									</span>
-									<br />
-									<div>
-										<S.LogoutText onClick={mutate}>로그아웃</S.LogoutText>
-									</div>
+									이름은 {user.nickName}이며, 부마위키의 {user.authority === 'ADMIN' && '관리자'}
+									{user.authority === 'BANNED' && '읽기전용 사용자'}
+									{user.authority === 'USER' && '사용자'} 중 한 명이다.
+									<S.LogoutText onClick={mutate}>로그아웃</S.LogoutText>
 								</>
 							)}
 						</S.MyPageInfoLoadWrap>
@@ -46,12 +39,12 @@ const MyPageLayout = ({ isLogined, user, mutate }: MyPageLayoutPropsType) => {
 								<span>이 유저가 기여한 문서의 정보들이다.</span>
 								<S.ContributeList>
 									{user.contributeDocs.map((docs: Contributors) => (
-										<span key={docs.createTime}>
+										<S.ContributeListText key={docs.createTime}>
 											문서명 :&nbsp;
 											<S.ContributeLink href={`/docs/${docs.title}`}>{docs.title}</S.ContributeLink>
 											<br />
-											수정 날짜 : {util.dateParser(docs.createTime)}
-										</span>
+											수정일 : {util.dateParser(docs.createTime)}
+										</S.ContributeListText>
 									))}
 								</S.ContributeList>
 							</S.ContributeWrap>
