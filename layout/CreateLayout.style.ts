@@ -53,27 +53,30 @@ export const CreateTDTitle = styled.td`
 
 export const CreateTDDisplay = styled.td`
 	display: flex;
-	height:40px;
-	align-items:center;
+	height: 40px;
+	align-items: center;
 	padding-left: 20px;
 	border: none;
 	white-space: pre-wrap;
 	font-size: 14px;
 
 	@media (max-width: 500px) {
-		font-size: 10px;
+		font-size: 4px;
+		overflow: scroll;
+		flex-direction: column;
+		justify-content: center;
 	}
 `
 
 export const CreateTDHtmlDiv = styled.td`
 	width: 100%;
 	height: 400px;
-	padding:20px;
+	padding: 20px;
 	border: none;
 	white-space: pre-wrap;
 	overflow: scroll;
 
-	vertical-align:top;
+	vertical-align: top;
 
 	@media (max-width: 500px) {
 		font-size: 100px;
@@ -81,26 +84,21 @@ export const CreateTDHtmlDiv = styled.td`
 `
 
 export const FrameWrap = styled.div`
-	padding:10px;
+	padding: 10px;
 `
 
-export const CreateTableDiv = styled.div`
-`
+export const CreateTableDiv = styled.div``
 
-export const CreateTableBody = styled.tbody`
-`
+export const CreateTableBody = styled.tbody``
 
 export const CreateTableLabel = styled.label`
-	font-size:16px;
-	font-weight:700;
+	font-size: 16px;
+	font-weight: 700;
 
 	@media (max-width: 700px) {
-		font-size: 10px;
-
+		font-size: 4px;
 	}
 `
-
-//========================================================
 
 export const CreateTitleText = styled.span`
 	color: #274168;
@@ -140,7 +138,7 @@ export const CreateTableTRTextarea = styled.textarea`
 	width: 100%;
 	height: 400px;
 	outline: none;
-	padding-top:20px;
+	padding-top: 20px;
 	resize: none;
 	border: none;
 	white-space: pre-wrap;
@@ -196,7 +194,7 @@ export const FrameInputBox = styled.div`
 export const FrameText = styled.div`
 	font-size: 15px;
 	font-weight: 700;
-	margin-right:5px;
+	margin-right: 5px;
 	padding: 2px;
 `
 
@@ -254,12 +252,12 @@ export const CreateTableTRInputContents = styled.input`
 
 	@media (max-width: 500px) {
 		font-size: 12px;
+		margin-left: 80px;
 	}
 `
 
 export const CreateTableRadioBox = styled.div`
 	@media (max-width: 500px) {
-		display: none;
 	}
 `
 

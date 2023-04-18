@@ -19,7 +19,7 @@ interface CreateLayoutPropsType {
 	setSize: React.Dispatch<React.SetStateAction<FrameType>>
 	makeFrame: () => void
 	onClickCreateDocs: () => void
-	changeDocsType: (e: React.ChangeEvent<HTMLInputElement | HTMLOptionElement>) => void
+	changeDocsType: (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLOptionElement>) => void
 }
 
 const CreateLayout = ({
@@ -49,9 +49,9 @@ const CreateLayout = ({
 								{userInfo.authority === 'ADMIN' && (
 									<>
 										<S.CreateTableLabel htmlFor="STUDENT">학생</S.CreateTableLabel>
-										<S.CreateTableRadio type="radio" onChange={(e) => setDocs({ ...docs, docsType: e.target.id })} id="STUDENT" name="radio" />
+										<S.CreateTableRadio type="radio" onChange={(e) => changeDocsType(e)} id="STUDENT" name="radio" />
 										<S.CreateTableLabel htmlFor="READONLY">관리자</S.CreateTableLabel>
-										<S.CreateTableRadio type="radio" onChange={(e) => setDocs({ ...docs, docsType: e.target.id })} id="READONLY" name="radio" />
+										<S.CreateTableRadio type="radio" onChange={(e) => changeDocsType(e)} id="READONLY" name="radio" />
 									</>
 								)}
 								{createForm.map((info) => (
@@ -60,13 +60,6 @@ const CreateLayout = ({
 										<S.CreateTableRadio type="radio" onChange={(e) => changeDocsType(e)} id={info.id} name="radio" />
 									</S.CreateTableRadioBox>
 								))}
-								<S.CreateTableSelectBox>
-									{createForm.map((info) => (
-										<S.CreateTableSelectOption key={info.id} onChange={(e) => changeDocsType(e as React.ChangeEvent<HTMLOptionElement>)} id={info.id}>
-											{info.title}
-										</S.CreateTableSelectOption>
-									))}
-								</S.CreateTableSelectBox>
 							</S.CreateTDDisplay>
 						</S.CreateTR>
 						<S.CreateTR>

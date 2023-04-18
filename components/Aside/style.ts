@@ -2,15 +2,19 @@ import Image from 'next/image'
 import Link from 'next/link'
 import styled from 'styled-components'
 
-export const AsideWrap = styled.div`
+export const AsideWrap = styled.div<{ isMobile: string }>`
 	width: 240px;
 	height: fit-content;
 	margin-top: 20px;
 	position: sticky;
 	top: 2vw;
+	display: ${({ isMobile }) => (isMobile ? 'none' : 'block')};
 
 	@media (max-width: 500px) {
-		display: none;
+		display: ${({ isMobile }) => (isMobile ? 'block' : 'none')};
+		position: relative;
+		width: 100vw;
+		margin-top: -3vh;
 	}
 `
 

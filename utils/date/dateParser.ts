@@ -13,6 +13,7 @@ const dateParser = (UTC: string) => {
 	${date.format('A') === '오후' && date.hour() !== 12 ? date.hour() - 12 : date.hour() === 0 ? 12 : date.hour()}시 
     ${date.minute()}분`
 
+	if (!UTC) return 'LOADING...'
 	return PARSING_DATE
 }
 

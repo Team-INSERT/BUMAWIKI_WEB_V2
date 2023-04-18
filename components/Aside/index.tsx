@@ -10,7 +10,11 @@ import { useQuery } from 'react-query'
 import { getAccessToken } from '@/lib/httpClient/getAccessToken'
 import queryKey from '@/constants/queryKey.constants'
 
-const Aside = () => {
+interface AsidePropsType {
+	isMobile?: string
+}
+
+const Aside = ({ isMobile }: AsidePropsType) => {
 	const [page, setPage] = React.useState(0)
 	const [lastModifiedDocs, setLastModifiedDocs] = React.useState<Docs[]>([])
 
@@ -30,7 +34,7 @@ const Aside = () => {
 	}, [page, refetch])
 
 	return (
-		<S.AsideWrap>
+		<S.AsideWrap isMobile={isMobile || ''}>
 			<S.AsideTitleWrap>
 				<S.AsideTitle>최근 수정된 문서</S.AsideTitle>
 			</S.AsideTitleWrap>
