@@ -1,10 +1,11 @@
 import httpClient from '@/lib/httpClient'
 import { useRouter } from 'next/router'
-import { useMutation } from 'react-query'
+import { QueryClient, useMutation } from 'react-query'
 import Swal from 'sweetalert2'
 
 const useDeleteDocsMutation = (docsId: number) => {
 	const router = useRouter()
+	const queryClient = new QueryClient()
 
 	return useMutation(async () => (await httpClient.deleteDocs.deleteById(docsId, {})).data, {
 		onSuccess: () => {
@@ -12,6 +13,7 @@ const useDeleteDocsMutation = (docsId: number) => {
 				icon: 'success',
 				title: '문서 삭제 완료!',
 			})
+			queryClient.invalidateQueries('lastModifiedDocs')
 			router.push('/')
 		},
 	})

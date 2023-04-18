@@ -2,7 +2,7 @@ import { IFileTypes } from '@/components/DragDrop'
 import httpClient from '@/lib/httpClient'
 import { encodeContents } from '@/utils/document/requestContents'
 import { useRouter } from 'next/router'
-import { useMutation } from 'react-query'
+import { QueryClient, useMutation } from 'react-query'
 import Swal from 'sweetalert2'
 
 interface CreateDocsFormType {
@@ -32,6 +32,7 @@ const onCreateDocs = async (data: CreateDocsFormType) => {
 
 const useCreateDocsMutation = () => {
 	const router = useRouter()
+	const queryClient = new QueryClient()
 
 	return useMutation(onCreateDocs, {
 		onSuccess: (data) => {
@@ -39,6 +40,7 @@ const useCreateDocsMutation = () => {
 				icon: 'success',
 				title: '문서 생성 완료!',
 			})
+			queryClient.invalidateQueries('lastModifiedDocs')
 			router.push(`/docs/${data.title}`)
 		},
 	})
