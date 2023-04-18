@@ -25,6 +25,13 @@ const User = ({ user }: UserPropsType) => {
 	)
 }
 
+export const getStaticPaths = async () => {
+	return {
+		paths: [],
+		fallback: 'blocking',
+	}
+}
+
 const getApiDocs = async (userId: string) => {
 	try {
 		return (await httpClient.user.getByTitle(userId)).data
