@@ -25,6 +25,9 @@ const useLoginMutation = () => {
 			// window.history.go(-2)
 			queryClient.invalidateQueries('getUser')
 		},
+		onError: (err) => {
+			console.log(err)
+		},
 		// onError: () => window.history.go(-2),
 	})
 }
