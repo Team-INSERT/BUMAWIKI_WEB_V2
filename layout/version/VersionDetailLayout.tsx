@@ -19,8 +19,8 @@ const VersionDetailLayout = ({ different }: VersionDetailPropsType) => {
 				<S.VersionLine />
 				<S.VersionContentsWrap>
 					<S.VersionContentsLoadWrap>
-						<S.LastUpdateDate>마지막 수정 : {util.dateParser(different.versionDocs.thisVersionCreatedAt)}</S.LastUpdateDate>
 						<S.LastUpdateDate>작성자 : {different.versionDocs.nickName}</S.LastUpdateDate>
+						<S.LastUpdateDate>마지막 수정 : {util.dateParser(different.versionDocs.thisVersionCreatedAt)}</S.LastUpdateDate>
 						<AccodianMenu name="개요">
 							{different.diff.map(({ operation, text }, index) => {
 								const version = versionFilter(operation)
