@@ -5,9 +5,12 @@ import { useMutation, useQueryClient } from 'react-query'
 
 const onLogin = async (authCode: string | string[] | undefined) => {
 	return (
-		await httpClient.oauth.post(null, {
-			headers: { authCode },
-		})
+		await httpClient.oauth.post(
+			{},
+			{
+				headers: { authCode },
+			}
+		)
 	).data
 }
 
