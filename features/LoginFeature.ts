@@ -18,20 +18,17 @@ const onLogin = async (authCode: string) => {
 const useLoginMutation = () => {
 	const router = useRouter()
 	const queryClient = useQueryClient()
-	console.log(router)
 
 	return useMutation(() => onLogin(router.asPath.replace('/oauth?code=', '')), {
 		onSuccess: (data) => {
 			Storage.setItem('access_token', data.accessToken)
 			Storage.setItem('refresh_token', data.refreshToken)
-			router.back()
-			router.back()
+			window.history.go(-2)
 			queryClient.invalidateQueries('getUser')
 		},
 		onError: () => {
 			toast.error('LOGIN ERROR!')
-			router.back()
-			router.back()
+			window.history.go(-2)
 		},
 	})
 }

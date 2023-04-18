@@ -14,15 +14,10 @@ const MyPage = () => {
 	})
 	const queryClient = new QueryClient()
 
-	const onLogout = async () => {
-		queryClient.invalidateQueries('getUser')
-		logout()
-	}
-
 	return (
 		<>
 			<NextSeo {...seoConfig} />
-			<MyPageLayout isLogined={isLogined} user={user || initUserState} mutate={onLogout} />
+			<MyPageLayout isLogined={isLogined} user={user || initUserState} mutate={logout} />
 		</>
 	)
 }

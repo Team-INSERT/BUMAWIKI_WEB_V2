@@ -8,7 +8,7 @@ import UserType from '@/types/user.type'
 interface MyPageLayoutPropsType {
 	isLogined: boolean
 	user: UserType
-	mutate: () => Promise<void>
+	mutate: () => void
 }
 
 const MyPageLayout = ({ isLogined, user, mutate }: MyPageLayoutPropsType) => {
