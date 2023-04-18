@@ -25,7 +25,7 @@ export const headerInitState = [
 export const subheaderInitState = [
 	[
 		{
-			href: '/docs/부마위키%20업데이트%20내용',
+			href: '/docs/부마위키%20업데이트%20내역',
 			title: '공지사항',
 		},
 		{

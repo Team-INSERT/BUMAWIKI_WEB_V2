@@ -30,6 +30,7 @@ export default function App({ Component, pageProps }: AppProps) {
 					<ScrollBtn />
 					<Aside />
 				</Component>
+				<Aside isMobile="true" />
 				<Footer />
 			</RecoilRoot>
 		</QueryClientProvider>

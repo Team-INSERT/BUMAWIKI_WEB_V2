@@ -58,8 +58,11 @@ const Create = () => {
 		setDocs({ ...docs, contents: frame })
 	}
 
-	const changeDocsType = (e: React.ChangeEvent<HTMLInputElement | HTMLOptionElement>) => {
+	const changeDocsType = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLOptionElement>) => {
 		const type = e.target.id
+		const value = e.target.value
+		console.log(value)
+		if (value !== 'on') return setDocs({ ...docs, docsType: type, title: docs.title.replace('틀:', ''), contents: '' })
 		if (type === 'FRAME') return setDocs({ ...docs, docsType: type, title: `틀:${docs.title}` })
 		return setDocs({ ...docs, docsType: type, title: docs.title.replace('틀:', ''), contents: '' })
 	}

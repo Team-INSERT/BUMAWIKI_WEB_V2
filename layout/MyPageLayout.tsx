@@ -4,12 +4,11 @@ import * as S from './MyPageLayout.style'
 import { AccodianMenu, Aside, Board, Classify, ScrollBtn } from '@/components'
 import Contributors from '@/types/contributors.type'
 import UserType from '@/types/user.type'
-import { UseMutateFunction } from 'react-query'
 
 interface MyPageLayoutPropsType {
 	isLogined: boolean
 	user: UserType
-	mutate: UseMutateFunction<void, unknown, void, unknown>
+	mutate: () => Promise<void>
 }
 
 const MyPageLayout = ({ isLogined, user, mutate }: MyPageLayoutPropsType) => {
@@ -35,7 +34,7 @@ const MyPageLayout = ({ isLogined, user, mutate }: MyPageLayoutPropsType) => {
 									</span>
 									<br />
 									<div>
-										<S.LogoutText onClick={() => mutate()}>로그아웃</S.LogoutText>
+										<S.LogoutText onClick={mutate}>로그아웃</S.LogoutText>
 									</div>
 								</>
 							)}
