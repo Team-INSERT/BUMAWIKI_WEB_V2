@@ -26,10 +26,7 @@ const useLoginMutation = () => {
 			router.back()
 			router.back()
 		},
-		onError: () => {
-			router.back()
-			router.back()
-		},
+		onError: () => window.history.go(-2),
 	})
 }
 
