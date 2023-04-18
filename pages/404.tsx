@@ -1,7 +1,7 @@
 import * as S from '../layout/HomeLayout.style'
 
 import React from 'react'
-import { NextSeo, NextSeoProps } from 'next-seo'
+import { NextSeo } from 'next-seo'
 import { Aside, Board, ScrollBtn } from '@/components'
 import useConfig from '@/hooks/useConfig'
 

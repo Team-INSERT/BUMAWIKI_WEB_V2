@@ -1,6 +1,6 @@
 import React from 'react'
 import UpdateDocsType from '@/types/update.type.'
-import { decodeContents, encodeContents } from '@/utils/document/requestContents'
+import { decodeContents } from '@/utils/document/requestContents'
 import Docs from '@/types/docs.type'
 import { GetStaticProps } from 'next'
 import { Storage } from '@/lib/storage/'
