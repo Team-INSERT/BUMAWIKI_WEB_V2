@@ -42,7 +42,8 @@ const useUser = (options?: UseUserOptions) => {
 			},
 		})
 		setUser(initUserState)
-
+		Storage.delItem('access_token')
+		Storage.delItem('refresh_token')
 		remove()
 	}
 
