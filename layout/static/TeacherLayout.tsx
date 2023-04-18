@@ -16,20 +16,23 @@ const TeacherLayout = ({ common_teacher, major_teacher, mentor_teacher }: Teache
 				<S.StaticTitleWrap>
 					<S.StaticTitleText>부마위키:선생님</S.StaticTitleText>
 				</S.StaticTitleWrap>
-				<Classify>선생님</Classify>
+				<S.StaticClassify>
+					<Classify>선생님</Classify>
+				</S.StaticClassify>
 				<S.StaticWarnText>※ 필독! 문서 내 대상을 비하하는 내용을 서술하는 사용자는 부마위키 이용에 제한을 받을 수 있습니다 ※</S.StaticWarnText>
-				<S.StaticList>
+				<S.StaticLine />
+				<S.StaticListWrap>
 					<AccodianMenu name="인문과목 선생님">
-						<S.StaticDetailList>
+						<S.StaticList>
 							{common_teacher.map((teacher: Docs) => (
 								<S.StaticListItem key={teacher.id}>
 									<S.StaticLink href={`/docs/${teacher.title}`}>{teacher.title}</S.StaticLink>
 								</S.StaticListItem>
 							))}
-						</S.StaticDetailList>
+						</S.StaticList>
 					</AccodianMenu>
 					<AccodianMenu name="전공과목 선생님">
-						<S.StaticDetailList>
+						<S.StaticList>
 							{major_teacher.map((teacher: Docs) => (
 								<S.StaticListItem key={teacher.id}>
 									<S.StaticLink href={`/docs/${teacher.title}`} className="link">
@@ -37,10 +40,10 @@ const TeacherLayout = ({ common_teacher, major_teacher, mentor_teacher }: Teache
 									</S.StaticLink>
 								</S.StaticListItem>
 							))}
-						</S.StaticDetailList>
+						</S.StaticList>
 					</AccodianMenu>
 					<AccodianMenu name="멘토 선생님">
-						<S.StaticDetailList>
+						<S.StaticList>
 							{mentor_teacher.map((teacher: Docs) => (
 								<S.StaticListItem key={teacher.id}>
 									<S.StaticLink href={`/docs/${teacher.title}`} className="link">
@@ -48,9 +51,9 @@ const TeacherLayout = ({ common_teacher, major_teacher, mentor_teacher }: Teache
 									</S.StaticLink>
 								</S.StaticListItem>
 							))}
-						</S.StaticDetailList>
+						</S.StaticList>
 					</AccodianMenu>
-				</S.StaticList>
+				</S.StaticListWrap>
 				<SubFooter />
 			</Board>
 			<ScrollBtn />
