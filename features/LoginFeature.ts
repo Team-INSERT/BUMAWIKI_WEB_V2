@@ -17,6 +17,7 @@ const onLogin = async (authCode: string) => {
 const useLoginMutation = () => {
 	const router = useRouter()
 	const queryClient = useQueryClient()
+	console.log(router)
 
 	return useMutation(() => onLogin(router.query.code as string), {
 		onSuccess: (data) => {
