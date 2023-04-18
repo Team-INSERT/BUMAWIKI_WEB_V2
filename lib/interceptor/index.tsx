@@ -4,7 +4,7 @@ import { getAccessToken } from '../httpClient/getAccessToken'
 import exception from '@/constants/exception.constants'
 
 export const requestInterceptors = (requestConfig: AxiosRequestConfig) => {
-	if (!Storage.getItem('access_token')) getAccessToken()
+	if (!Storage.getItem('access_token') && Storage.getItem('refresh_token')) getAccessToken()
 
 	if (requestConfig.headers) requestConfig.headers.Authorization = Storage.getItem('access_token')
 
