@@ -13,7 +13,6 @@ interface SingleDocsPropsType {
 }
 
 const Version = (props: SingleDocsPropsType) => {
-	console.log(props)
 	const { seoConfig } = useConfig({
 		title: `부마위키 문서 수정 기록 - ${props.docsName}`,
 		description: `"${props.docsName}" 문서의 수정 기록 페이지입니다.`,

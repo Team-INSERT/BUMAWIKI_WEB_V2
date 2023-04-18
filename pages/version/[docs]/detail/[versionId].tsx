@@ -11,7 +11,6 @@ const VersionDetail = ({ versionId, different }: VersionDetailPropsType) => {
 		title: `부마위키 문서 기록 - ${different.title}[${versionId}]`,
 		description: `"${different.title}" 문서의 예전 기록 페이지입니다.`,
 	})
-	console.log(different)
 
 	return (
 		<>
