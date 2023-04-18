@@ -22,9 +22,11 @@ const useLoginMutation = () => {
 			queryClient.invalidateQueries('getUser')
 			router.back()
 			router.back()
-			// window.history.go(-2)
 		},
-		onError: () => window.history.go(-2),
+		onError: () => {
+			router.back()
+			router.back()
+		},
 	})
 }
 
