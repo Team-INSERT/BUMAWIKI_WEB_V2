@@ -48,7 +48,7 @@ const DetailBtn = ({ docsId }: DetailBtnProps) => {
 
 	const onNavigatePage = (type: string) => {
 		if (type === 'VERSION') return router.push(`/version/${router.query.title}`)
-		if (type === 'UPDATE' && !isLogined) return alert('로그인 후 편집하실 수 있습니다!')
+		if (type === 'UPDATE' && !isLogined) return toast.error('로그인 후 편집하실 수 있습니다!')
 		router.push(`/update/${router.query.title}`)
 	}
 
