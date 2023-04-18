@@ -2,6 +2,7 @@ import httpClient from '@/lib/httpClient'
 import { Storage } from '@/lib/storage'
 import { useRouter } from 'next/router'
 import { useMutation, useQueryClient } from 'react-query'
+import { toast } from 'react-toastify'
 
 const onLogin = async (authCode: string) => {
 	return (
@@ -19,17 +20,19 @@ const useLoginMutation = () => {
 	const queryClient = useQueryClient()
 	console.log(router)
 
-	return useMutation(() => onLogin(router.query.code as string), {
+	return useMutation(() => onLogin(router.asPath.replace('/oauth?code=', '')), {
 		onSuccess: (data) => {
 			Storage.setItem('access_token', data.accessToken)
 			Storage.setItem('refresh_token', data.refreshToken)
-			// window.history.go(-2)
+			router.back()
+			router.back()
 			queryClient.invalidateQueries('getUser')
 		},
-		onError: (err) => {
-			console.log(err)
+		onError: () => {
+			toast.error('LOGIN ERROR!')
+			router.back()
+			router.back()
 		},
-		// onError: () => window.history.go(-2),
 	})
 }
 
