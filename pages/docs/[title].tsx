@@ -93,7 +93,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 		props: {
 			docs: res,
 		},
-		revalidate: 10,
+		revalidate: 1,
 	}
 }
 
