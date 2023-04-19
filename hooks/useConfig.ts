@@ -9,6 +9,12 @@ const useConfig = ({ title, description }: UseConfigPropsType) => {
 	const seoConfig: NextSeoProps = {
 		title,
 		description,
+		additionalLinkTags: [
+			{
+				rel: 'icon',
+				href: '/images/icon.ico',
+			},
+		],
 		openGraph: {
 			type: 'website',
 			title,
