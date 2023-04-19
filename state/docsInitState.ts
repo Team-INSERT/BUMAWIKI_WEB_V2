@@ -5,7 +5,7 @@ const docsInitState = {
 	docsType: '',
 	lastModifiedAt: '',
 	enroll: -1,
-	view: 0,
+	thumbsUpsCounts: 0,
 }
 
 export default docsInitState

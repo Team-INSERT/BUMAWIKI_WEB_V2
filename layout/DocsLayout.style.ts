@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import styled from 'styled-components'
 
 export const DocsWrap = styled.div`
@@ -69,5 +70,28 @@ export const DocsContents = styled.div`
 	img {
 		margin-top: 10px;
 		width: 80%;
+	}
+`
+
+export const DocsLikeWrap = styled.div`
+	display: flex;
+	margin: 0 0 8px auto;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+`
+
+export const DocsLikeIcon = styled(Image)`
+	width: 18px;
+	height: 18px;
+	margin-left: 6px;
+`
+
+export const DocsLikeCount = styled.div`
+	font-size: 12px;
+	font-weight: 600;
+
+	&::selection {
+		background-color: transparent;
 	}
 `

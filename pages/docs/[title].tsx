@@ -8,21 +8,44 @@ import docsInitState from '@/state/docsInitState'
 import DocsLayout from '@/layout/DocsLayout'
 import httpClient from '@/lib/httpClient'
 import useConfig from '@/hooks/useConfig'
+import useUser from '@/hooks/useUser'
+import { toast } from 'react-toastify'
+import { useRouter } from 'next/router'
 
 interface SingleDocsPropsType {
 	docs: Docs
 }
 
 const Doc = ({ docs }: SingleDocsPropsType) => {
+	const [like, setLike] = React.useState(false)
+	const [count, setCount] = React.useState(docs.thumbsUpsCounts || 0)
+	const router = useRouter()
+	const { isLogined } = useUser()
 	const { seoConfig } = useConfig({
 		title: `부마위키 - ${docs.title} (${util.typeEditor(docs.docsType)})`,
 		description: `${docs.contents.slice(0, 16)}...`,
 	})
 
+	const onChangeLike = () => {
+		if (!isLogined) return toast.error('로그인 후 이용 가능한 서비스입니다!')
+		setLike(!like)
+		setCount(like ? count - 1 : count + 1)
+	}
+
+	React.useEffect(() => {
+		return () => {
+			setLike(false)
+			setCount(docs.thumbsUpsCounts || 0)
+
+			// if (like) httpClient.createLike.post({ docsId: docs.id })
+			// else httpClient.deleteLike.post({ docsId: docs.id })
+		}
+	}, [router])
+
 	return (
 		<>
 			<NextSeo {...seoConfig} />
-			<DocsLayout docs={docs} />
+			<DocsLayout docs={docs} onChangeLike={onChangeLike} count={count} like={like} />
 		</>
 	)
 }
@@ -70,6 +93,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 		props: {
 			docs: res,
 		},
+		revalidate: 10,
 	}
 }
 

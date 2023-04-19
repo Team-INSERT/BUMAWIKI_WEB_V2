@@ -45,12 +45,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 	const res = await getApiDocs(params?.userId as string)
 
-	if (!res)
-		return {
-			props: {
-				user: initUserState,
-			},
-		}
+	if (!res) return { notFound: true }
 
 	return {
 		props: {

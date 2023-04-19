@@ -102,6 +102,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 			defaultDocs: res,
 			title: params?.title,
 		},
+		revalidate: 5,
 	}
 }
 

@@ -65,10 +65,6 @@ export const subheaderInitState = [
 			href: '/accident',
 			title: '사건',
 		},
-		{
-			href: '/popular',
-			title: '인기문서',
-		},
 	],
 	[
 		{
