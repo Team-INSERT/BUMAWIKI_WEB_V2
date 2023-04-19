@@ -37,6 +37,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 			versionId: params?.versionId,
 			different: different,
 		},
+		revalidate: 10,
 	}
 }
 

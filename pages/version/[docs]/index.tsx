@@ -44,6 +44,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 			docsName: params?.docs,
 			index: res.versionDocsResponseDto.length,
 		},
+		revalidate: 10,
 	}
 }
 
