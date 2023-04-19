@@ -146,4 +146,5 @@ export default {
 	authority: new HttpClient('api/set/authority', axiosConfig),
 	createLike: new HttpClient('api/thumbs/up/create', axiosConfig),
 	deleteLike: new HttpClient('api/thumbs/up/delete', axiosConfig),
+	getLike: new HttpClient('api/thumbs/up/get', axiosConfig),
 }
