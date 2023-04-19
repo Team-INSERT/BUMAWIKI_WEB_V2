@@ -5,8 +5,14 @@ import MyPageLayout from '@/layout/MyPageLayout'
 import { initUserState } from '@/context/userState'
 import useConfig from '@/hooks/useConfig'
 import { GetServerSideProps } from 'next'
+import httpClient from '@/lib/httpClient'
+import MyPageLikeType from '@/types/like.type'
 
-const MyPage = () => {
+interface MyPagePropsType {
+	likes: MyPageLikeType[]
+}
+
+const MyPage = ({ likes }: MyPagePropsType) => {
 	const { user, isLogined, logout } = useUser()
 	const { seoConfig } = useConfig({
 		title: '부마위키 - 마이페이지',
@@ -16,15 +22,15 @@ const MyPage = () => {
 	return (
 		<>
 			<NextSeo {...seoConfig} />
-			<MyPageLayout isLogined={isLogined} user={user || initUserState} mutate={logout} />
+			<MyPageLayout likes={likes} isLogined={isLogined} user={user || initUserState} mutate={logout} />
 		</>
 	)
 }
 
-export const getServerSideProps: GetServerSideProps = () => {
-	return {
-		props: {},
-	}
+export const getServerSideProps: GetServerSideProps = async () => {
+	const likes = (await httpClient.getLike.get()).data
+
+	return { props: { likes } }
 }
 
 export default MyPage
