@@ -4,7 +4,7 @@ import httpClient from '@/lib/httpClient'
 import { encodeContents } from '@/utils/document/requestContents'
 import { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
-import { useMutation } from 'react-query'
+import { QueryClient, useMutation } from 'react-query'
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
 
@@ -37,6 +37,7 @@ const onUpdateDocs = async ({ title, data }: UpdateMutateFunctionPropsType) => {
 
 const useUpdateDocsMutation = (title: string) => {
 	const router = useRouter()
+	const queryClient = new QueryClient()
 
 	return useMutation(onUpdateDocs, {
 		onSuccess: () => {
@@ -44,6 +45,7 @@ const useUpdateDocsMutation = (title: string) => {
 				icon: 'success',
 				title: '문서 편집 완료!',
 			})
+			queryClient.invalidateQueries('lastModifiedDocs')
 			router.push(`/docs/${title}`)
 		},
 		onError: (err) => {

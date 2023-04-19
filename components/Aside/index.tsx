@@ -9,6 +9,7 @@ import Docs from '@/types/docs.type'
 import { useQuery } from 'react-query'
 import { getAccessToken } from '@/lib/httpClient/getAccessToken'
 import queryKey from '@/constants/queryKey.constants'
+import { useRouter } from 'next/router'
 
 interface AsidePropsType {
 	isMobile?: string
