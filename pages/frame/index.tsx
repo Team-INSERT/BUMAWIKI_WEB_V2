@@ -20,13 +20,9 @@ const Frame = (props: DocsPropsType) => {
 }
 
 export async function getStaticProps() {
-	const frame = (await httpClient.static.getByTitle('frame')).data
+	const docs = (await httpClient.static.getByTitle('frame')).data
 
-	return {
-		props: {
-			docs: frame,
-		},
-	}
+	return { props: { docs } }
 }
 
 export default Frame
