@@ -2,7 +2,7 @@ import React from 'react'
 import UpdateDocsType from '@/types/update.type.'
 import { decodeContents } from '@/utils/document/requestContents'
 import Docs from '@/types/docs.type'
-import { GetStaticProps } from 'next'
+import { GetServerSideProps, GetStaticProps } from 'next'
 import { Storage } from '@/lib/storage/'
 import { NextSeo } from 'next-seo'
 import { IFileTypes } from '@/components/DragDrop'
@@ -77,13 +77,6 @@ const Update = ({ defaultDocs }: SinglDocsPropsType) => {
 	)
 }
 
-export const getStaticPaths = async () => {
-	return {
-		paths: [],
-		fallback: 'blocking',
-	}
-}
-
 const getApiDocs = async (docsName: string) => {
 	try {
 		return (await httpClient.docs.getByTitle(docsName)).data
@@ -92,7 +85,7 @@ const getApiDocs = async (docsName: string) => {
 	}
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
 	const { params } = context
 
 	const res = await getApiDocs(params?.title as string)
@@ -102,7 +95,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
 			defaultDocs: res,
 			title: params?.title,
 		},
-		revalidate: 5,
 	}
 }
 
