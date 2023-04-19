@@ -39,7 +39,7 @@ const Doc = ({ docs }: SingleDocsPropsType) => {
 			// if (like) httpClient.createLike.post({ docsId: docs.id })
 			// else httpClient.deleteLike.post({ docsId: docs.id })
 		}
-	}, [router])
+	}, [router, docs.thumbsUpsCounts])
 
 	return (
 		<>
@@ -60,27 +60,23 @@ const getApiDocs = async (docsName: string) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	const { params } = context
 
-	const res = await getApiDocs(params?.title as string)
+	const docs = await getApiDocs(params?.title as string)
 
-	if (!res) return { notFound: true }
+	if (!docs) return { notFound: true }
 
-	const { contents } = res
+	const { contents } = docs
 
-	if (res.contents.indexOf('include(') !== -1) {
+	if (docs.contents.indexOf('include(') !== -1) {
 		const includeTag = contents.substring(contents.indexOf('include('), contents.indexOf(');') + 2)
 		const frames: string[] = contents.substring(contents.indexOf('include('), contents.indexOf(');')).replace('include(', '').split(', ')
 
 		let result = ''
 
 		for (const frame of frames) result += `${await util.includeFrame(frame)}\n`
-		res.contents = contents.replace(includeTag, result)
+		docs.contents = contents.replace(includeTag, result)
 	}
 
-	return {
-		props: {
-			docs: res,
-		},
-	}
+	return { props: { docs } }
 }
 
 export default Doc
