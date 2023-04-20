@@ -216,7 +216,7 @@ const HomeLayout = () => {
 							<br />
 							우리는 모두 하나 힘 모아 전진하세
 							<br />
-							영원토록 길이 빛날 부산소프트웨어마이스터고
+							영원무궁 길이 빛날 부산소프트웨어마이스터고
 						</S.SongContent>
 					</AccodianMenu>
 				</S.SongWrap>
