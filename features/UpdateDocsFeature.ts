@@ -1,4 +1,5 @@
 import { IFileTypes } from '@/components/DragDrop'
+import config from '@/config'
 import exception from '@/constants/exception.constants'
 import httpClient from '@/lib/httpClient'
 import { encodeContents } from '@/utils/document/requestContents'
@@ -36,17 +37,17 @@ const onUpdateDocs = async ({ title, data }: UpdateMutateFunctionPropsType) => {
 }
 
 const useUpdateDocsMutation = (title: string) => {
-	const router = useRouter()
 	const queryClient = new QueryClient()
+	const router = useRouter()
 
 	return useMutation(onUpdateDocs, {
 		onSuccess: () => {
-			Swal.fire({
-				icon: 'success',
-				title: '문서 편집 완료!',
-			})
 			queryClient.invalidateQueries('lastModifiedDocs')
-			router.push(`/docs/${title}`)
+			httpClient.revalidateUpdate.post({ title }, { baseURL: `${config.clientUrl}/api/revalidate-update` })
+			httpClient.revalidateVersion.post({ title }, { baseURL: `${config.clientUrl}/api/revalidate-version` })
+			httpClient.revalidateDocs.post({ title }, { baseURL: `${config.clientUrl}/api/revalidate-docs` }).then(() => {
+				window.location.href = `/docs/${title}`
+			})
 		},
 		onError: (err) => {
 			if (err instanceof AxiosError) {
