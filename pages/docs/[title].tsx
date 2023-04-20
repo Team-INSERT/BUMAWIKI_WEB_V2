@@ -2,7 +2,7 @@ import * as util from '@/utils'
 
 import React from 'react'
 import Docs from '@/types/docs.type'
-import { GetServerSideProps, GetStaticProps } from 'next'
+import { GetStaticProps } from 'next'
 import { NextSeo } from 'next-seo'
 import DocsLayout from '@/layout/DocsLayout'
 import httpClient from '@/lib/httpClient'
