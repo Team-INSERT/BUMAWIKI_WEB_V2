@@ -26,10 +26,7 @@ export default function App({ Component, pageProps }: AppProps) {
 			<RecoilRoot>
 				<CustomToastContainer autoClose={1000} position={toast.POSITION.TOP_RIGHT} />
 				<Header />
-				<Component {...pageProps}>
-					<ScrollBtn />
-					<Aside />
-				</Component>
+				<Component {...pageProps} />
 				<Aside isMobile="true" />
 				<Footer />
 			</RecoilRoot>

@@ -2,7 +2,7 @@ import React from 'react'
 import UpdateDocsType from '@/types/update.type.'
 import { decodeContents } from '@/utils/document/requestContents'
 import Docs from '@/types/docs.type'
-import { GetServerSideProps, GetStaticProps } from 'next'
+import { GetStaticProps } from 'next'
 import { Storage } from '@/lib/storage/'
 import { NextSeo } from 'next-seo'
 import { IFileTypes } from '@/components/DragDrop'
@@ -13,6 +13,7 @@ import UpdateLayout from '@/layout/UpdateLayout'
 import { toast } from 'react-toastify'
 import useConfig from '@/hooks/useConfig'
 import useUpdateDocsMutation from '@/features/UpdateDocsFeature'
+import config from '@/config'
 
 interface SinglDocsPropsType {
 	defaultDocs: Docs
@@ -44,21 +45,16 @@ const Update = ({ defaultDocs }: SinglDocsPropsType) => {
 	}
 
 	const onClickUpdateDocs = async () => {
-		if (!isLogined) {
-			toast.error('로그인 후 이용 가능한 서비스입니다.')
-			return
+		const { contents, title } = docs
+		const data = {
+			contents,
+			files: parentFiles,
 		}
-		if (!docs.contents) {
-			toast.error('문서가 비어있습니다!')
-			return
-		}
-		mutate({
-			title: docs.title,
-			data: {
-				contents: docs.contents,
-				files: parentFiles,
-			},
-		})
+
+		if (!isLogined) return toast.error('로그인 후 이용 가능한 서비스입니다.')
+		if (!docs.contents) return toast.error('문서가 비어있습니다!')
+
+		mutate({ title, data })
 	}
 
 	return (
@@ -85,10 +81,18 @@ const getApiDocs = async (docsName: string) => {
 	}
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticPaths = async () => {
+	return {
+		paths: [],
+		fallback: 'blocking',
+	}
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
 	const { params } = context
 
 	const res = await getApiDocs(params?.title as string)
+	if (!res) return { notFound: true }
 
 	return {
 		props: {

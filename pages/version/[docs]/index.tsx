@@ -1,6 +1,6 @@
 import React from 'react'
 import { VersionDocs } from '@/types/version.type'
-import { GetServerSideProps, GetStaticProps } from 'next'
+import { GetStaticProps } from 'next'
 import { NextSeo } from 'next-seo'
 import httpClient from '@/lib/httpClient'
 import VersionLayout from '@/layout/version/VersionLayout'
@@ -26,7 +26,14 @@ const Version = (props: SingleDocsPropsType) => {
 	)
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticPaths = async () => {
+	return {
+		paths: [],
+		fallback: 'blocking',
+	}
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
 	const { params } = context
 
 	const res = (await httpClient.version.getByTitle(`${params?.docs as string}/version`)).data

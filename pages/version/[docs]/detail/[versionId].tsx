@@ -20,7 +20,14 @@ const VersionDetail = ({ versionId, different }: VersionDetailPropsType) => {
 	)
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticPaths = async () => {
+	return {
+		paths: [],
+		fallback: 'blocking',
+	}
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
 	const { params } = context
 
 	const different = (await httpClient.different.getByTitle(`${params?.docs}/different/${params?.versionId}`)).data

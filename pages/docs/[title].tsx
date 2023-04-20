@@ -2,7 +2,7 @@ import * as util from '@/utils'
 
 import React from 'react'
 import Docs from '@/types/docs.type'
-import { GetServerSideProps } from 'next'
+import { GetStaticProps } from 'next'
 import { NextSeo } from 'next-seo'
 import DocsLayout from '@/layout/DocsLayout'
 import httpClient from '@/lib/httpClient'
@@ -57,7 +57,14 @@ const getApiDocs = async (docsName: string) => {
 	}
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticPaths = async () => {
+	return {
+		paths: [],
+		fallback: 'blocking',
+	}
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
 	const { params } = context
 
 	const res = await getApiDocs(params?.title as string)
