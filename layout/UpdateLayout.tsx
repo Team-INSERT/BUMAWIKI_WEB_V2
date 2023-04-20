@@ -10,6 +10,7 @@ import Check from 'assets/check.svg'
 import { decodeContents } from '@/utils/document/requestContents'
 import UpdateDocsType from '@/types/update.type.'
 import FileListArray from '@/types/filelistArray.type'
+import { Id } from 'react-toastify'
 
 interface UpdateLayoutPropsType {
 	docs: UpdateDocsType
@@ -18,7 +19,7 @@ interface UpdateLayoutPropsType {
 	onClickAutoComplete: () => void
 	isOnAutoComplete: any
 	textareaRef: React.RefObject<HTMLTextAreaElement>
-	onClickUpdateDocs: () => Promise<void>
+	onClickUpdateDocs: () => Promise<Id | undefined>
 }
 
 const UpdateLayout = ({ docs, setDocs, setFiles, onClickAutoComplete, isOnAutoComplete, textareaRef, onClickUpdateDocs }: UpdateLayoutPropsType) => {
