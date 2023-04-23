@@ -43,9 +43,9 @@ const useUpdateDocsMutation = (title: string) => {
 	return useMutation(onUpdateDocs, {
 		onSuccess: () => {
 			queryClient.invalidateQueries('lastModifiedDocs')
-			httpClient.revalidateUpdate.post({ title }, { baseURL: `${config.clientUrl}/revalidate-update` })
-			httpClient.revalidateVersion.post({ title }, { baseURL: `${config.clientUrl}/revalidate-version` })
-			httpClient.revalidateDocs.post({ title }, { baseURL: `${config.clientUrl}/revalidate-docs` }).then(() => {
+			httpClient.revalidateUpdate.post({ title }, { baseURL: `${config.clientUrl}/api/revalidate-update` })
+			httpClient.revalidateVersion.post({ title }, { baseURL: `${config.clientUrl}/api/revalidate-version` })
+			httpClient.revalidateDocs.post({ title }, { baseURL: `${config.clientUrl}/api/revalidate-docs` }).then(() => {
 				window.location.href = `/docs/${title}`
 			})
 		},
