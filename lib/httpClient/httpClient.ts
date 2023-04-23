@@ -146,7 +146,7 @@ export default {
 	authority: new HttpClient('api/set/authority', axiosConfig),
 	createLike: new HttpClient('api/thumbs/up/create', axiosConfig),
 	deleteLike: new HttpClient('api/thumbs/up/delete', axiosConfig),
-	revalidateDocs: new HttpClient('apis/revalidate-docs', axiosConfig),
-	revalidateUpdate: new HttpClient('apis/revalidate-update', axiosConfig),
-	revalidateVersion: new HttpClient('apis/revalidate-version', axiosConfig),
+	revalidateDocs: new HttpClient('revalidate-docs', axiosConfig),
+	revalidateUpdate: new HttpClient('revalidate-update', axiosConfig),
+	revalidateVersion: new HttpClient('revalidate-version', axiosConfig),
 }
