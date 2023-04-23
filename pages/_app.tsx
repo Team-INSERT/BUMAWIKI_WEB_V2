@@ -8,7 +8,7 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { RecoilRoot } from 'recoil'
 
-axios.defaults.baseURL = 'http://bumawiki.kro.kr/api'
+axios.defaults.baseURL = 'https://bumawiki.kro.kr/api'
 
 const queryClient = new QueryClient({
 	defaultOptions: {
