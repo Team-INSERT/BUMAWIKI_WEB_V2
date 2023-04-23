@@ -38,7 +38,6 @@ const onUpdateDocs = async ({ title, data }: UpdateMutateFunctionPropsType) => {
 
 const useUpdateDocsMutation = (title: string) => {
 	const queryClient = new QueryClient()
-	const router = useRouter()
 
 	return useMutation(onUpdateDocs, {
 		onSuccess: () => {

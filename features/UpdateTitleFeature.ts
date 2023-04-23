@@ -1,3 +1,4 @@
+import config from '@/config'
 import httpClient from '@/lib/httpClient'
 import { useRouter } from 'next/router'
 import { useMutation, useQueryClient } from 'react-query'
@@ -9,12 +10,19 @@ const useUpdateTitleMutation = (docsName: string) => {
 
 	return useMutation(async () => (await httpClient.updateTitle.putByTitle(router.pathname, docsName)).data, {
 		onSuccess: (data) => {
+			const { title } = data
+
 			Swal.fire({
 				icon: 'success',
 				title: '문서 이름 변경 완료!',
 			})
+
 			queryClient.invalidateQueries('lastModifiedDocs')
-			router.push(`/docs/${data.title}`)
+			httpClient.revalidateUpdate.post({ title }, { baseURL: `${config.clientUrl}/api/revalidate-update` })
+			httpClient.revalidateVersion.post({ title }, { baseURL: `${config.clientUrl}/api/revalidate-version` })
+			httpClient.revalidateDocs.post({ title }, { baseURL: `${config.clientUrl}/api/revalidate-docs` }).then(() => {
+				window.location.href = `/docs/${title}`
+			})
 		},
 	})
 }
