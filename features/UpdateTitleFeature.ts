@@ -18,11 +18,12 @@ const useUpdateTitleMutation = (docsName: string) => {
 			})
 
 			queryClient.invalidateQueries('lastModifiedDocs')
-			httpClient.revalidateUpdate.post({ title }, { baseURL: `${config.clientUrl}/api/revalidate-update` })
-			httpClient.revalidateVersion.post({ title }, { baseURL: `${config.clientUrl}/api/revalidate-version` })
-			httpClient.revalidateDocs.post({ title }, { baseURL: `${config.clientUrl}/api/revalidate-docs` }).then(() => {
-				window.location.href = `/docs/${title}`
-			})
+			// httpClient.revalidateUpdate.post({ title }, { baseURL: `${config.clientUrl}/api/revalidate-update` })
+			// httpClient.revalidateVersion.post({ title }, { baseURL: `${config.clientUrl}/api/revalidate-version` })
+			// httpClient.revalidateDocs.post({ title }, { baseURL: `${config.clientUrl}/api/revalidate-docs` }).then(() => {
+			// 	window.location.href = `/docs/${title}`
+			// })
+			router.push(`/docs/${title}`)
 		},
 	})
 }
