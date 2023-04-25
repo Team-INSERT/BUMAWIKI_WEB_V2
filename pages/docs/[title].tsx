@@ -57,40 +57,14 @@ const getApiDocs = async (docsName: string) => {
 	}
 }
 
-// export const getStaticPaths = async () => {
-// 	return {
-// 		paths: [],
-// 		fallback: 'blocking',
-// 	}
-// }
+export const getStaticPaths = async () => {
+	return {
+		paths: [],
+		fallback: 'blocking',
+	}
+}
 
-// export const getStaticProps: GetStaticProps = async (context) => {
-// 	const { params } = context
-
-// 	const res = await getApiDocs(params?.title as string)
-
-// 	if (!res) return { notFound: true }
-
-// 	const { contents } = res
-
-// 	if (res.contents.indexOf('include(') !== -1) {
-// 		const includeTag = contents.substring(contents.indexOf('include('), contents.indexOf(');') + 2)
-// 		const frames: string[] = contents.substring(contents.indexOf('include('), contents.indexOf(');')).replace('include(', '').split(', ')
-
-// 		let result = ''
-
-// 		for (const frame of frames) result += `${await util.includeFrame(frame)}\n`
-// 		res.contents = contents.replace(includeTag, result)
-// 	}
-
-// 	return {
-// 		props: {
-// 			docs: res,
-// 		},
-// 	}
-// }
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
 	const { params } = context
 
 	const res = await getApiDocs(params?.title as string)
