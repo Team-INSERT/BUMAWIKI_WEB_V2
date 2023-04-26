@@ -26,28 +26,14 @@ const Version = (props: SingleDocsPropsType) => {
 	)
 }
 
-// export const getStaticPaths = async () => {
-// 	return {
-// 		paths: [],
-// 		fallback: 'blocking',
-// 	}
-// }
+export const getStaticPaths = async () => {
+	return {
+		paths: [],
+		fallback: 'blocking',
+	}
+}
 
-// export const getStaticProps: GetStaticProps = async (context) => {
-// 	const { params } = context
-
-// 	const res = (await httpClient.version.getByTitle(`${params?.docs as string}/version`)).data
-
-// 	return {
-// 		props: {
-// 			version: res.versionDocsResponseDto,
-// 			docsName: params?.docs,
-// 			index: res.versionDocsResponseDto.length,
-// 		},
-// 	}
-// }
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
 	const { params } = context
 
 	const res = (await httpClient.version.getByTitle(`${params?.docs as string}/version`)).data

@@ -82,28 +82,14 @@ const getApiDocs = async (docsName: string) => {
 	}
 }
 
-// export const getStaticPaths = async () => {
-// 	return {
-// 		paths: [],
-// 		fallback: 'blocking',
-// 	}
-// }
+export const getStaticPaths = async () => {
+	return {
+		paths: [],
+		fallback: 'blocking',
+	}
+}
 
-// export const getStaticProps: GetStaticProps = async (context) => {
-// 	const { params } = context
-
-// 	const res = await getApiDocs(params?.title as string)
-// 	if (!res) return { notFound: true }
-
-// 	return {
-// 		props: {
-// 			defaultDocs: res,
-// 			title: params?.title,
-// 		},
-// 	}
-// }
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
 	const { params } = context
 
 	const res = await getApiDocs(params?.title as string)

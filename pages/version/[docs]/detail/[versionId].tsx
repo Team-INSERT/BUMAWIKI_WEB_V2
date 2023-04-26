@@ -20,27 +20,14 @@ const VersionDetail = ({ versionId, different }: VersionDetailPropsType) => {
 	)
 }
 
-// export const getStaticPaths = async () => {
-// 	return {
-// 		paths: [],
-// 		fallback: 'blocking',
-// 	}
-// }
+export const getStaticPaths = async () => {
+	return {
+		paths: [],
+		fallback: 'blocking',
+	}
+}
 
-// export const getStaticProps: GetStaticProps = async (context) => {
-// 	const { params } = context
-
-// 	const different = (await httpClient.different.getByTitle(`${params?.docs}/different/${params?.versionId}`)).data
-
-// 	return {
-// 		props: {
-// 			versionId: params?.versionId,
-// 			different: different,
-// 		},
-// 	}
-// }
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
 	const { params } = context
 
 	const different = (await httpClient.different.getByTitle(`${params?.docs}/different/${params?.versionId}`)).data
@@ -48,7 +35,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	return {
 		props: {
 			versionId: params?.versionId,
-			different: different,
+			different,
 		},
 	}
 }
