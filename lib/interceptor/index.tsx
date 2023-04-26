@@ -6,7 +6,9 @@ import exception from '@/constants/exception.constants'
 export const requestInterceptors = (requestConfig: AxiosRequestConfig) => {
 	if (!Storage.getItem('access_token') && Storage.getItem('refresh_token')) getAccessToken()
 
-	if (requestConfig.headers) requestConfig.headers.Authorization = Storage.getItem('access_token')
+	if (requestConfig.headers) {
+		requestConfig.headers.Authorization = Storage.getItem('access_token')
+	}
 
 	const urlParams = requestConfig.url?.split('/:') || []
 	if (urlParams.length < 2) return requestConfig

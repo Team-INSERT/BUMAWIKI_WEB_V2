@@ -2,6 +2,7 @@ type LocalStorageKey = 'access_token' | 'refresh_token' | 'autoComplete'
 
 export class Storage {
 	static getItem(key: LocalStorageKey) {
+		console.log(typeof window !== 'undefined')
 		return typeof window !== 'undefined' ? localStorage.getItem(key) : null
 	}
 
