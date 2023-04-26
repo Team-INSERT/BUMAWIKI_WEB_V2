@@ -8,7 +8,11 @@ const useUpdateTitleMutation = (docsName: string) => {
 	const router = useRouter()
 	const queryClient = useQueryClient()
 
-	return useMutation(async () => (await httpClient.updateTitle.putByTitle(router.pathname, docsName)).data, {
+	const updateTitle = async () => {
+		return (await httpClient.updateTitle.putByTitle(router.pathname, { title: docsName })).data
+	}
+
+	return useMutation(updateTitle, {
 		onSuccess: (data) => {
 			const { title } = data
 
