@@ -7,6 +7,7 @@ interface Docs {
 	view: number
 	lastModifiedAt: string
 	thumbsUpsCounts: number
+	youLikeThis: boolean
 }
 
 export default Docs

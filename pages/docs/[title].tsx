@@ -10,13 +10,14 @@ import useConfig from '@/hooks/useConfig'
 import useUser from '@/hooks/useUser'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
+import { Storage } from '@/lib/storage'
 
 interface SingleDocsPropsType {
 	docs: Docs
 }
 
 const Doc = ({ docs }: SingleDocsPropsType) => {
-	const [like, setLike] = React.useState(false)
+	const [like, setLike] = React.useState(docs.youLikeThis || false)
 	const [count, setCount] = React.useState(docs.thumbsUpsCounts || 0)
 	const router = useRouter()
 	const { isLogined } = useUser()
@@ -33,7 +34,7 @@ const Doc = ({ docs }: SingleDocsPropsType) => {
 
 	React.useEffect(() => {
 		return () => {
-			setLike(false)
+			setLike(docs.youLikeThis || false)
 			setCount(docs.thumbsUpsCounts || 0)
 
 			// if (like) httpClient.createLike.post({ docsId: docs.id })
@@ -51,20 +52,47 @@ const Doc = ({ docs }: SingleDocsPropsType) => {
 
 const getApiDocs = async (docsName: string) => {
 	try {
-		return (await httpClient.docs.getByTitle(docsName)).data
+		console.log(Storage.getItem('access_token'))
+		return (await httpClient.docs.getByTitle(docsName, { headers: { Authorization: Storage.getItem('access_token') } })).data
 	} catch (err) {
 		return false
 	}
 }
 
-export const getStaticPaths = async () => {
-	return {
-		paths: [],
-		fallback: 'blocking',
-	}
-}
+// export const getStaticPaths = async () => {
+// 	return {
+// 		paths: [],
+// 		fallback: 'blocking',
+// 	}
+// }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+// export const getStaticProps: GetStaticProps = async (context) => {
+// 	const { params } = context
+
+// 	const res = await getApiDocs(params?.title as string)
+
+// 	if (!res) return { notFound: true }
+
+// 	const { contents } = res
+
+// 	if (res.contents.indexOf('include(') !== -1) {
+// 		const includeTag = contents.substring(contents.indexOf('include('), contents.indexOf(');') + 2)
+// 		const frames: string[] = contents.substring(contents.indexOf('include('), contents.indexOf(');')).replace('include(', '').split(', ')
+
+// 		let result = ''
+
+// 		for (const frame of frames) result += `${await util.includeFrame(frame)}\n`
+// 		res.contents = contents.replace(includeTag, result)
+// 	}
+
+// 	return {
+// 		props: {
+// 			docs: res,
+// 		},
+// 	}
+// }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
 	const { params } = context
 
 	const res = await getApiDocs(params?.title as string)
