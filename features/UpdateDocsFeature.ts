@@ -1,6 +1,7 @@
 import { IFileTypes } from '@/components/DragDrop'
 import config from '@/config'
 import exception from '@/constants/exception.constants'
+import useRevalidate from '@/hooks/useRevalidate'
 import httpClient from '@/lib/httpClient'
 import { encodeContents } from '@/utils/document/requestContents'
 import { AxiosError } from 'axios'
@@ -39,15 +40,12 @@ const onUpdateDocs = async ({ title, data }: UpdateMutateFunctionPropsType) => {
 const useUpdateDocsMutation = (title: string) => {
 	const queryClient = new QueryClient()
 	const router = useRouter()
+	const { revalidate } = useRevalidate(title)
 
 	return useMutation(onUpdateDocs, {
 		onSuccess: () => {
 			queryClient.invalidateQueries('lastModifiedDocs')
-			// httpClient.revalidateUpdate.post({ title }, { baseURL: `${config.clientUrl}/api/revalidate-update` })
-			// httpClient.revalidateVersion.post({ title }, { baseURL: `${config.clientUrl}/api/revalidate-version` })
-			// httpClient.revalidateDocs.post({ title }, { baseURL: `${config.clientUrl}/api/revalidate-docs` }).then(() => {
-			// 	window.location.href = `/docs/${title}`
-			// })
+			revalidate()
 			router.push(`/docs/${title}`)
 		},
 		onError: (err) => {
