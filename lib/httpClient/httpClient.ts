@@ -37,7 +37,6 @@ export class HttpClient {
 	}
 
 	getByTitle(url: string, requestConfig?: AxiosRequestConfig) {
-		console.log(requestConfig)
 		return this.api.get(`/${url}`, {
 			...HttpClient.clientConfig,
 			...requestConfig,
