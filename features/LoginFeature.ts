@@ -24,6 +24,7 @@ const useLoginMutation = () => {
 			Storage.setItem('access_token', data.accessToken)
 			Storage.setItem('refresh_token', data.refreshToken)
 			window.history.go(-2)
+			window.location.reload()
 			queryClient.invalidateQueries('getUser')
 		},
 		onError: () => {
