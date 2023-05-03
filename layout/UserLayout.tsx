@@ -8,9 +8,10 @@ import authority from '@/constants/authority.constants'
 
 interface UserLayoutPropsType {
 	user: UserType
+	myuser: UserType
 }
 
-const UserLayout = ({ user }: UserLayoutPropsType) => {
+const UserLayout = ({ user, myuser }: UserLayoutPropsType) => {
 	return (
 		<S.UserWrap>
 			<Board>
@@ -22,7 +23,7 @@ const UserLayout = ({ user }: UserLayoutPropsType) => {
 				<S.UserInfoWrap>
 					<AccodianMenu name="정보">
 						<S.UserInfoLoadWrap>
-							{user.authority === authority.ADMIN && <Authority email={user.email} />}
+							{myuser.authority === authority.ADMIN && <Authority email={user.email} />}
 							<span>
 								이름은 {user.nickName}이며, 부마위키의
 								{user.authority === authority.ADMIN && ' 관리자'}
