@@ -2,7 +2,7 @@ import * as util from '@/utils'
 
 import React from 'react'
 import Docs from '@/types/docs.type'
-import { GetServerSideProps, GetStaticProps } from 'next'
+import { GetStaticProps } from 'next'
 import { NextSeo } from 'next-seo'
 import DocsLayout from '@/layout/DocsLayout'
 import httpClient from '@/lib/httpClient'
@@ -28,18 +28,25 @@ const Doc = ({ docs }: SingleDocsPropsType) => {
 
 	const onChangeLike = () => {
 		if (!isLogined) return toast.error('로그인 후 이용 가능한 서비스입니다!')
+
+		try {
+			if (!like) httpClient.createLike.post({ docsId: docs.id })
+			else httpClient.deleteLike.delete({ data: { docsId: docs.id } })
+		} catch (err) {
+			console.log(err)
+		}
+
 		setLike(!like)
 		setCount(like ? count - 1 : count + 1)
 	}
 
 	React.useEffect(() => {
-		return () => {
-			setLike(docs.youLikeThis || false)
-			setCount(docs.thumbsUpsCounts || 0)
+		;(async () => {
+			const isLike = (await httpClient.isLike.getByTitle(docs.id.toString())).data
 
-			// if (like) httpClient.createLike.post({ docsId: docs.id })
-			// else httpClient.deleteLike.post({ docsId: docs.id })
-		}
+			setLike(isLike)
+			setCount(docs.thumbsUpsCounts)
+		})()
 	}, [router])
 
 	return (
