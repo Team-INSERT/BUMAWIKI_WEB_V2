@@ -41,7 +41,7 @@ const MyPageLayout = ({ isLogined, user, likes, mutate }: MyPageLayoutPropsType)
 								<S.ContributeWrap>
 									<span>이 유저가 좋아요를 누른 문서의 정보들이다.</span>
 									<S.ContributeList>
-										{likes.map((like: MyPageLikeType) => (
+										{likes.map((like) => (
 											<S.ContributeListText key={like.title}>
 												<S.ContributeLink href={`/docs/${like.title}`}>
 													{like.title} ({util.typeEditor(like.docsType)})
