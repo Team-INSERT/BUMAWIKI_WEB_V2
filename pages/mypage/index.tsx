@@ -6,6 +6,7 @@ import { initUserState } from '@/context/userState'
 import useConfig from '@/hooks/useConfig'
 import httpClient from '@/lib/httpClient'
 import MyPageLikeType from '@/types/like.type'
+import useLikeCountById from '@/hooks/useLikeCountById'
 
 const MyPage = () => {
 	const [likes, setLikes] = React.useState<MyPageLikeType[]>([{ title: '', docsType: '' }])
@@ -14,10 +15,11 @@ const MyPage = () => {
 		title: '부마위키 - 마이페이지',
 		description: '부마위키의 마이페이지입니다.',
 	})
+	const { getLikeList } = useLikeCountById()
 
 	const onEffectGetLikeList = async () => {
 		try {
-			const like = (await httpClient.getLike.get()).data
+			const like = await getLikeList()
 			setLikes(like)
 		} catch (err) {
 			console.log(err)

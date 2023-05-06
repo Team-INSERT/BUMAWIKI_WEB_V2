@@ -11,6 +11,7 @@ import useUser from '@/hooks/useUser'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
 import { Storage } from '@/lib/storage'
+import useLikeCountById from '@/hooks/useLikeCountById'
 
 interface SingleDocsPropsType {
 	docs: Docs
@@ -20,21 +21,19 @@ const Doc = ({ docs }: SingleDocsPropsType) => {
 	const [like, setLike] = React.useState(docs.youLikeThis || false)
 	const [count, setCount] = React.useState(docs.thumbsUpsCounts || 0)
 	const router = useRouter()
+
 	const { isLogined } = useUser()
 	const { seoConfig } = useConfig({
 		title: `부마위키 - ${docs.title} (${util.typeEditor(docs.docsType)})`,
 		description: `${docs.contents.slice(0, 16)}...`,
 	})
+	const { getIsLike, createLike, deleteLike } = useLikeCountById(docs.id)
 
 	const onChangeLike = () => {
 		if (!isLogined) return toast.error('로그인 후 이용 가능한 서비스입니다!')
 
-		try {
-			if (!like) httpClient.createLike.post({ docsId: docs.id })
-			else httpClient.deleteLike.delete({ data: { docsId: docs.id } })
-		} catch (err) {
-			console.log(err)
-		}
+		if (!like) createLike()
+		else deleteLike()
 
 		setLike(!like)
 		setCount(like ? count - 1 : count + 1)
@@ -42,9 +41,7 @@ const Doc = ({ docs }: SingleDocsPropsType) => {
 
 	React.useEffect(() => {
 		;(async () => {
-			const isLike = (await httpClient.isLike.getByTitle(docs.id.toString())).data
-
-			setLike(isLike)
+			setLike(await getIsLike())
 			setCount(docs.thumbsUpsCounts)
 		})()
 	}, [router])
