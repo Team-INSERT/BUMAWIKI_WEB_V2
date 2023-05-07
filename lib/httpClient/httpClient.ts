@@ -3,7 +3,6 @@ import { requestInterceptors, responseInterceptors } from '@/lib/interceptor'
 import { Storage } from '@/lib/storage'
 import { getAccessToken } from './getAccessToken'
 import { QueryClient } from 'react-query'
-import exception from '@/constants/exception.constants'
 
 export interface HttpClientConfig {
 	baseURL?: string
@@ -145,8 +144,10 @@ export default {
 	updateTitle: new HttpClient('api/docs/update/title', axiosConfig),
 	deleteDocs: new HttpClient('api/docs/delete/', axiosConfig),
 	authority: new HttpClient('api/set/authority', axiosConfig),
+	getLike: new HttpClient('api/thumbs/up/get', axiosConfig),
 	createLike: new HttpClient('api/thumbs/up/create', axiosConfig),
 	deleteLike: new HttpClient('api/thumbs/up/delete', axiosConfig),
+	isLike: new HttpClient('api/docs/like', axiosConfig),
 	revalidateDocs: new HttpClient('api/revalidate-docs', axiosConfig),
 	revalidateUpdate: new HttpClient('api/revalidate-update', axiosConfig),
 	revalidateVersion: new HttpClient('api/revalidate-version', axiosConfig),

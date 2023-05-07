@@ -4,14 +4,16 @@ import * as S from './MyPageLayout.style'
 import { AccodianMenu, Aside, Board, Classify, ScrollBtn } from '@/components'
 import Contributors from '@/types/contributors.type'
 import UserType from '@/types/user.type'
+import MyPageLikeType from '@/types/like.type'
 
 interface MyPageLayoutPropsType {
 	isLogined: boolean
 	user: UserType
+	likes: MyPageLikeType[]
 	mutate: () => void
 }
 
-const MyPageLayout = ({ isLogined, user, mutate }: MyPageLayoutPropsType) => {
+const MyPageLayout = ({ isLogined, user, likes, mutate }: MyPageLayoutPropsType) => {
 	return (
 		<S.MyPageWrap>
 			<Board>
@@ -34,21 +36,37 @@ const MyPageLayout = ({ isLogined, user, mutate }: MyPageLayoutPropsType) => {
 						</S.MyPageInfoLoadWrap>
 					</AccodianMenu>
 					{isLogined && (
-						<AccodianMenu name={'기여한 문서'}>
-							<S.ContributeWrap>
-								<span>이 유저가 기여한 문서의 정보들이다.</span>
-								<S.ContributeList>
-									{user.contributeDocs.map((docs: Contributors) => (
-										<S.ContributeListText key={docs.createTime}>
-											문서명 :&nbsp;
-											<S.ContributeLink href={`/docs/${docs.title}`}>{docs.title}</S.ContributeLink>
-											<br />
-											수정일 : {util.dateParser(docs.createTime)}
-										</S.ContributeListText>
-									))}
-								</S.ContributeList>
-							</S.ContributeWrap>
-						</AccodianMenu>
+						<>
+							<AccodianMenu name={'좋아요 목록'}>
+								<S.ContributeWrap>
+									<span>이 유저가 좋아요를 누른 문서의 정보들이다.</span>
+									<S.ContributeList>
+										{likes.map((like) => (
+											<S.ContributeListText key={like.title}>
+												<S.ContributeLink href={`/docs/${like.title}`}>
+													{like.title} ({util.typeEditor(like.docsType)})
+												</S.ContributeLink>
+											</S.ContributeListText>
+										))}
+									</S.ContributeList>
+								</S.ContributeWrap>
+							</AccodianMenu>
+							<AccodianMenu name={'기여한 문서'}>
+								<S.ContributeWrap>
+									<span>이 유저가 기여한 문서의 정보들이다.</span>
+									<S.ContributeList>
+										{user.contributeDocs.map((docs: Contributors) => (
+											<S.ContributeListText key={docs.createTime}>
+												문서명 :&nbsp;
+												<S.ContributeLink href={`/docs/${docs.title}`}>{docs.title}</S.ContributeLink>
+												<br />
+												수정일 : {util.dateParser(docs.createTime)}
+											</S.ContributeListText>
+										))}
+									</S.ContributeList>
+								</S.ContributeWrap>
+							</AccodianMenu>
+						</>
 					)}
 				</S.MyPageInfoWrap>
 			</Board>
