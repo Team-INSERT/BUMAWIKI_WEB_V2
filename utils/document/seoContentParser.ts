@@ -7,3 +7,5 @@ const seoContentParser = (contents: string) => {
 
 	return seoContents
 }
+
+export default seoContentParser
