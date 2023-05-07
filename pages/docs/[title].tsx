@@ -25,7 +25,7 @@ const Doc = ({ docs }: SingleDocsPropsType) => {
 	const { isLogined } = useUser()
 	const { seoConfig } = useConfig({
 		title: `부마위키 - ${docs.title} (${util.typeEditor(docs.docsType)})`,
-		description: `${docs.contents.slice(0, 16)}...`,
+		description: seoContentParser(docs.contents),
 	})
 	const { getIsLike, createLike, deleteLike } = useLikeCountById(docs.id)
 
