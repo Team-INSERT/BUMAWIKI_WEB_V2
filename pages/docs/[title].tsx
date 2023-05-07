@@ -12,6 +12,7 @@ import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
 import { Storage } from '@/lib/storage'
 import useLikeCountById from '@/hooks/useLikeCountById'
+import seoContentParser from '@/utils/document/seoContentParser'
 
 interface SingleDocsPropsType {
 	docs: Docs
