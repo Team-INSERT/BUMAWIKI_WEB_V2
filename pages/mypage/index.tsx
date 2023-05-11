@@ -19,8 +19,7 @@ const MyPage = () => {
 
 	const onEffectGetLikeList = async () => {
 		try {
-			const like = await getLikeList()
-			setLikes(like)
+			setLikes(await getLikeList())
 		} catch (err) {
 			console.log(err)
 		}
