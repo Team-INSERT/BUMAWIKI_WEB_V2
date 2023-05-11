@@ -19,8 +19,10 @@ interface SingleDocsPropsType {
 }
 
 const Doc = ({ docs }: SingleDocsPropsType) => {
-	const [like, setLike] = React.useState(docs.youLikeThis || false)
-	const [count, setCount] = React.useState(docs.thumbsUpsCounts || 0)
+	const [like, setLike] = React.useState({
+		isLike: false,
+		count: 0,
+	})
 	const router = useRouter()
 
 	const { isLogined } = useUser()
@@ -28,29 +30,31 @@ const Doc = ({ docs }: SingleDocsPropsType) => {
 		title: `부마위키 - ${docs.title} (${util.typeEditor(docs.docsType)})`,
 		description: seoContentParser(docs.contents),
 	})
-	const { getIsLike, createLike, deleteLike } = useLikeCountById(docs.id)
+	const { getIsLike, getLikeCounts, createLike, deleteLike } = useLikeCountById(docs)
 
 	const onChangeLike = () => {
 		if (!isLogined) return toast.error('로그인 후 이용 가능한 서비스입니다!')
 
-		if (!like) createLike()
+		if (like) createLike()
 		else deleteLike()
 
-		setLike(!like)
-		setCount(like ? count - 1 : count + 1)
+		setLike({ count: like.isLike ? like.count - 1 : like.count + 1, isLike: !like.isLike })
 	}
 
 	React.useEffect(() => {
 		;(async () => {
-			setLike(await getIsLike())
-			setCount(docs.thumbsUpsCounts)
+			try {
+				setLike({ isLike: await getIsLike(), count: await getLikeCounts() })
+			} catch (err) {
+				setLike({ count: like.count, isLike: false })
+			}
 		})()
 	}, [router])
 
 	return (
 		<>
 			<NextSeo {...seoConfig} />
-			<DocsLayout docs={docs} onChangeLike={onChangeLike} count={count} like={like} />
+			<DocsLayout docs={docs} onChangeLike={onChangeLike} count={like.count} like={like.isLike} />
 		</>
 	)
 }
