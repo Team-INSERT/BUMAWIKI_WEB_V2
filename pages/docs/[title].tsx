@@ -35,7 +35,7 @@ const Doc = ({ docs }: SingleDocsPropsType) => {
 	const onChangeLike = () => {
 		if (!isLogined) return toast.error('로그인 후 이용 가능한 서비스입니다!')
 
-		if (!like) createLike()
+		if (like) createLike()
 		else deleteLike()
 
 		setLike({ count: like.isLike ? like.count - 1 : like.count + 1, isLike: !like.isLike })
