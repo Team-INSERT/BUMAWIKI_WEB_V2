@@ -1,26 +1,28 @@
 import httpClient from '@/lib/httpClient'
+import Docs from '@/types/docs.type'
 
-const useLikeCountById = (docsId?: number) => {
+const useLikeCountById = (docs?: Docs) => {
 	const getLikeList = async () => {
-		return (await httpClient.getLike.get()).data
+		return (await httpClient.getMyLike.get()).data
+	}
+
+	const getLikeCounts = async () => {
+		if (!!docs) return (await httpClient.getLike.getByTitle(docs.title)).data.thumbsUpsCount
 	}
 
 	const getIsLike = async () => {
-		if (!docsId) return false
-		return (await httpClient.isLike.getByTitle(docsId.toString())).data
+		if (!!docs) return (await httpClient.isLike.getByTitle(docs.id.toString())).data
 	}
 
 	const createLike = () => {
-		if (!docsId) return false
-		return httpClient.createLike.post({ docsId })
+		if (!!docs) return httpClient.createLike.post({ docsId: docs.id })
 	}
 
 	const deleteLike = () => {
-		if (!docsId) return false
-		return httpClient.deleteLike.delete({ data: { docsId } })
+		if (!!docs) return httpClient.deleteLike.delete({ data: { docsId: docs.id } })
 	}
 
-	return { getLikeList, getIsLike, createLike, deleteLike }
+	return { getLikeList, getLikeCounts, getIsLike, createLike, deleteLike }
 }
 
 export default useLikeCountById
