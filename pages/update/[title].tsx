@@ -53,7 +53,7 @@ const Update = ({ defaultDocs }: SinglDocsPropsType) => {
 
 		if (!isLogined) return toast.error('로그인 후 이용 가능한 서비스입니다.')
 		if (!docs.contents) return toast.error('문서가 비어있습니다.')
-		if (docs.contents === defaultDocs.contents) return toast.error('변경된 내용이 없습니다.')
+		if (docs.contents === decodeContents(defaultDocs.contents)) return toast.error('변경된 내용이 없습니다.')
 
 		mutate({ title, data })
 	}
