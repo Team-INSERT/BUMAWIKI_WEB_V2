@@ -21,9 +21,11 @@ const PopularLayout = ({ docs }: PopularLayoutPropsType) => {
 				<S.StaticListWrap>
 					<AccodianMenu name="인기 문서">
 						<S.StaticList>
-							{docs.map((docs: Docs) => (
+							{docs.map((docs: Docs, index) => (
 								<S.StaticListItem key={docs.id}>
-									<S.StaticLink href={`/docs/${docs.title}`}>{docs.title}</S.StaticLink>
+									<S.StaticLink href={`/docs/${docs.title}`}>
+										{index + 1}위 - {docs.title} (좋아요 {docs.thumbsUpsCounts}개)
+									</S.StaticLink>
 								</S.StaticListItem>
 							))}
 						</S.StaticList>
