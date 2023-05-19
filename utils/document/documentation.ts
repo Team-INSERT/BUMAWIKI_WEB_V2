@@ -2,7 +2,7 @@ import { decodeContents } from './requestContents'
 
 const documentation = (content: string) => {
 	content = content
-		.replace(/<틀>/gi, `<details close><table class="frame_table" style="width:100%;" >`)
+		.replace(/<틀>/gi, `<details class="frame_details"><table class="frame_table" style="width:100%;" >`)
 		.replace(/<\/틀>/gi, `</table></details>`)
 		.replace(/<틀제목/gi, `<summary class="frame_caption" `)
 		.replace(/<\/틀제목>/gi, `<br><span style="color:white; font-size:14px">[ 펼치기 · 접기 ]</span></summary>`)
@@ -32,8 +32,12 @@ const documentation = (content: string) => {
 		.replace(/<\/노랑>/gi, `</span>`)
 		.replace(/<취소선>/gi, `<del style="color:#ccc;">`)
 		.replace(/<\/취소선>/gi, `</del>`)
-		.replace(/<소제목>/gi, `<div class="subtitle" >`)
-		.replace(/<\/소제목>/gi, `</div><hr/>`)
+		.replace(/<소제목>/gi, `</details><details open class="details"><summary class="summary">`)
+		.replace(/<\/소제목>/gi, `</summary>`)
+		// .replace(/<세부사항>/gi, `<div><details open class="details">`)
+		// .replace(/<\/세부사항>/gi, `</details></div>`)
+		// .replace(/<세부제목>/gi, `<summary class="summary">`)
+		// .replace(/<\/세부제목>/gi, `</summary>`)
 		.replace(/<<사진>>:{.*}/gi, `<div class="image-preview">사진 위치</div>`)
 		.replace(/<외부링크 문서={/gi, `<a class="link" target="_blank" href="`)
 		.replace(/<링크 문서={/gi, `<a class="link" target="_blank" href="/docs/`)
