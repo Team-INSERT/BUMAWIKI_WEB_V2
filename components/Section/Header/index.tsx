@@ -7,10 +7,12 @@ import { useRouter } from 'next/router'
 import useUser from '@/hooks/useUser'
 import { headerInitState, subheaderInitState } from '@/state/headerInitState'
 import { toast } from 'react-toastify'
+import { TIMEOUT } from 'dns'
 
 const Header = () => {
 	const [search, setSearch] = React.useState('')
 	const [isHover, setIsHover] = React.useState(false)
+	const [delayHandler, setDelayHandeler] = React.useState<null | ReturnType<typeof setTimeout>>(null)
 	const { isLogined } = useUser()
 	const router = useRouter()
 
@@ -19,13 +21,31 @@ const Header = () => {
 		return toast.error('검색할 문서명을 입력해주세요!')
 	}
 
+	const handleMouseEnter = () => {
+		if (isHover) {
+			setIsHover(true)
+		} else {
+			setDelayHandeler(setTimeout(() => {
+				setIsHover(true)
+			}, 400))
+		}
+	}
+
+	const handleMouseLeave = () => {
+		if (!isHover && delayHandler) {
+			clearTimeout(delayHandler)
+		} else {
+			setIsHover(false)
+		}
+	}
+
 	return (
-		<S.HeaderContainer onMouseOver={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+		<S.HeaderContainer>
 			<S.HeaderWrap>
 				<S.HeaderLink href={'/'}>
 					<S.HeaderLogo src="/images/logo.png" width="1000" height="1000" alt="logo" />
 				</S.HeaderLink>
-				<S.HeaderSectionWrap>
+				<S.HeaderSectionWrap onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
 					{headerInitState.map((header, index) => (
 						<S.HeaderSection key={index}>
 							<S.HeaderSectionLogo src={header.image} alt="" />
@@ -61,10 +81,10 @@ const Header = () => {
 				<S.SubHeaderPlace>
 					<S.HeaderLogo src="/images/logo.png" width="1000" height="1000" alt="logo" />
 				</S.SubHeaderPlace>
-				<S.HeaderSectionWrap>
+				<S.HeaderSectionWrap onMouseEnter={() => setIsHover(true)} onMouseLeave={handleMouseLeave}>
 					{[
 						subheaderInitState.map((subheader, index) => (
-							<S.SubHeaderSectionWrap margin={index === 2 ? '3vw' : ''} key={index}>
+							<S.SubHeaderSectionWrap margin={index === 2 ? '2vw' : ''} key={index}>
 								{subheader.map((info, index) => (
 									<S.SubHeaderSection href={info.href} target={info.target} key={index}>
 										<S.HeaderSectionText display="true">{info.title}</S.HeaderSectionText>
