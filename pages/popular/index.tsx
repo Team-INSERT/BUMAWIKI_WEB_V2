@@ -20,7 +20,7 @@ const Frame = (props: DocsPropsType) => {
 	)
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
 	const popular = (await httpClient.static.getByTitle('popular')).data
 
 	return {
