@@ -11,7 +11,6 @@ import { toast } from 'react-toastify'
 const Header = () => {
 	const [search, setSearch] = React.useState('')
 	const [isHover, setIsHover] = React.useState(false)
-	const [delayHandler, setDelayHandeler] = React.useState<null | ReturnType<typeof setTimeout>>(null)
 	const { isLogined } = useUser()
 	const router = useRouter()
 
@@ -20,23 +19,13 @@ const Header = () => {
 		return toast.error('검색할 문서명을 입력해주세요!')
 	}
 
-	const handleMouseEnter = () => {
-		if (isHover) return setIsHover(true)
-		setDelayHandeler(setTimeout(() => {}, 400))
-	}
-
-	const handleMouseLeave = () => {
-		if (!isHover && delayHandler) return clearTimeout(delayHandler)
-		setIsHover(false)
-	}
-
 	return (
-		<S.HeaderContainer>
+		<S.HeaderContainer onMouseOver={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
 			<S.HeaderWrap>
 				<S.HeaderLink href={'/'}>
 					<S.HeaderLogo src="/images/logo.png" width="1000" height="1000" alt="logo" />
 				</S.HeaderLink>
-				<S.HeaderSectionWrap onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+				<S.HeaderSectionWrap>
 					{headerInitState.map((header, index) => (
 						<S.HeaderSection key={index}>
 							<S.HeaderSectionLogo src={header.image} alt="" />
@@ -72,10 +61,10 @@ const Header = () => {
 				<S.SubHeaderPlace>
 					<S.HeaderLogo src="/images/logo.png" width="1000" height="1000" alt="logo" />
 				</S.SubHeaderPlace>
-				<S.HeaderSectionWrap onMouseEnter={() => setIsHover(true)} onMouseLeave={handleMouseLeave}>
+				<S.HeaderSectionWrap>
 					{[
 						subheaderInitState.map((subheader, index) => (
-							<S.SubHeaderSectionWrap margin={index === 2 ? '2vw' : ''} key={index}>
+							<S.SubHeaderSectionWrap margin={index === 2 ? '3vw' : ''} key={index}>
 								{subheader.map((info, index) => (
 									<S.SubHeaderSection href={info.href} target={info.target} key={index}>
 										<S.HeaderSectionText display="true">{info.title}</S.HeaderSectionText>

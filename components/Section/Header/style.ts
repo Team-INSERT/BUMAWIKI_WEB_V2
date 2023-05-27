@@ -1,7 +1,6 @@
-import { redirect } from 'next/dist/server/api-utils'
 import Image from 'next/image'
 import Link from 'next/link'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 
 export const HeaderContainer = styled.div`
 	display: flex;
@@ -26,18 +25,7 @@ export const SubHeaderWrap = styled.div<{ isHover: boolean }>`
 	align-items: center;
 	background-color: #526786;
 	display: ${(props) => (props.isHover ? 'flex' : 'none')};
-	animation: ${(props) => props.isHover ? fadeIn : ''} 0.1s ease-in;
 `
-
-const fadeIn = keyframes`
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-`;
-
 
 export const HeaderLink = styled(Link)`
 	display: flex;
@@ -69,13 +57,11 @@ export const HeaderLogo = styled(Image)`
 
 export const HeaderSectionWrap = styled.div`
 	display: flex;
-	height: 100%;
 `
 
 export const HeaderSection = styled.div`
 	display: flex;
-	/* cursor: pointer; */
-	pointer-events: none;
+	cursor: pointer;
 	text-decoration: none;
 	margin-left: 4vw;
 	height: 6.5vh;
@@ -118,7 +104,7 @@ export const SubHeaderSectionWrap = styled.div<{ margin?: string }>`
 	display: flex;
 	cursor: pointer;
 	text-decoration: none;
-	margin: 3vh 2vw 0 ${(props) => props.margin || '2.6vw'};
+	margin: 0 2vw 0 ${(props) => props.margin || '2.6vw'};
 	flex-direction: column;
 	align-items: center;
 
@@ -140,17 +126,11 @@ export const HeaderSectionText = styled.span<{ display?: string }>`
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 800;
 
-	&:hover {
-		font-weight:600;
-		color:#ddd;
-	}
-
 	@media (max-width: 500px) {
 		font-size: 10px;
 		display: ${(props) => (props.display === 'true' ? 'block' : 'none')};
 	}
 `
-
 
 export const HeaderSearchWrap = styled.div`
 	display: flex;
