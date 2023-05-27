@@ -121,7 +121,7 @@ export class HttpClient {
 }
 
 const axiosConfig: HttpClientConfig = {
-	baseURL: 'https://bumawiki.kro.kr/',
+	baseURL: 'https://buma.wiki/',
 	timeout: 10000,
 }
 
