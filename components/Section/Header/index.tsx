@@ -11,12 +11,23 @@ import { toast } from 'react-toastify'
 const Header = () => {
 	const [search, setSearch] = React.useState('')
 	const [isHover, setIsHover] = React.useState(false)
+  const [delayHandler, setDelayHandeler] = React.useState<null | ReturnType<typeof setTimeout>>(null)
 	const { isLogined } = useUser()
 	const router = useRouter()
 
 	const navigateSearchResult = () => {
 		if (search.length) return router.push(`/search/${search}`)
 		return toast.error('검색할 문서명을 입력해주세요!')
+	}
+
+	const handleMouseEnter = () => {
+		if (isHover) return setIsHover(true)
+		setDelayHandeler(setTimeout(() => { setIsHover(true) }, 400))
+	}
+
+	const handleMouseLeave = () => {
+		if (!isHover && delayHandler) return clearTimeout(delayHandler)
+		setIsHover(false)
 	}
 
 	return (
