@@ -74,18 +74,18 @@ input[type='file']::file-selector-button {
 	content: '';
 }
 
-details {
+.frame_details {
 	margin-bottom: 1em;
 	transition: all 1.5s ease-in-out;
 	max-height: 10em;
 	overflow: hidden;
 }
 
-details[open] {
+.frame_details[open] {
 	max-height: 500em;
 }
 
-details[close] {
+.frame_details[close] {
 	max-height: auto;
 }
 
@@ -126,4 +126,29 @@ details[close] {
 	display: flex;
 	align-items: center;
 	padding-left: 20px;
+}
+
+.details {
+	margin-bottom: 10px;
+}
+
+.details>summary {
+	width: 100%;
+	height: 40px;
+	border-bottom: 1.5px solid #ccc;
+
+	line-height: 40px;
+	font-weight: 800;
+	color: #27416894;
+	font-family: 'Pretendard';
+	font-size: 30px;
+}
+
+.details[open]>summary {
+	color: #274168;
+}
+
+.details summary::marker {
+	color: #818181;
+	content: "";
 }
