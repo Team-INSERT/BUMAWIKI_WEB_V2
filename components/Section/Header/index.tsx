@@ -11,7 +11,7 @@ import { toast } from 'react-toastify'
 const Header = () => {
 	const [search, setSearch] = React.useState('')
 	const [isHover, setIsHover] = React.useState(false)
-  const [delayHandler, setDelayHandeler] = React.useState<null | ReturnType<typeof setTimeout>>(null)
+	const [delayHandler, setDelayHandeler] = React.useState<null | ReturnType<typeof setTimeout>>(null)
 	const { isLogined } = useUser()
 	const router = useRouter()
 
@@ -22,7 +22,11 @@ const Header = () => {
 
 	const handleMouseEnter = () => {
 		if (isHover) return setIsHover(true)
-		setDelayHandeler(setTimeout(() => { setIsHover(true) }, 400))
+		setDelayHandeler(
+			setTimeout(() => {
+				setIsHover(true)
+			}, 400)
+		)
 	}
 
 	const handleMouseLeave = () => {
@@ -31,7 +35,7 @@ const Header = () => {
 	}
 
 	return (
-		<S.HeaderContainer onMouseOver={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+		<S.HeaderContainer onMouseOver={handleMouseEnter} onMouseLeave={handleMouseLeave}>
 			<S.HeaderWrap>
 				<S.HeaderLink href={'/'}>
 					<S.HeaderLogo src="/images/logo.png" width="1000" height="1000" alt="logo" />
