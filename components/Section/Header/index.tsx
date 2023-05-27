@@ -22,7 +22,11 @@ const Header = () => {
 
 	const handleMouseEnter = () => {
 		if (isHover) return setIsHover(true)
-		setDelayHandeler(setTimeout(() => { setIsHover(true) }, 400))
+		setDelayHandeler(
+			setTimeout(() => {
+				setIsHover(true)
+			}, 400)
+		)
 	}
 
 	const handleMouseLeave = () => {
@@ -31,7 +35,7 @@ const Header = () => {
 	}
 
 	return (
-		<S.HeaderContainer>
+		<S.HeaderContainer onMouseOver={handleMouseEnter} onMouseLeave={handleMouseLeave}>
 			<S.HeaderWrap>
 				<S.HeaderLink href={'/'}>
 					<S.HeaderLogo src="/images/logo.png" width="1000" height="1000" alt="logo" />
