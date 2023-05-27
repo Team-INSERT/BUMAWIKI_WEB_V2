@@ -4,7 +4,6 @@ import { NextSeo } from 'next-seo'
 import MyPageLayout from '@/layout/MyPageLayout'
 import { initUserState } from '@/context/userState'
 import useConfig from '@/hooks/useConfig'
-import httpClient from '@/lib/httpClient'
 import MyPageLikeType from '@/types/like.type'
 import useLikeCountById from '@/hooks/useLikeCountById'
 
@@ -27,7 +26,7 @@ const MyPage = () => {
 
 	React.useEffect(() => {
 		onEffectGetLikeList()
-	})
+	}, [])
 
 	return (
 		<>

@@ -6,7 +6,6 @@ import { useRouter } from 'next/router'
 import { useQuery } from 'react-query'
 import { useRecoilState } from 'recoil'
 import httpClient from '@/lib/httpClient'
-import { getAccessToken } from '@/lib/httpClient/getAccessToken'
 import Swal from 'sweetalert2'
 
 interface UseUserOptions {
