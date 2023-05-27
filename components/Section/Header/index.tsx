@@ -22,7 +22,7 @@ const Header = () => {
 
 	const handleMouseEnter = () => {
 		if (isHover) return setIsHover(true)
-		setDelayHandeler(setTimeout(() => {}, 400))
+		setDelayHandeler(setTimeout(() => { setIsHover(true) }, 400))
 	}
 
 	const handleMouseLeave = () => {
