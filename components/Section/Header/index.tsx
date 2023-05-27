@@ -61,7 +61,7 @@ const Header = () => {
 						{isLogined ? (
 							<S.HeaderMypageText href="/mypage">마이페이지</S.HeaderMypageText>
 						) : (
-							<S.HeaderLoginText href="https://auth.bssm.kro.kr/oauth?clientId=22fb2e30&redirectURI=https://bumawiki.kro.kr/oauth">
+							<S.HeaderLoginText href="https://auth.bssm.kro.kr/oauth?clientId=22fb2e30&redirectURI=https://buma.wiki/oauth">
 								로그인
 							</S.HeaderLoginText>
 						)}
