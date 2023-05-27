@@ -7,7 +7,6 @@ import { useRouter } from 'next/router'
 import useUser from '@/hooks/useUser'
 import { headerInitState, subheaderInitState } from '@/state/headerInitState'
 import { toast } from 'react-toastify'
-import { TIMEOUT } from 'dns'
 
 const Header = () => {
 	const [search, setSearch] = React.useState('')
@@ -22,21 +21,13 @@ const Header = () => {
 	}
 
 	const handleMouseEnter = () => {
-		if (isHover) {
-			setIsHover(true)
-		} else {
-			setDelayHandeler(setTimeout(() => {
-				setIsHover(true)
-			}, 400))
-		}
+		if (isHover) return setIsHover(true)
+		setDelayHandeler(setTimeout(() => {}, 400))
 	}
 
 	const handleMouseLeave = () => {
-		if (!isHover && delayHandler) {
-			clearTimeout(delayHandler)
-		} else {
-			setIsHover(false)
-		}
+		if (!isHover && delayHandler) return clearTimeout(delayHandler)
+		setIsHover(false)
 	}
 
 	return (
