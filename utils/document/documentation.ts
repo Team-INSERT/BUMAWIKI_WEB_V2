@@ -42,6 +42,8 @@ const documentation = (content: string) => {
 		.replace(/<외부링크 문서={/gi, `<a class="link" target="_blank" href="`)
 		.replace(/<링크 문서={/gi, `<a class="link" target="_blank" href="/docs/`)
 		.replace(/}>/gi, `">`)
+		.replace(/(?<=<<<|<<|>>|>>>)\s*http:\/\/bumawiki\.kro\.kr\s*/g, 'https://buma.wiki')
+		.replace(/(?<=<<<|<<)\s+|\s+(?=>>>|>>)/g, '%20')
 		.replace(/<<</gi, `<video src="`)
 		.replace(/>>>:\[\[/gi, `" controls style="width:`)
 		.replace(/\]\]/gi, `%;"></video>`)
