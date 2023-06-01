@@ -1,59 +1,74 @@
 import { decodeContents } from './requestContents'
 
 const documentation = (content: string) => {
-	content = content
-		.replace(/<틀>/gi, `<details class="frame_details"><table class="frame_table" style="width:100%;" >`)
-		.replace(/<\/틀>/gi, `</table></details>`)
-		.replace(/<틀제목/gi, `<summary class="frame_caption" `)
-		.replace(/<\/틀제목>/gi, `<br><span style="color:white; font-size:14px">[ 펼치기 · 접기 ]</span></summary>`)
-		.replace(/<행>/gi, `<tr>`)
-		.replace(/<\/행>/gi, `</tr>`)
-		.replace(/<열/gi, `<td class="frame_td" `)
-		.replace(/스타일={{/gi, `style="`)
-		.replace(/배경색=\(/gi, `;background-color:`)
-		.replace(/글자색=\(/gi, `;color:`)
-		.replace(/<\/열>/gi, `</td>`)
-		.replace(/가로병합={{/gi, ` colspan="`)
-		.replace(/세로병합={{/gi, ` rowspan="`)
-		.replace(/}}/gi, `"`)
-		.replace(/\);/gi, '')
-		.replace(/<항목>/gi, `<li style="list-style: disc;">`)
-		.replace(/<어록>/gi, `<div class="analects" >`)
-		.replace(/<\/어록>/gi, `</div>`)
-		.replace(/<블록>/gi, `<div class="block" >`)
-		.replace(/<\/블록>/gi, `</div>`)
-		.replace(/<강조>/gi, `<strong>`)
-		.replace(/<\/강조>/gi, `</strong>`)
-		.replace(/<빨강>/gi, `<span style="color:red;">`)
-		.replace(/<\/빨강>/gi, `</span>`)
-		.replace(/<하양>/gi, `<span style="color:white;">`)
-		.replace(/<\/하양>/gi, `</span>`)
-		.replace(/<노랑>/gi, `<span style="color:#ffd400;">`)
-		.replace(/<\/노랑>/gi, `</span>`)
-		.replace(/<취소선>/gi, `<del style="color:#ccc;">`)
-		.replace(/<\/취소선>/gi, `</del>`)
-		.replace(/<소제목>/gi, `</details><details open class="details"><summary class="summary">`)
-		.replace(/<\/소제목>/gi, `</summary>`)
-		// .replace(/<세부사항>/gi, `<div><details open class="details">`)
-		// .replace(/<\/세부사항>/gi, `</details></div>`)
-		// .replace(/<세부제목>/gi, `<summary class="summary">`)
-		// .replace(/<\/세부제목>/gi, `</summary>`)
-		.replace(/<<사진>>:{.*}/gi, `<div class="image-preview">사진 위치</div>`)
-		.replace(/<외부링크 문서={/gi, `<a class="link" target="_blank" href="`)
-		.replace(/<링크 문서={/gi, `<a class="link" target="_blank" href="/docs/`)
-		.replace(/}>/gi, `">`)
-		.replace(/<<</gi, `<video src="`)
-		.replace(/>>>:\[\[/gi, `" controls style="width:`)
-		.replace(/\]\]/gi, `%;"></video>`)
-		.replace(/<\/외부링크>/gi, `</a>`)
-		.replace(/<\/링크>/gi, `</a>`)
-		.replace(/<br\/>/gi, `<br/>`)
-		.replace(/<</gi, `<img src="`)
-		.replace(/>>:{/gi, `" alt='' style="width:`)
-		.replace(/}/gi, `%;" />`)
-		.replace(/&#.*;/gi, ``)
+	const escapedContent = content.replace(/[<>&'"]/g, (match) => {
+		switch (match) {
+			case '<':
+				return '&lt;'
+			case '>':
+				return '&gt;'
+			case '&':
+				return '&amp;'
+			case "'":
+				return '&#x27;'
+			case '"':
+				return '&quot;'
+			default:
+				return match
+		}
+	})
 
-	return decodeContents(content)
+	return decodeContents(
+		escapedContent
+			.replace(/<틀>/gi, `<details class="frame_details"><table class="frame_table" style="width:100%;" >`)
+			.replace(/<\/틀>/gi, `</table></details>`)
+			.replace(/<틀제목/gi, `<summary class="frame_caption" `)
+			.replace(/<\/틀제목>/gi, `<br><span style="color:white; font-size:14px">[ 펼치기 · 접기 ]</span></summary>`)
+			.replace(/<행>/gi, `<tr>`)
+			.replace(/<\/행>/gi, `</tr>`)
+			.replace(/<열/gi, `<td class="frame_td" `)
+			.replace(/스타일={{/gi, `style="`)
+			.replace(/배경색=\(/gi, `;background-color:`)
+			.replace(/글자색=\(/gi, `;color:`)
+			.replace(/<\/열>/gi, `</td>`)
+			.replace(/가로병합={{/gi, ` colspan="`)
+			.replace(/세로병합={{/gi, ` rowspan="`)
+			.replace(/}}/gi, `"`)
+			.replace(/\);/gi, '')
+			.replace(/<항목>/gi, `<li style="list-style: disc;">`)
+			.replace(/<어록>/gi, `<div class="analects" >`)
+			.replace(/<\/어록>/gi, `</div>`)
+			.replace(/<블록>/gi, `<div class="block" >`)
+			.replace(/<\/블록>/gi, `</div>`)
+			.replace(/<강조>/gi, `<strong>`)
+			.replace(/<\/강조>/gi, `</strong>`)
+			.replace(/<빨강>/gi, `<span style="color:red;">`)
+			.replace(/<\/빨강>/gi, `</span>`)
+			.replace(/<하양>/gi, `<span style="color:white;">`)
+			.replace(/<\/하양>/gi, `</span>`)
+			.replace(/<노랑>/gi, `<span style="color:#ffd400;">`)
+			.replace(/<\/노랑>/gi, `</span>`)
+			.replace(/<취소선>/gi, `<del style="color:#ccc;">`)
+			.replace(/<\/취소선>/gi, `</del>`)
+			.replace(/<소제목>/gi, `</details><details open class="details"><summary class="summary">`)
+			.replace(/<\/소제목>/gi, `</summary>`)
+			.replace(/<<사진>>:{.*}/gi, `<div class="image-preview">사진 위치</div>`)
+			.replace(/<외부링크 문서={/gi, `<a class="link" target="_blank" href="`)
+			.replace(/<링크 문서={/gi, `<a class="link" target="_blank" href="/docs/`)
+			.replace(/}>/gi, `">`)
+			.replace(/(?<=<<<|<<|>>|>>>)\s*http:\/\/bumawiki\.kro\.kr\s*/g, 'https://buma.wiki')
+			.replace(/(?<=<<<|<<)\s+|\s+(?=>>>|>>)/g, '%20')
+			.replace(/<<</gi, `<video src="`)
+			.replace(/>>>:\[\[/gi, `" controls style="width:`)
+			.replace(/\]\]/gi, `%;"></video>`)
+			.replace(/<\/외부링크>/gi, `</a>`)
+			.replace(/<\/링크>/gi, `</a>`)
+			.replace(/<br\/>/gi, `<br/>`)
+			.replace(/<</gi, `<img src="`)
+			.replace(/>>:{/gi, `" alt='' style="width:`)
+			.replace(/}/gi, `%;" />`)
+			.replace(/&#.*;/gi, ``)
+	)
 }
 
 export default documentation
