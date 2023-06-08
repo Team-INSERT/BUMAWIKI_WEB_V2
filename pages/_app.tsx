@@ -39,6 +39,10 @@ export default function App({ Component, pageProps }: AppProps) {
 
 	return (
 		<QueryClientProvider client={queryClient}>
+			<script
+				async
+				src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6289115458062002"
+				crossOrigin="anonymous"></script>
 			{/* Global Site Tag (gtag.js) - Google Analytics */}
 			<Script strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`} />
 			<Script
