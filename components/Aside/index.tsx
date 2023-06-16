@@ -9,7 +9,6 @@ import Docs from '@/types/docs.type'
 import { useQuery } from 'react-query'
 import { getAccessToken } from '@/lib/httpClient/getAccessToken'
 import queryKey from '@/constants/queryKey.constants'
-import { useRouter } from 'next/router'
 
 interface AsidePropsType {
 	isMobile?: string
@@ -35,7 +34,7 @@ const Aside = ({ isMobile }: AsidePropsType) => {
 	}, [page, refetch])
 
 	return (
-		<S.AsideWrap isMobile={isMobile || ''}>
+		<S.AsideWrap isMobile={isMobile ?? ''}>
 			<S.AsideTitleWrap>
 				<S.AsideTitle>최근 수정된 문서</S.AsideTitle>
 			</S.AsideTitleWrap>

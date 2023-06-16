@@ -27,14 +27,18 @@ const DragDrop = ({ getFiles }: DragDropFunctionPropsType) => {
 	const handleFilterFile = React.useCallback((id: number): void => setFiles(files.filter((file: IFileTypes) => file.id !== id)), [files])
 
 	const onChangeFiles = React.useCallback(
-		(e: React.ChangeEvent<HTMLInputElement> | any) => {
+		(e: React.ChangeEvent<HTMLInputElement> | React.DragEvent<HTMLInputElement>) => {
 			let selectFiles: File[] = []
-			let tempFiles: IFileTypes[] = files
+			let tempFiles: IFileTypes[] = [...files]
 
 			if (e.type === 'drop') {
-				selectFiles = e.dataTransfer.files
+				const dragEvent = e as React.DragEvent<HTMLInputElement>
+				const fileList = dragEvent.dataTransfer.files
+				selectFiles = fileList ? Array.from(fileList) : [] // FileList가 null이면 빈 배열 할당
 			} else {
-				selectFiles = e.target.files
+				const changeEvent = e as React.ChangeEvent<HTMLInputElement>
+				const fileList = changeEvent.target.files
+				selectFiles = fileList ? Array.from(fileList) : [] // FileList가 null이면 빈 배열 할당
 			}
 
 			for (const file of selectFiles) {
@@ -76,7 +80,7 @@ const DragDrop = ({ getFiles }: DragDropFunctionPropsType) => {
 			e.preventDefault()
 			e.stopPropagation()
 
-			onChangeFiles(e)
+			onChangeFiles(e as unknown as React.DragEvent<HTMLInputElement>)
 			setIsDragging(false)
 		},
 		[onChangeFiles]
