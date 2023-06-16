@@ -104,7 +104,7 @@ export class HttpClient {
 		const accessToken = Storage.getItem('access_token')
 		HttpClient.clientConfig.headers = {
 			...HttpClient.clientConfig.headers,
-			Authorization: accessToken || undefined,
+			Authorization: accessToken ?? undefined,
 		}
 	}
 
