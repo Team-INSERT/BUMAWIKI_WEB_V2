@@ -142,8 +142,8 @@ input[type='file']::file-selector-button {
 	color: #27416894;
 	font-family: 'Pretendard';
 	font-size: 30px;
+	cursor: pointer;
 }
-
 .details[open]>summary {
 	color: #274168;
 }
