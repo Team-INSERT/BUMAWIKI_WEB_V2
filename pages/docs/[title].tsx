@@ -46,7 +46,7 @@ const Doc = ({ docs }: SingleDocsPropsType) => {
 			try {
 				setLike({ isLike: await getIsLike(), count: await getLikeCounts() })
 			} catch (err) {
-				setLike({ count: like.count, isLike: false })
+				setLike({ isLike: false, count: await getLikeCounts() })
 			}
 		})()
 	}, [router])
@@ -61,7 +61,7 @@ const Doc = ({ docs }: SingleDocsPropsType) => {
 
 const getApiDocs = async (docsName: string) => {
 	try {
-		return (await httpClient.docs.getByTitle(docsName, { headers: { Authorization: Storage.getItem('access_token') } })).data
+		return (await httpClient.docs.getByTitle(docsName)).data
 	} catch (err) {
 		return false
 	}

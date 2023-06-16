@@ -1,7 +1,5 @@
-import { decodeContents } from './requestContents'
-
 const documentation = (content: string) => {
-	content = content
+	return content
 		.replace(/<틀>/gi, `<details class="frame_details"><table class="frame_table" style="width:100%;" >`)
 		.replace(/<\/틀>/gi, `</table></details>`)
 		.replace(/<틀제목/gi, `<summary class="frame_caption" `)
@@ -34,14 +32,12 @@ const documentation = (content: string) => {
 		.replace(/<\/취소선>/gi, `</del>`)
 		.replace(/<소제목>/gi, `</details><details open class="details"><summary class="summary">`)
 		.replace(/<\/소제목>/gi, `</summary>`)
-		// .replace(/<세부사항>/gi, `<div><details open class="details">`)
-		// .replace(/<\/세부사항>/gi, `</details></div>`)
-		// .replace(/<세부제목>/gi, `<summary class="summary">`)
-		// .replace(/<\/세부제목>/gi, `</summary>`)
 		.replace(/<<사진>>:{.*}/gi, `<div class="image-preview">사진 위치</div>`)
 		.replace(/<외부링크 문서={/gi, `<a class="link" target="_blank" href="`)
 		.replace(/<링크 문서={/gi, `<a class="link" target="_blank" href="/docs/`)
 		.replace(/}>/gi, `">`)
+		.replace(/(?<=<<<|<<|>>|>>>)\s*http:\/\/bumawiki\.kro\.kr\s*/g, 'https://buma.wiki')
+		.replace(/(?<=<<<|<<)\s+|\s+(?=>>>|>>)/g, '%20')
 		.replace(/<<</gi, `<video src="`)
 		.replace(/>>>:\[\[/gi, `" controls style="width:`)
 		.replace(/\]\]/gi, `%;"></video>`)
@@ -52,8 +48,6 @@ const documentation = (content: string) => {
 		.replace(/>>:{/gi, `" alt='' style="width:`)
 		.replace(/}/gi, `%;" />`)
 		.replace(/&#.*;/gi, ``)
-
-	return decodeContents(content)
 }
 
 export default documentation

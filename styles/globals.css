@@ -132,7 +132,7 @@ input[type='file']::file-selector-button {
 	margin-bottom: 10px;
 }
 
-.details > summary {
+.details>summary {
 	width: 100%;
 	height: 40px;
 	border-bottom: 1.5px solid #ccc;
@@ -144,12 +144,11 @@ input[type='file']::file-selector-button {
 	font-size: 30px;
 	cursor: pointer;
 }
-
-.details[open] > summary {
+.details[open]>summary {
 	color: #274168;
 }
 
 .details summary::marker {
 	color: #818181;
-	content: '';
+	content: "";
 }

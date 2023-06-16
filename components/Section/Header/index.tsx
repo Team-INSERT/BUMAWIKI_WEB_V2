@@ -11,6 +11,7 @@ import { toast } from 'react-toastify'
 const Header = () => {
 	const [search, setSearch] = React.useState('')
 	const [isHover, setIsHover] = React.useState(false)
+	const [delayHandler, setDelayHandeler] = React.useState<null | ReturnType<typeof setTimeout>>(null)
 	const { isLogined } = useUser()
 	const router = useRouter()
 
@@ -19,13 +20,27 @@ const Header = () => {
 		return toast.error('검색할 문서명을 입력해주세요!')
 	}
 
+	const handleMouseEnter = () => {
+		if (isHover) return setIsHover(true)
+		setDelayHandeler(
+			setTimeout(() => {
+				setIsHover(true)
+			}, 400)
+		)
+	}
+
+	const handleMouseLeave = () => {
+		if (!isHover && delayHandler) return clearTimeout(delayHandler)
+		setIsHover(false)
+	}
+
 	return (
-		<S.HeaderContainer onMouseOver={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+		<S.HeaderContainer onMouseOver={handleMouseEnter} onMouseLeave={handleMouseLeave}>
 			<S.HeaderWrap>
 				<S.HeaderLink href={'/'}>
 					<S.HeaderLogo src="/images/logo.png" width="1000" height="1000" alt="logo" />
 				</S.HeaderLink>
-				<S.HeaderSectionWrap>
+				<S.HeaderSectionWrap onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
 					{headerInitState.map((header, index) => (
 						<S.HeaderSection key={index}>
 							<S.HeaderSectionLogo src={header.image} alt="" />
@@ -50,7 +65,7 @@ const Header = () => {
 						{isLogined ? (
 							<S.HeaderMypageText href="/mypage">마이페이지</S.HeaderMypageText>
 						) : (
-							<S.HeaderLoginText href="https://auth.bssm.kro.kr/oauth?clientId=22fb2e30&redirectURI=https://bumawiki.kro.kr/oauth">
+							<S.HeaderLoginText href="https://auth.bssm.kro.kr/oauth?clientId=22fb2e30&redirectURI=https://buma.wiki/oauth">
 								로그인
 							</S.HeaderLoginText>
 						)}
@@ -61,10 +76,10 @@ const Header = () => {
 				<S.SubHeaderPlace>
 					<S.HeaderLogo src="/images/logo.png" width="1000" height="1000" alt="logo" />
 				</S.SubHeaderPlace>
-				<S.HeaderSectionWrap>
+				<S.HeaderSectionWrap onMouseEnter={() => setIsHover(true)} onMouseLeave={handleMouseLeave}>
 					{[
 						subheaderInitState.map((subheader, index) => (
-							<S.SubHeaderSectionWrap margin={index === 2 ? '3vw' : ''} key={index}>
+							<S.SubHeaderSectionWrap margin={index === 2 ? '2vw' : ''} key={index}>
 								{subheader.map((info, index) => (
 									<S.SubHeaderSection href={info.href} target={info.target} key={index}>
 										<S.HeaderSectionText display="true">{info.title}</S.HeaderSectionText>

@@ -32,6 +32,14 @@ const Search = ({ searchValue, redirect, results }: SingleDocsPropsType) => {
 	)
 }
 
+const getApiDocs = async (search: string) => {
+	try {
+		return (await httpClient.search.getByTitle(search as string)).data
+	} catch (err) {
+		return false
+	}
+}
+
 export const getStaticPaths = async () => {
 	return {
 		paths: [],
@@ -43,7 +51,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
 	const search = context?.params?.search
 	let redirect = false
 
-	const res = (await httpClient.search.getByTitle(search as string)).data
+	const res = await getApiDocs(search as string)
+
+	if (!res) return { props: { results: false, searchValue: search } }
 	if (res.length === 1) redirect = true
 
 	return {
