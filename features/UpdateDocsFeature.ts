@@ -49,8 +49,8 @@ const useUpdateDocsMutation = (title: string) => {
 			router.push(`/docs/${title}`)
 		},
 		onError: (err) => {
-			if (err instanceof AxiosError) {
-				const { status, message, error } = err.response?.data
+			if (err instanceof AxiosError && err.response) {
+				const { status, message, error } = err.response.data
 				if (status === 403) {
 					if (message === exception.code.DOCS_403_2) toast.error('자기 자신의 문서는 편집할 수 없습니다.')
 					if (error === 'Forbidden') toast.error('읽기전용 사용자는 문서를 편집할 수 없습니다.')

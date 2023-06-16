@@ -25,7 +25,7 @@ const MyPage = () => {
 	}
 
 	React.useEffect(() => {
-		onEffectGetLikeList()
+		;(async () => await onEffectGetLikeList())()
 	}, [])
 
 	return (

@@ -3,8 +3,8 @@ import { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { getAccessToken } from '../httpClient/getAccessToken'
 import exception from '@/constants/exception.constants'
 
-export const requestInterceptors = (requestConfig: AxiosRequestConfig) => {
-	if (!Storage.getItem('access_token') && Storage.getItem('refresh_token')) getAccessToken()
+export const requestInterceptors = async (requestConfig: AxiosRequestConfig) => {
+	if (!Storage.getItem('access_token') && Storage.getItem('refresh_token')) await getAccessToken()
 
 	if (requestConfig.headers) {
 		requestConfig.headers.Authorization = Storage.getItem('access_token')
@@ -29,8 +29,8 @@ export const requestInterceptors = (requestConfig: AxiosRequestConfig) => {
 	}
 }
 
-export const responseInterceptors = (originalResponse: AxiosResponse) => {
-	if (originalResponse.status !== exception.status.SUCCESS) getAccessToken()
+export const responseInterceptors = async (originalResponse: AxiosResponse) => {
+	if (originalResponse.status !== exception.status.SUCCESS) await getAccessToken()
 
 	return {
 		...originalResponse,
