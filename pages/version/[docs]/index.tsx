@@ -1,6 +1,6 @@
 import React from 'react'
 import { VersionDocs } from '@/types/version.type'
-import { GetServerSideProps, GetStaticProps } from 'next'
+import { GetStaticProps } from 'next'
 import { NextSeo } from 'next-seo'
 import httpClient from '@/lib/httpClient'
 import VersionLayout from '@/layout/version/VersionLayout'

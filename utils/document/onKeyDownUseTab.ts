@@ -3,7 +3,7 @@ const onKeyDownUseTab = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
 
 	if (e.keyCode === 9) {
 		e.preventDefault()
-		var v = target.value,
+		const v = target.value,
 			s = target.selectionStart,
 			f = target.selectionEnd
 		target.value = v.substring(0, s) + '\t' + v.substring(f)
