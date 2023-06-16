@@ -1,5 +1,4 @@
 import { IFileTypes } from '@/components/DragDrop'
-import config from '@/config'
 import exception from '@/constants/exception.constants'
 import useRevalidate from '@/hooks/useRevalidate'
 import httpClient from '@/lib/httpClient'
@@ -8,7 +7,6 @@ import { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { QueryClient, useMutation } from 'react-query'
 import { toast } from 'react-toastify'
-import Swal from 'sweetalert2'
 
 interface UpdateDocsFormType {
 	contents: string

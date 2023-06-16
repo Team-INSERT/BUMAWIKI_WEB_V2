@@ -26,7 +26,7 @@ const DocsLayout = ({ docs, onChangeLike, count, like }: DocsLayoutPropsType) =>
 					</S.DocsMenu>
 				</S.DocsTitleWrap>
 				<S.Classify>
-					<Classify>{util.typeEditor(docs.docsType as string)}</Classify>
+					<Classify>{util.typeEditor(docs.docsType)}</Classify>
 				</S.Classify>
 				<S.DocsLine />
 				<S.DocsContentsWrap>

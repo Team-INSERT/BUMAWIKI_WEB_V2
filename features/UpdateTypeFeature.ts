@@ -1,4 +1,3 @@
-import config from '@/config'
 import useRevalidate from '@/hooks/useRevalidate'
 import httpClient from '@/lib/httpClient'
 import { useRouter } from 'next/router'
