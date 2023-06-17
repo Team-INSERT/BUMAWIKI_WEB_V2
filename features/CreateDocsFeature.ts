@@ -21,8 +21,8 @@ const createDocsForm = ({ title, enroll, contents, docsType, files }: CreateDocs
 			type: 'application/json',
 		})
 	)
-	const filelist = files.reverse()
-	filelist.forEach((file) => data.append('files', file.object, file.object.name))
+	const fileList = files.reverse()
+	fileList.forEach((file) => data.append('files', file.object, file.object.name))
 	return data
 }
 
