@@ -2,7 +2,7 @@ import React from 'react'
 import UpdateDocsType from '@/types/update.type.'
 import { decodeContents } from '@/utils/document/requestContents'
 import Docs from '@/types/docs.type'
-import { GetServerSideProps, GetStaticProps } from 'next'
+import { GetStaticProps } from 'next'
 import { Storage } from '@/lib/storage/'
 import { NextSeo } from 'next-seo'
 import { IFileTypes } from '@/components/DragDrop'
@@ -13,7 +13,6 @@ import UpdateLayout from '@/layout/UpdateLayout'
 import { toast } from 'react-toastify'
 import useConfig from '@/hooks/useConfig'
 import useUpdateDocsMutation from '@/features/UpdateDocsFeature'
-import config from '@/config'
 
 interface SinglDocsPropsType {
 	defaultDocs: Docs
@@ -29,10 +28,10 @@ const Update = ({ defaultDocs }: SinglDocsPropsType) => {
 	})
 
 	const [parentFiles, setParentFiles] = React.useState<IFileTypes[]>([])
-	const [isOnAutoComplete, setIsOnAutoComplete] = React.useState(JSON.parse(Storage.getItem('autoComplete') || 'true'))
+	const [isOnAutoComplete, setIsOnAutoComplete] = React.useState(JSON.parse(Storage.getItem('autoComplete') ?? 'true'))
 	const [docs, setDocs] = React.useState<UpdateDocsType>({
 		title: defaultDocs.title,
-		contents: decodeContents(defaultDocs.contents || ''),
+		contents: decodeContents(defaultDocs.contents ?? ''),
 		files: [],
 	})
 

@@ -41,8 +41,8 @@ const Header = () => {
 					<S.HeaderLogo src="/images/logo.png" width="1000" height="1000" alt="logo" />
 				</S.HeaderLink>
 				<S.HeaderSectionWrap onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-					{headerInitState.map((header, index) => (
-						<S.HeaderSection key={index}>
+					{headerInitState.map((header) => (
+						<S.HeaderSection key={header.title}>
 							<S.HeaderSectionLogo src={header.image} alt="" />
 							<S.HeaderSectionText>{header.title}</S.HeaderSectionText>
 						</S.HeaderSection>
@@ -78,10 +78,10 @@ const Header = () => {
 				</S.SubHeaderPlace>
 				<S.HeaderSectionWrap onMouseEnter={() => setIsHover(true)} onMouseLeave={handleMouseLeave}>
 					{[
-						subheaderInitState.map((subheader, index) => (
-							<S.SubHeaderSectionWrap margin={index === 2 ? '2vw' : ''} key={index}>
-								{subheader.map((info, index) => (
-									<S.SubHeaderSection href={info.href} target={info.target} key={index}>
+						subheaderInitState.map((subheader) => (
+							<S.SubHeaderSectionWrap margin={subheader.id === 3 ? '2vw' : ''} key={subheader.id}>
+								{subheader.value.map((info) => (
+									<S.SubHeaderSection href={info.href} target={info.target} key={info.title}>
 										<S.HeaderSectionText display="true">{info.title}</S.HeaderSectionText>
 									</S.SubHeaderSection>
 								))}

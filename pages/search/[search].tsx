@@ -34,7 +34,7 @@ const Search = ({ searchValue, redirect, results }: SingleDocsPropsType) => {
 
 const getApiDocs = async (search: string) => {
 	try {
-		return (await httpClient.search.getByTitle(search as string)).data
+		return (await httpClient.search.getByTitle(search)).data
 	} catch (err) {
 		return false
 	}

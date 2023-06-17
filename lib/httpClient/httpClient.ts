@@ -90,13 +90,11 @@ export class HttpClient {
 
 		this.api.interceptors.response.use(
 			(response) => response,
-			(error) => {
+			async (error) => {
 				console.log(error)
-				// const { status, code } = error.response.data
-				// if (status === 403 && code === exception.code.TOKEN_403_3) Storage.delItem('refresh_token')
 				Storage.delItem('access_token')
 				queryClient.invalidateQueries('getUser')
-				getAccessToken()
+				await getAccessToken()
 				return Promise.reject(error)
 			}
 		)
@@ -106,7 +104,7 @@ export class HttpClient {
 		const accessToken = Storage.getItem('access_token')
 		HttpClient.clientConfig.headers = {
 			...HttpClient.clientConfig.headers,
-			Authorization: accessToken || undefined,
+			Authorization: accessToken ?? undefined,
 		}
 	}
 

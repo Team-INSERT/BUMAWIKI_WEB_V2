@@ -23,65 +23,77 @@ export const headerInitState = [
 ]
 
 export const subheaderInitState = [
-	[
-		{
-			href: '/docs/부마위키%20업데이트%20내역',
-			title: '공지사항',
-		},
-		{
-			href: '/docs/부마위키%20방명록',
-			title: '방명록',
-		},
-		{
-			href: '/docs/부마위키%20개인정보처리방침',
-			title: '처리방침',
-		},
-		{
-			href: 'https://forms.gle/DzAP7XSYH4ubK43FA',
-			title: '문의하기',
-			target: '_blank',
-		},
-	],
-	[
-		{
-			href: '/student',
-			title: '학생',
-		},
-		{
-			href: '/teacher',
-			title: '선생님',
-		},
-		{
-			href: '/club',
-			title: '동아리',
-		},
-	],
-	[
-		{
-			href: '/frame',
-			title: '틀',
-		},
-		{
-			href: '/accident',
-			title: '사건',
-		},
-		{
-			href: '/popular',
-			title: '인기',
-		},
-	],
-	[
-		{
-			href: 'https://bssm.kro.kr',
-			title: 'BSM',
-		},
-		{
-			href: 'https://bgit.bssm.kro.kr',
-			title: 'BGIT',
-		},
-		{
-			href: 'https://www.simblue.kro.kr/',
-			title: '심청이',
-		},
-	],
+	{
+		id: 1,
+		value: [
+			{
+				href: '/docs/부마위키%20업데이트%20내역',
+				title: '공지사항',
+			},
+			{
+				href: '/docs/부마위키%20방명록',
+				title: '방명록',
+			},
+			{
+				href: '/docs/부마위키%20개인정보처리방침',
+				title: '처리방침',
+			},
+			{
+				href: 'https://forms.gle/DzAP7XSYH4ubK43FA',
+				title: '문의하기',
+				target: '_blank',
+			},
+		],
+	},
+	{
+		id: 2,
+		value: [
+			{
+				href: '/student',
+				title: '학생',
+			},
+			{
+				href: '/teacher',
+				title: '선생님',
+			},
+			{
+				href: '/club',
+				title: '동아리',
+			},
+		],
+	},
+	{
+		id: 3,
+		value: [
+			{
+				href: '/frame',
+				title: '틀',
+			},
+			{
+				href: '/accident',
+				title: '사건',
+			},
+			{
+				href: '/popular',
+				title: '인기',
+			},
+		],
+	},
+	{
+		id: 4,
+		value: [
+			{
+				href: 'https://bssm.kro.kr',
+				title: 'BSM',
+			},
+			{
+				href: 'https://bgit.bssm.kro.kr',
+				title: 'BGIT',
+			},
+			{
+				href: 'https://www.simblue.kro.kr/',
+				title: '심청이',
+			},
+		],
+	},
 ]

@@ -9,13 +9,12 @@ import Docs from '@/types/docs.type'
 import { useQuery } from 'react-query'
 import { getAccessToken } from '@/lib/httpClient/getAccessToken'
 import queryKey from '@/constants/queryKey.constants'
-import { useRouter } from 'next/router'
 
 interface AsidePropsType {
-	isMobile?: string
+	display?: string
 }
 
-const Aside = ({ isMobile }: AsidePropsType) => {
+const Aside = ({ display }: AsidePropsType) => {
 	const [page, setPage] = React.useState(0)
 	const [lastModifiedDocs, setLastModifiedDocs] = React.useState<Docs[]>([])
 
@@ -35,7 +34,7 @@ const Aside = ({ isMobile }: AsidePropsType) => {
 	}, [page, refetch])
 
 	return (
-		<S.AsideWrap isMobile={isMobile || ''}>
+		<S.AsideWrap display={display}>
 			<S.AsideTitleWrap>
 				<S.AsideTitle>최근 수정된 문서</S.AsideTitle>
 			</S.AsideTitleWrap>

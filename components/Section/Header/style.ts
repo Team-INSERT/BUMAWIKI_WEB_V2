@@ -1,4 +1,3 @@
-import { redirect } from 'next/dist/server/api-utils'
 import Image from 'next/image'
 import Link from 'next/link'
 import styled, { keyframes } from 'styled-components'
@@ -26,7 +25,7 @@ export const SubHeaderWrap = styled.div<{ isHover: boolean }>`
 	align-items: center;
 	background-color: #526786;
 	display: ${(props) => (props.isHover ? 'flex' : 'none')};
-	animation: ${(props) => props.isHover ? fadeIn : ''} 0.1s ease-in;
+	animation: ${(props) => (props.isHover ? fadeIn : '')} 0.1s ease-in;
 `
 
 const fadeIn = keyframes`
@@ -36,8 +35,7 @@ const fadeIn = keyframes`
   100% {
     opacity: 1;
   }
-`;
-
+`
 
 export const HeaderLink = styled(Link)`
 	display: flex;
@@ -141,8 +139,8 @@ export const HeaderSectionText = styled.span<{ display?: string }>`
 	font-weight: 800;
 
 	&:hover {
-		font-weight:600;
-		color:#ddd;
+		font-weight: 600;
+		color: #ddd;
 	}
 
 	@media (max-width: 500px) {
@@ -150,7 +148,6 @@ export const HeaderSectionText = styled.span<{ display?: string }>`
 		display: ${(props) => (props.display === 'true' ? 'block' : 'none')};
 	}
 `
-
 
 export const HeaderSearchWrap = styled.div`
 	display: flex;

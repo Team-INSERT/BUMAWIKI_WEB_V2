@@ -1,5 +1,5 @@
 import React from 'react'
-import { GetServerSideProps, GetStaticProps } from 'next'
+import { GetStaticProps } from 'next'
 import { NextSeo } from 'next-seo'
 import httpClient from '@/lib/httpClient'
 import useConfig from '@/hooks/useConfig'

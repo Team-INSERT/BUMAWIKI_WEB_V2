@@ -1,4 +1,3 @@
-import * as api from '@/api/getDocs'
 import httpClient from '@/lib/httpClient'
 
 const includeFrame = async (frameTitle: string) => {
