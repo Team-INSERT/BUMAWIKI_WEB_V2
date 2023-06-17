@@ -48,7 +48,7 @@ const Doc = ({ docs }: SingleDocsPropsType) => {
 				setLike({ isLike: false, count: await getLikeCounts() })
 			}
 		})()
-	}, [router])
+	}, [router, getIsLike, getLikeCounts])
 
 	return (
 		<>
