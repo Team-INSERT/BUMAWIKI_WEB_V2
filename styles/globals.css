@@ -109,7 +109,7 @@ input[type='file']::file-selector-button {
 	margin-top: 20px;
 	font-size: 28px;
 	font-weight: 700;
-	font-family: 'Pretendard';
+	font-family: 'Pretendard', sans-serif;
 }
 
 .link {
@@ -132,7 +132,7 @@ input[type='file']::file-selector-button {
 	margin-bottom: 10px;
 }
 
-.details>summary {
+.details > summary {
 	width: 100%;
 	height: 40px;
 	border-bottom: 1.5px solid #ccc;
@@ -140,15 +140,15 @@ input[type='file']::file-selector-button {
 	line-height: 40px;
 	font-weight: 800;
 	color: #27416894;
-	font-family: 'Pretendard';
+	font-family: 'Pretendard', sans-serif;
 	font-size: 30px;
 }
 
-.details[open]>summary {
+.details[open] > summary {
 	color: #274168;
 }
 
 .details summary::marker {
 	color: #818181;
-	content: "";
+	content: '';
 }
