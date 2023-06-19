@@ -5,7 +5,7 @@ import Search from 'assets/search.svg'
 import React from 'react'
 import { useRouter } from 'next/router'
 import useUser from '@/hooks/useUser'
-import { headerInitState, subheaderInitState } from '@/state/headerInitState'
+import { headerInitState, subheaderInitState } from '@/state/header.state'
 import { toast } from 'react-toastify'
 
 const Header = () => {
