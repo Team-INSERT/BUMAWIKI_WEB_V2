@@ -17,7 +17,7 @@ export const HeaderWrap = styled.div`
 
 export const SubHeaderWrap = styled.div<{ isHover: boolean }>`
 	width: 100.15vw;
-	height: 22vh;
+	height: 24vh;
 	display: flex;
 	top: 6.5vh;
 	position: absolute;
@@ -68,6 +68,7 @@ export const HeaderLogo = styled(Image)`
 export const HeaderSectionWrap = styled.div`
 	display: flex;
 	height: 100%;
+	margin-left: 0.5vw;
 `
 
 export const HeaderSection = styled.div`
@@ -103,7 +104,7 @@ export const SubHeaderSection = styled(Link)`
 	display: flex;
 	cursor: pointer;
 	text-decoration: none;
-	margin: 1vh 0 1vh auto;
+	margin: 1vh auto 1vh auto;
 	justify-content: center;
 	align-items: center;
 
@@ -151,8 +152,9 @@ export const HeaderSectionText = styled.span<{ display?: string }>`
 
 export const HeaderSearchWrap = styled.div`
 	display: flex;
-	margin-left: auto;
+	margin: 0 auto 0 auto;
 	align-items: center;
+	justify-content: center;
 `
 
 export const HeaderSearchForm = styled.form`
