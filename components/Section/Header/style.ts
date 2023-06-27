@@ -17,7 +17,7 @@ export const HeaderWrap = styled.div`
 
 export const SubHeaderWrap = styled.div<{ isHover: boolean }>`
 	width: 100.15vw;
-	height: 22vh;
+	height: 24vh;
 	display: flex;
 	top: 6.5vh;
 	position: absolute;
@@ -49,7 +49,7 @@ export const HeaderLink = styled(Link)`
 export const SubHeaderPlace = styled.div`
 	display: flex;
 	align-items: center;
-
+	margin-left: 0;
 	@media (max-width: 500px) {
 		display: none;
 	}
@@ -60,7 +60,7 @@ export const SubHeaderPlace = styled.div`
 `
 
 export const HeaderLogo = styled(Image)`
-	margin-left: 7vw;
+	margin-left: 6vw;
 	width: 8vw;
 	height: auto;
 `
@@ -75,7 +75,7 @@ export const HeaderSection = styled.div`
 	/* cursor: pointer; */
 	pointer-events: none;
 	text-decoration: none;
-	margin-left: 4vw;
+	margin-left: 3.4vw;
 	height: 6.5vh;
 	justify-content: center;
 	align-items: center;
@@ -103,7 +103,7 @@ export const SubHeaderSection = styled(Link)`
 	display: flex;
 	cursor: pointer;
 	text-decoration: none;
-	margin: 1vh 0 1vh auto;
+	margin: 1vh auto 1vh auto;
 	justify-content: center;
 	align-items: center;
 
@@ -116,7 +116,7 @@ export const SubHeaderSectionWrap = styled.div<{ margin?: string }>`
 	display: flex;
 	cursor: pointer;
 	text-decoration: none;
-	margin: 3vh 2vw 0 ${(props) => props.margin || '2.6vw'};
+	margin: 3vh 1.8vw 0 ${(props) => props.margin || '2.2vw'};
 	flex-direction: column;
 	align-items: center;
 
@@ -132,7 +132,7 @@ export const HeaderSectionLogo = styled(Image)`
 `
 
 export const HeaderSectionText = styled.span<{ display?: string }>`
-	margin-left: 8px;
+	margin-left: 10px;
 	color: white;
 	font-size: 15px;
 	font-family: 'Open Sans', sans-serif;
