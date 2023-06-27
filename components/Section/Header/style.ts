@@ -49,7 +49,7 @@ export const HeaderLink = styled(Link)`
 export const SubHeaderPlace = styled.div`
 	display: flex;
 	align-items: center;
-
+	margin-left: 3px;
 	@media (max-width: 500px) {
 		display: none;
 	}
@@ -60,7 +60,7 @@ export const SubHeaderPlace = styled.div`
 `
 
 export const HeaderLogo = styled(Image)`
-	margin-left: 7vw;
+	margin-left: 6vw;
 	width: 8vw;
 	height: auto;
 `
@@ -68,7 +68,6 @@ export const HeaderLogo = styled(Image)`
 export const HeaderSectionWrap = styled.div`
 	display: flex;
 	height: 100%;
-	margin-left: 0.5vw;
 `
 
 export const HeaderSection = styled.div`
@@ -76,7 +75,7 @@ export const HeaderSection = styled.div`
 	/* cursor: pointer; */
 	pointer-events: none;
 	text-decoration: none;
-	margin-left: 4vw;
+	margin-left: 3.6vw;
 	height: 6.5vh;
 	justify-content: center;
 	align-items: center;
@@ -117,7 +116,7 @@ export const SubHeaderSectionWrap = styled.div<{ margin?: string }>`
 	display: flex;
 	cursor: pointer;
 	text-decoration: none;
-	margin: 3vh 2vw 0 ${(props) => props.margin || '2.6vw'};
+	margin: 3vh 1.6vw 0 ${(props) => props.margin || '2.2vw'};
 	flex-direction: column;
 	align-items: center;
 
@@ -133,7 +132,7 @@ export const HeaderSectionLogo = styled(Image)`
 `
 
 export const HeaderSectionText = styled.span<{ display?: string }>`
-	margin-left: 8px;
+	margin-left: 10px;
 	color: white;
 	font-size: 15px;
 	font-family: 'Open Sans', sans-serif;
@@ -152,9 +151,8 @@ export const HeaderSectionText = styled.span<{ display?: string }>`
 
 export const HeaderSearchWrap = styled.div`
 	display: flex;
-	margin: 0 auto 0 auto;
+	margin-left: auto;
 	align-items: center;
-	justify-content: center;
 `
 
 export const HeaderSearchForm = styled.form`
