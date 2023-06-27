@@ -1,7 +1,7 @@
 /** @type {import('next-sitemap').IConfig} */
 
 module.exports = {
-	siteUrl: 'http://bumawiki.kro.kr',
+	siteUrl: 'https://buma.wiki',
 	generateRobotsTxt: true,
 	sitemapSize: 7000,
 	changefreq: 'daily',

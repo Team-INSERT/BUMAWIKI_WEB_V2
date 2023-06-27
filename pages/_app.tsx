@@ -64,7 +64,7 @@ export default function App({ Component, pageProps }: AppProps) {
 				<CustomToastContainer autoClose={1000} position={toast.POSITION.TOP_RIGHT} />
 				<Header />
 				<Component {...pageProps} />
-				<Aside isMobile="true" />
+				<Aside display="block" />
 				<Footer />
 			</RecoilRoot>
 		</QueryClientProvider>

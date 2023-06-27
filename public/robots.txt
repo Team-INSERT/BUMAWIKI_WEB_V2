@@ -4,7 +4,7 @@ Allow: /
 Disallow: /exclude
 
 # Host
-Host: http://bumawiki.kro.kr
+Host: https://buma.wiki
 
 # Sitemaps
-Sitemap: http://bumawiki.kro.kr/sitemap.xml
+Sitemap: https://buma.wiki/sitemap.xml
