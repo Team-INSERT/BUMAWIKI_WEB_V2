@@ -49,7 +49,7 @@ export const HeaderLink = styled(Link)`
 export const SubHeaderPlace = styled.div`
 	display: flex;
 	align-items: center;
-	margin-left: 3px;
+	margin-left: 0;
 	@media (max-width: 500px) {
 		display: none;
 	}
@@ -75,7 +75,7 @@ export const HeaderSection = styled.div`
 	/* cursor: pointer; */
 	pointer-events: none;
 	text-decoration: none;
-	margin-left: 3.6vw;
+	margin-left: 3.4vw;
 	height: 6.5vh;
 	justify-content: center;
 	align-items: center;
@@ -116,7 +116,7 @@ export const SubHeaderSectionWrap = styled.div<{ margin?: string }>`
 	display: flex;
 	cursor: pointer;
 	text-decoration: none;
-	margin: 3vh 1.6vw 0 ${(props) => props.margin || '2.2vw'};
+	margin: 3vh 1.8vw 0 ${(props) => props.margin || '2.2vw'};
 	flex-direction: column;
 	align-items: center;
 
