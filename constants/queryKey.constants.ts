@@ -1,5 +1,5 @@
 const queryKey = {
-	getLastModify: 'getLastModify',
-}
+  getLastModify: "getLastModify",
+};
 
-export default queryKey
+export default queryKey;

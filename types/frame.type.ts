@@ -1,8 +1,8 @@
-import { ButtonHTMLAttributes } from 'react'
+import { ButtonHTMLAttributes } from "react";
 
 interface FrameType extends ButtonHTMLAttributes<HTMLButtonElement> {
-	row: number
-	column: number
+  row: number;
+  column: number;
 }
 
-export default FrameType
+export default FrameType;

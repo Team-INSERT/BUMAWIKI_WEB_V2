@@ -1,11 +1,9 @@
 import FileListArray from "./filelistArray.type";
 
-interface CreateDocsType {
+interface UpdateDocsType {
   title: string;
   contents: string;
-  docsType: string;
-  enroll: number;
   files: FileListArray[];
 }
 
-export default CreateDocsType;
+export default UpdateDocsType;

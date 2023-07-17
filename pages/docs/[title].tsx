@@ -1,102 +1,117 @@
-import * as util from '@/utils'
+import * as util from "@/utils";
 
-import React from 'react'
-import Docs from '@/types/docs.type'
-import { GetStaticProps } from 'next'
-import { NextSeo } from 'next-seo'
-import DocsLayout from '@/layout/DocsLayout'
-import httpClient from '@/lib/httpClient'
-import useConfig from '@/hooks/useConfig'
-import useUser from '@/hooks/useUser'
-import { toast } from 'react-toastify'
-import { useRouter } from 'next/router'
-import useLikeCountById from '@/hooks/useLikeCountById'
-import seoContentParser from '@/utils/document/seoContentParser'
+import React from "react";
+import Docs from "@/types/docs.type";
+import { GetStaticProps } from "next";
+import { NextSeo } from "next-seo";
+import DocsLayout from "@/layout/DocsLayout";
+import httpClient from "@/lib/httpClient";
+import useConfig from "@/hooks/useConfig";
+import useUser from "@/hooks/useUser";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
+import useLikeCountById from "@/hooks/useLikeCountById";
+import seoContentParser from "@/utils/document/seoContentParser";
 
 interface SingleDocsPropsType {
-	docs: Docs
+  docs: Docs;
 }
 
 const Doc = ({ docs }: SingleDocsPropsType) => {
-	const [like, setLike] = React.useState({
-		isLike: false,
-		count: 0,
-	})
-	const router = useRouter()
+  const [like, setLike] = React.useState({
+    isLike: false,
+    count: 0,
+  });
+  const router = useRouter();
 
-	const { isLogined } = useUser()
-	const { seoConfig } = useConfig({
-		title: `부마위키 - ${docs.title} (${util.typeEditor(docs.docsType)})`,
-		description: seoContentParser(docs.contents),
-	})
-	const { getIsLike, getLikeCounts, createLike, deleteLike } = useLikeCountById(docs)
+  const { isLogined } = useUser();
+  const { seoConfig } = useConfig({
+    title: `부마위키 - ${docs.title} (${util.typeEditor(docs.docsType)})`,
+    description: seoContentParser(docs.contents),
+  });
+  const { getIsLike, getLikeCounts, createLike, deleteLike } =
+    useLikeCountById(docs);
 
-	const onChangeLike = () => {
-		if (!isLogined) return toast.error('로그인 후 이용 가능한 서비스입니다!')
+  const onChangeLike = () => {
+    if (!isLogined) return toast.error("로그인 후 이용 가능한 서비스입니다!");
 
-		if (!like.isLike) createLike()
-		else deleteLike()
+    if (!like.isLike) createLike();
+    else deleteLike();
 
-		setLike({ count: like.isLike ? like.count - 1 : like.count + 1, isLike: !like.isLike })
-	}
+    setLike({
+      count: like.isLike ? like.count - 1 : like.count + 1,
+      isLike: !like.isLike,
+    });
+  };
 
-	React.useEffect(() => {
-		;(async () => {
-			try {
-				setLike({ isLike: await getIsLike(), count: await getLikeCounts() })
-			} catch (err) {
-				setLike({ isLike: false, count: await getLikeCounts() })
-			}
-		})()
-	}, [router, getIsLike, getLikeCounts])
+  React.useEffect(() => {
+    (async () => {
+      try {
+        setLike({ isLike: await getIsLike(), count: await getLikeCounts() });
+      } catch (err) {
+        setLike({ isLike: false, count: await getLikeCounts() });
+      }
+    })();
+  }, [router, getIsLike, getLikeCounts]);
 
-	return (
-		<>
-			<NextSeo {...seoConfig} />
-			<DocsLayout docs={docs} onChangeLike={onChangeLike} count={like.count} like={like.isLike} />
-		</>
-	)
-}
+  return (
+    <>
+      <NextSeo {...seoConfig} />
+      <DocsLayout
+        docs={docs}
+        onChangeLike={onChangeLike}
+        count={like.count}
+        like={like.isLike}
+      />
+    </>
+  );
+};
 
 const getApiDocs = async (docsName: string) => {
-	try {
-		return (await httpClient.docs.getByTitle(docsName)).data
-	} catch (err) {
-		return false
-	}
-}
+  try {
+    return (await httpClient.docs.getByTitle(docsName)).data;
+  } catch (err) {
+    return false;
+  }
+};
 
 export const getStaticPaths = async () => {
-	return {
-		paths: [],
-		fallback: 'blocking',
-	}
-}
+  return {
+    paths: [],
+    fallback: "blocking",
+  };
+};
 
 export const getStaticProps: GetStaticProps = async (context) => {
-	const { params } = context
+  const { params } = context;
 
-	const res = await getApiDocs(params?.title as string)
+  const res = await getApiDocs(params?.title as string);
 
-	if (!res) return { notFound: true }
+  if (!res) return { notFound: true };
 
-	const { contents } = res
+  const { contents } = res;
 
-	if (res.contents.indexOf('include(') !== -1) {
-		const includeTag = contents.substring(contents.indexOf('include('), contents.indexOf(');') + 2)
-		const frames: string[] = contents.substring(contents.indexOf('include('), contents.indexOf(');')).replace('include(', '').split(', ')
+  if (res.contents.indexOf("include(") !== -1) {
+    const includeTag = contents.substring(
+      contents.indexOf("include("),
+      contents.indexOf(");") + 2,
+    );
+    const frames: string[] = contents
+      .substring(contents.indexOf("include("), contents.indexOf(");"))
+      .replace("include(", "")
+      .split(", ");
 
-		let result = ''
+    let result = "";
 
-		for (const frame of frames) result += `${await util.includeFrame(frame)}\n`
-		res.contents = contents.replace(includeTag, result)
-	}
+    for (const frame of frames) result += `${await util.includeFrame(frame)}\n`;
+    res.contents = contents.replace(includeTag, result);
+  }
 
-	return {
-		props: {
-			docs: res,
-		},
-	}
-}
+  return {
+    props: {
+      docs: res,
+    },
+  };
+};
 
-export default Doc
+export default Doc;

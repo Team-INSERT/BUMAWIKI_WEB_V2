@@ -1,7 +1,7 @@
 const updateInitState = {
-	title: '',
-	contents: '',
-	files: [],
-}
+  title: "",
+  contents: "",
+  files: [],
+};
 
-export default updateInitState
+export default updateInitState;

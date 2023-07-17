@@ -1,6 +1,6 @@
 interface FileListArray {
-	id: number
-	object: File
+  id: number;
+  object: File;
 }
 
-export default FileListArray
+export default FileListArray;

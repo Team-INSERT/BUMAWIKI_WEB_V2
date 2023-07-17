@@ -1,7 +1,7 @@
 const authority = {
-	ADMIN: 'ADMIN',
-	READONLY: 'BANNED',
-	USER: 'USER',
-}
+  ADMIN: "ADMIN",
+  READONLY: "BANNED",
+  USER: "USER",
+};
 
-export default authority
+export default authority;

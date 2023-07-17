@@ -1,6 +1,6 @@
-import moment from 'moment'
-import 'moment/locale/ko'
+import moment from "moment";
+import "moment/locale/ko";
 
-const getLastDate = (UTC: string) => moment(UTC).fromNow()
+const getLastDate = (UTC: string) => moment(UTC).fromNow();
 
-export default getLastDate
+export default getLastDate;
