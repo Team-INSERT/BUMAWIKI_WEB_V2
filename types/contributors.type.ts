@@ -1,7 +1,7 @@
 interface Contributors {
-	docsId: number
-	title: string
-	createTime: string
+  docsId: number;
+  title: string;
+  createTime: string;
 }
 
-export default Contributors
+export default Contributors;

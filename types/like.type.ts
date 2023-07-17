@@ -1,6 +1,6 @@
 interface MyPageLikeType {
-	title: string
-	docsType: string
+  title: string;
+  docsType: string;
 }
 
-export default MyPageLikeType
+export default MyPageLikeType;

@@ -1,3 +1,3 @@
-import httpClient from './httpClient'
+import httpClient from "./httpClient";
 
-export default httpClient
+export default httpClient;

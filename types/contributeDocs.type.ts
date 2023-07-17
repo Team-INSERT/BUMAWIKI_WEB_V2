@@ -1,10 +1,10 @@
 interface ContributeDocsType {
-	userId: number
-	userNickName: string
-	docsId: number
-	createTime: string
-	title: string
-	versionDocsId: number
+  userId: number;
+  userNickName: string;
+  docsId: number;
+  createTime: string;
+  title: string;
+  versionDocsId: number;
 }
 
-export default ContributeDocsType
+export default ContributeDocsType;

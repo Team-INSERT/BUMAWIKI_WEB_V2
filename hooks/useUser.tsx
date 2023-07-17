@@ -1,65 +1,68 @@
-import React from 'react'
-import userState, { initUserState } from '@/context/userState'
-import { Storage } from '@/lib/storage/'
-import UserType from '@/types/user.type'
-import { useRouter } from 'next/router'
-import { useQuery } from 'react-query'
-import { useRecoilState } from 'recoil'
-import httpClient from '@/lib/httpClient'
-import Swal from 'sweetalert2'
+import React from "react";
+import userState, { initUserState } from "@/context/userState";
+import { Storage } from "@/lib/storage/";
+import UserType from "@/types/user.type";
+import { useRouter } from "next/router";
+import { useQuery } from "react-query";
+import { useRecoilState } from "recoil";
+import httpClient from "@/lib/httpClient";
+import Swal from "sweetalert2";
 
 interface UseUserOptions {
-	authorizedPage?: boolean
+  authorizedPage?: boolean;
 }
 
 const getUser = async () => {
-	return (
-		await httpClient.myuser.get({
-			headers: {
-				Authorization: Storage.getItem('access_token'),
-			},
-		})
-	).data
-}
+  return (
+    await httpClient.myuser.get({
+      headers: {
+        Authorization: Storage.getItem("access_token"),
+      },
+    })
+  ).data;
+};
 
 const useUser = (options?: UseUserOptions) => {
-	const [user, setUser] = useRecoilState(userState)
-	const router = useRouter()
+  const [user, setUser] = useRecoilState(userState);
+  const router = useRouter();
 
-	const {
-		data: userInfo,
-		remove,
-		isLoading,
-	} = useQuery<UserType>('getUser', getUser, {
-		retry: 1,
-	})
+  const {
+    data: userInfo,
+    remove,
+    isLoading,
+  } = useQuery<UserType>("getUser", getUser, {
+    retry: 1,
+  });
 
-	const logout = () => {
-		httpClient.logout.delete({
-			data: {
-				refresh_token: Storage.getItem('refresh_token'),
-			},
-		})
-		setUser(initUserState)
-		Storage.delItem('access_token')
-		Storage.delItem('refresh_token')
-		remove()
-	}
+  const logout = () => {
+    httpClient.logout.delete({
+      data: {
+        refresh_token: Storage.getItem("refresh_token"),
+      },
+    });
+    setUser(initUserState);
+    Storage.delItem("access_token");
+    Storage.delItem("refresh_token");
+    remove();
+  };
 
-	React.useEffect(() => userInfo && setUser(userInfo), [router.query, setUser, userInfo])
+  React.useEffect(
+    () => userInfo && setUser(userInfo),
+    [router.query, setUser, userInfo],
+  );
 
-	React.useEffect(() => {
-		if (options?.authorizedPage && !isLoading && !userInfo) {
-			Swal.fire({
-				icon: 'error',
-				title: '로그인이 필요한 페이지입니다.',
-			})
-			router.push('/')
-			// openModal()
-		}
-	}, [options, userInfo, isLoading, router])
+  React.useEffect(() => {
+    if (options?.authorizedPage && !isLoading && !userInfo) {
+      Swal.fire({
+        icon: "error",
+        title: "로그인이 필요한 페이지입니다.",
+      });
+      router.push("/");
+      // openModal()
+    }
+  }, [options, userInfo, isLoading, router]);
 
-	return { user, isLogined: !!userInfo, logout }
-}
+  return { user, isLogined: !!userInfo, logout };
+};
 
-export default useUser
+export default useUser;

@@ -1,14 +1,13 @@
 {
-	"editor.formatOnSave": true,
-	"javascript.format.enable": false,
-	"eslint.options": {
-		"extensions": [".html", ".ts", ".js", ".tsx"]
-	},
-	"files.autoSaveDelay": 500,
-	"eslint.packageManager": "yarn",
-	"typescript.tsdk": "node_modules/typescript/lib",
-	"editor.codeActionsOnSave": {
-		"source.fixAll.eslint": true,
-		"source.organizeImports": false
-	}
+  "editor.formatOnSave": true,
+  "javascript.format.enable": false,
+  "eslint.options": {
+    "extensions": [".html", ".ts", ".js", ".tsx"]
+  },
+  "files.autoSaveDelay": 500,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.organizeImports": false
+  }
 }

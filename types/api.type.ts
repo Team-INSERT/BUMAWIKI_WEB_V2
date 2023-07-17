@@ -1,12 +1,12 @@
 export interface UpdateDocsTitleProps {
-	title: string
-	docsName?: string
+  title: string;
+  docsName?: string;
 }
 
 export interface UpdateDocsProps extends UpdateDocsTitleProps {
-	data: FormData
+  data: FormData;
 }
 
 export interface UpdateDocsTypeProps extends UpdateDocsTitleProps {
-	docsType: string
+  docsType: string;
 }

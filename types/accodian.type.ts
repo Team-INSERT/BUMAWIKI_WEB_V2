@@ -1,7 +1,7 @@
 interface AccodianType {
-	name: string
-	children: React.ReactNode
-	isOpen?: boolean
+  name: string;
+  children: React.ReactNode;
+  isOpen?: boolean;
 }
 
-export default AccodianType
+export default AccodianType;

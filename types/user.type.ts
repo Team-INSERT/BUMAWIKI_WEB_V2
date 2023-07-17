@@ -1,12 +1,12 @@
-import ContributeDocsType from './contributeDocs.type'
+import ContributeDocsType from "./contributeDocs.type";
 
 interface UserType {
-	id: number
-	nickName: string
-	authority: string
-	email: string
-	isLogin: boolean
-	contributeDocs: ContributeDocsType[]
+  id: number;
+  nickName: string;
+  authority: string;
+  email: string;
+  isLogin: boolean;
+  contributeDocs: ContributeDocsType[];
 }
 
-export default UserType
+export default UserType;

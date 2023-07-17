@@ -1,5 +1,5 @@
 const seoContentParser = (contents: string) => {
-  	return contents.replace(/<[^>]*>/g, '');
-}
+  return contents.replace(/<[^>]*>/g, "");
+};
 
-export default seoContentParser
+export default seoContentParser;

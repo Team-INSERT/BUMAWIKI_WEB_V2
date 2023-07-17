@@ -1,7 +1,6 @@
 interface Color {
-    frameColor: string
-    textColor: string
+  frameColor: string;
+  textColor: string;
 }
 
-
-export default Color
+export default Color;

@@ -1,8 +1,8 @@
-import Docs from '../docs.type'
+import Docs from "../docs.type";
 
 interface DocsPropsType {
-	docs: Docs[]
-	years: number[]
+  docs: Docs[];
+  years: number[];
 }
 
-export default DocsPropsType
+export default DocsPropsType;
