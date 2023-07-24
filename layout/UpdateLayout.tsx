@@ -8,7 +8,7 @@ import theme from "@/styles/theme";
 import Image from "next/image";
 import Check from "assets/check.svg";
 import { decodeContents } from "@/utils/document/requestContents";
-import UpdateDocsType from "@/types/update.type.";
+import UpdateDocsType from "@/types/update.type";
 import FileListArray from "@/types/filelistArray.type";
 import { Id } from "react-toastify";
 
