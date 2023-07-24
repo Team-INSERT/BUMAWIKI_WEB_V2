@@ -3,7 +3,6 @@ import { Storage } from "../storage";
 
 export const getAccessToken = async () => {
   try {
-    console.log(Storage.getItem("refresh_token"));
     const res = (
       await axios.put("/auth/refresh/access", {
         refresh_token: Storage.getItem("refresh_token"),

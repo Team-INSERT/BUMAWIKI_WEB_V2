@@ -72,3 +72,7 @@ export const StaticDetailList = styled.ul`
   margin: 30px 0 0 50px;
   font-weight: 600;
 `;
+
+export const StaticGradeBox = styled.div`
+  padding: 18px 0;
+`;

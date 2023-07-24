@@ -5,7 +5,7 @@ import ArrowRight from "assets/arrow_right.svg";
 import React from "react";
 import AccodianType from "@/types/accodian.type";
 
-const AccodianMenu = ({ children, name }: AccodianType) => {
+const AccodianMenu = ({ children, name, isOpen }: AccodianType) => {
   const [detail, setDetail] = React.useState<boolean>(true);
   const [opacity, setOpacity] = React.useState<number>(1);
 
@@ -14,6 +14,13 @@ const AccodianMenu = ({ children, name }: AccodianType) => {
     if (opacity === 1) return setOpacity(0.4);
     setOpacity(1);
   };
+
+  React.useEffect(() => {
+    if (!isOpen && isOpen !== undefined) {
+      setOpacity(0.4);
+      setDetail((detail) => !detail);
+    }
+  }, [isOpen]);
 
   return (
     <S.AccodianWrap>
