@@ -46,14 +46,15 @@ const Doc = ({ docs }: SingleDocsPropsType) => {
 
   React.useEffect(() => {
     (async () => {
-      try {
-        setLike({ isLike: await getIsLike(), count: await getLikeCounts() });
-      } catch (err) {
-        console.log(err);
-        setLike({ isLike: false, count: await getLikeCounts() });
+      if (isLogined) {
+        try {
+          setLike({ isLike: await getIsLike(), count: await getLikeCounts() });
+        } catch (err) {
+          setLike({ isLike: false, count: await getLikeCounts() });
+        }
       }
     })();
-  }, [router, getIsLike, getLikeCounts]);
+  }, [router, getIsLike, getLikeCounts, isLogined]);
 
   return (
     <>

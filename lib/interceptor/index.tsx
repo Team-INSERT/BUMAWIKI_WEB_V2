@@ -33,10 +33,6 @@ export const requestInterceptors = async (
 };
 
 export const responseInterceptors = async (response: AxiosResponse) => {
-  const 권한이없다면 = response.status === exception.status.FORBIDDEN;
-
-  if (권한이없다면) await getAccessToken();
-
   return {
     ...response,
     data: response.data,
