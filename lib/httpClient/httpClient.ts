@@ -1,7 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { requestInterceptors, responseInterceptors } from "@/lib/interceptor";
 import { Storage } from "@/lib/storage";
-import { getAccessToken } from "./getAccessToken";
 import { QueryClient } from "react-query";
 
 export interface HttpClientConfig {

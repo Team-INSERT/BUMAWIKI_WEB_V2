@@ -35,10 +35,10 @@ export const requestInterceptors = async (
 export const responseInterceptors = async (response: AxiosResponse) => {
   const 권한이없다면 = response.status === exception.status.FORBIDDEN;
 
-  console.log(response);
-  // const 로그인하지않은유저라면 =
-
-  if (권한이없다면) await getAccessToken();
+  if (권한이없다면) {
+    console.log(response);
+    await getAccessToken();
+  }
 
   return {
     ...response,
