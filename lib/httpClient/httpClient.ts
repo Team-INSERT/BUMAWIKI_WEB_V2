@@ -95,10 +95,7 @@ export class HttpClient {
     this.api.interceptors.response.use(
       (response) => response,
       async (error) => {
-        console.log(error);
-        Storage.delItem("access_token");
         queryClient.invalidateQueries("getUser");
-        await getAccessToken();
         return Promise.reject(error);
       },
     );
