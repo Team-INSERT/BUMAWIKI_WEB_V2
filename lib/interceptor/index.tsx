@@ -33,7 +33,7 @@ export const requestInterceptors = async (
 };
 
 export const responseInterceptors = async (originalResponse: AxiosResponse) => {
-  if (originalResponse.status !== exception.status.SUCCESS)
+  if (originalResponse.status === exception.status.FORBIDDEN)
     await getAccessToken();
 
   return {
