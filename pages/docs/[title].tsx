@@ -49,6 +49,7 @@ const Doc = ({ docs }: SingleDocsPropsType) => {
       try {
         setLike({ isLike: await getIsLike(), count: await getLikeCounts() });
       } catch (err) {
+        console.log(err);
         setLike({ isLike: false, count: await getLikeCounts() });
       }
     })();
