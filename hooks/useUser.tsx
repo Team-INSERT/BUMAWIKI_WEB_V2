@@ -33,6 +33,7 @@ const useUser = (options?: UseUserOptions) => {
   } = useQuery<UserType>("getUser", getUser, {
     retry: 1,
     enabled: !!Storage.getItem("access_token"),
+    onError: () => Storage.delItem("access_token"),
   });
 
   const logout = () => {
