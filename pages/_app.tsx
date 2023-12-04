@@ -46,7 +46,7 @@ export default function App({ Component, pageProps }: AppProps) {
       ></script>
       {/* Google Adsense */}
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4588218925754368"
-     crossorigin="anonymous"></script>
+     crossOrigin="anonymous"></script>
       {/* Global Site Tag (gtag.js) - Google Analytics */}
       <Script
         strategy="afterInteractive"
