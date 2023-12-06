@@ -39,14 +39,16 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <script
+      <Script
         async
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6289115458062002"
         crossOrigin="anonymous"
-      ></script>
+      ></Script>
       {/* Google Adsense */}
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4588218925754368"
-     crossOrigin="anonymous"></script>
+      <Script async
+              src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4588218925754368"
+              crossOrigin="anonymous"></Script>
+
       {/* Global Site Tag (gtag.js) - Google Analytics */}
       <Script
         strategy="afterInteractive"
