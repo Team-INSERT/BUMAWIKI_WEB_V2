@@ -8,6 +8,7 @@ import Header from "./Section/Header";
 import SubFooter from "./Section/SubFooter";
 import Footer from "./Section/Footer";
 import Authority from "./Button/Authority";
+import Scripts from "./Script";
 
 export {
   AccodianMenu,
@@ -20,4 +21,5 @@ export {
   SubFooter,
   Footer,
   Authority,
+  Scripts
 };
