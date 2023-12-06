@@ -2,6 +2,8 @@ import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { requestInterceptors, responseInterceptors } from "@/lib/interceptor";
 import { Storage } from "@/lib/storage";
 import { QueryClient } from "react-query";
+import { getAccessToken } from "./getAccessToken";
+import exception from "@/constants/exception.constants";
 
 export interface HttpClientConfig {
   baseURL?: string;
@@ -94,7 +96,12 @@ export class HttpClient {
     this.api.interceptors.response.use(
       (response) => response,
       async (error) => {
-        queryClient.invalidateQueries("getUser");
+        const originalRequest = error.config;
+        if (error.response.data.code === exception.code.TOKEN_403_2) {
+          await getAccessToken();
+          return this.api(originalRequest);
+        }
+
         return Promise.reject(error);
       },
     );

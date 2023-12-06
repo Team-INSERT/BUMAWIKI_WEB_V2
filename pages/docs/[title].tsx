@@ -54,7 +54,7 @@ const Doc = ({ docs }: SingleDocsPropsType) => {
         }
       }
     })();
-  }, [router, getIsLike, getLikeCounts, isLogined]);
+  }, [router, isLogined]);
 
   return (
     <>
