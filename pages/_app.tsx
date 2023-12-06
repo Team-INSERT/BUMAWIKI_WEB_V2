@@ -39,11 +39,6 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6289115458062002"
-        crossOrigin="anonymous"
-      ></Script>
       {/* Google Adsense */}
       <Script async
               src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4588218925754368"
