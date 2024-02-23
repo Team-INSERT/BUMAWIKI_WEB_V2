@@ -16,6 +16,26 @@ const HomeLayout = () => {
         <S.HomeTitleWrap>
           <S.HomeTitleText>부마위키:대문</S.HomeTitleText>
         </S.HomeTitleWrap>
+        <S.NoticeWrap>
+          <S.NoticeText href="/docs/부마위키%20업데이트%20내역" target="_blank">
+            공지사항
+          </S.NoticeText>
+          <S.NoticeText href="/docs/부마위키%20방명록" target="_blank">
+            방명록
+          </S.NoticeText>
+          <S.NoticeText
+            href="/docs/부마위키%20개인정보처리방침"
+            target="_blank"
+          >
+            개인정보처리방침
+          </S.NoticeText>
+          <S.NoticeText
+            href="https://forms.gle/DzAP7XSYH4ubK43FA"
+            target="_blank"
+          >
+            문의하기
+          </S.NoticeText>
+        </S.NoticeWrap>
         <S.HomeClassify>
           <Classify>부마위키</Classify>
         </S.HomeClassify>

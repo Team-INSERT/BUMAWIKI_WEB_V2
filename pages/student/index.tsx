@@ -33,48 +33,13 @@ interface StudentFrameType {
   gradeNumber: number;
 }
 
-const grades: Array<StudentFrameType> = [
-  { name: "freshman", gradeNumber: 1, classNames: [1, 2, 3, 4] },
-  { name: "sophomore", gradeNumber: 2, classNames: [1, 2, 3, 4] },
-  { name: "senior", gradeNumber: 3, classNames: [1, 2, 3, 4] },
-];
-
 export async function getStaticProps() {
   const student = (await httpClient.static.getByTitle("student")).data;
   const years = util.getAllYear();
-
-  const gradeFrame = {
-    freshman: "",
-    sophomore: "",
-    senior: "",
-  };
-
-  for (const grade of grades) {
-    const { name, classNames, gradeNumber }: StudentFrameType = {
-      name: grade.name,
-      classNames: grade.classNames,
-      gradeNumber: grade.gradeNumber,
-    };
-
-    let frameContents = "";
-
-    for (const frame of classNames) {
-      frameContents += await util.includeFrame(
-        `틀:${gradeNumber}학년${frame}반`,
-      );
-    }
-    gradeFrame[name] = frameContents;
-  }
-
-  const { freshman, sophomore, senior } = gradeFrame;
-
   return {
     props: {
       docs: student,
       years,
-      freshman,
-      sophomore,
-      senior,
     },
   };
 }

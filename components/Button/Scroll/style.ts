@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export const ScrollButtonWrap = styled.div`
   position: fixed;
-  right: 3.2%;
+  right: 13%;
   bottom: 5%;
   z-index: 1;
   display: flex;
