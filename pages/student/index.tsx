@@ -27,12 +27,6 @@ const Student = (props: StudentPropsType) => {
   );
 };
 
-interface StudentFrameType {
-  name: "freshman" | "sophomore" | "senior";
-  classNames: Array<number>;
-  gradeNumber: number;
-}
-
 export async function getStaticProps() {
   const student = (await httpClient.static.getByTitle("student")).data;
   const years = util.getAllYear();
