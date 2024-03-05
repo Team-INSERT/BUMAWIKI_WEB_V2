@@ -10,6 +10,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { RecoilRoot } from "recoil";
+import DocsCreateButton from "@/components/Button/Create";
 
 axios.defaults.baseURL = "https://buma.wiki/api";
 
@@ -48,6 +49,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
         <Aside display="block" />
         <Footer />
+        <DocsCreateButton />
       </RecoilRoot>
     </QueryClientProvider>
   );

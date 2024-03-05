@@ -46,19 +46,6 @@ export const HeaderLink = styled(Link)`
   }
 `;
 
-export const SubHeaderPlace = styled.div`
-  display: flex;
-  align-items: center;
-  margin-left: 0;
-  @media (max-width: 500px) {
-    display: none;
-  }
-
-  img {
-    opacity: 0;
-  }
-`;
-
 export const HeaderLogo = styled(Image)`
   margin-left: 6vw;
   width: 8vw;
@@ -67,18 +54,19 @@ export const HeaderLogo = styled(Image)`
 
 export const HeaderSectionWrap = styled.div`
   display: flex;
-  height: 100%;
+  gap: 4vw;
 `;
 
-export const HeaderSection = styled.div`
+export const HeaderSection = styled(Link)`
   display: flex;
-  /* cursor: pointer; */
-  pointer-events: none;
+  cursor: pointer;
   text-decoration: none;
-  margin-left: 3.4vw;
-  height: 6.5vh;
   justify-content: center;
   align-items: center;
+
+  &:first-child {
+    margin-left: 4vw;
+  }
 
   @media (max-width: 500px) {
     margin-left: 9vw;
@@ -99,36 +87,13 @@ export const HeaderSectionLink = styled(Link)`
   }
 `;
 
-export const SubHeaderSection = styled(Link)`
-  display: flex;
-  cursor: pointer;
-  text-decoration: none;
-  margin: 1vh auto 1vh auto;
-  justify-content: center;
-  align-items: center;
-
-  @media (max-width: 500px) {
-    margin-right: auto;
-  }
-`;
-
-export const SubHeaderSectionWrap = styled.div<{ margin?: string }>`
-  display: flex;
-  cursor: pointer;
-  text-decoration: none;
-  margin: 3vh 1.8vw 0 ${(props) => props.margin || "2.2vw"};
-  flex-direction: column;
-  align-items: center;
-
-  @media (max-width: 500px) {
-    margin-left: 1.4vw;
-    font-size: 8px;
-  }
-`;
-
 export const HeaderSectionLogo = styled(Image)`
   width: 14px;
   height: 14px;
+
+  @media (max-width: 1024px) {
+    display: none;
+  }
 `;
 
 export const HeaderSectionText = styled.span<{ display?: string }>`
@@ -174,6 +139,10 @@ export const HeaderSearchInput = styled.input`
   font-family: "Open Sans", sans-serif;
   color: $main-color;
   font-weight: 800;
+
+  @media (max-width: 1024px) {
+    width: 100px;
+  }
 
   @media (max-width: 500px) {
     width: 70px;

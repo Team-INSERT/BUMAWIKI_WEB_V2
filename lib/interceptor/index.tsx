@@ -1,14 +1,9 @@
 import { Storage } from "@/lib/storage";
-import { AxiosRequestConfig, AxiosResponse } from "axios";
-import { getAccessToken } from "../httpClient/getAccessToken";
-import exception from "@/constants/exception.constants";
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 
 export const requestInterceptors = async (
   requestConfig: AxiosRequestConfig,
 ) => {
-  if (!Storage.getItem("access_token") && Storage.getItem("refresh_token"))
-    await getAccessToken();
-
   if (requestConfig.headers) {
     requestConfig.headers.Authorization = Storage.getItem("access_token");
   }

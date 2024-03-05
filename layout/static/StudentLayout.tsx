@@ -15,18 +15,9 @@ import { decodeContents } from "@/utils/document/requestContents";
 interface StudentLayoutPropsType {
   docs: Docs[];
   years: number[];
-  freshman: string;
-  sophomore: string;
-  senior: string;
 }
 
-const StudentLayout = ({
-  docs,
-  years,
-  freshman,
-  sophomore,
-  senior,
-}: StudentLayoutPropsType) => {
+const StudentLayout = ({ docs, years }: StudentLayoutPropsType) => {
   return (
     <S.StaticWrap>
       <Board>
@@ -38,29 +29,8 @@ const StudentLayout = ({
         </S.StaticClassify>
         <S.StaticLine />
         <S.StaticListWrap>
-          <AccodianMenu name={`${new Date().getFullYear()}학년도 1학년`}>
-            <S.StaticGradeBox
-              dangerouslySetInnerHTML={{
-                __html: util.documentation(decodeContents(freshman)),
-              }}
-            ></S.StaticGradeBox>
-          </AccodianMenu>
-          <AccodianMenu name={`${new Date().getFullYear()}학년도 2학년`}>
-            <S.StaticGradeBox
-              dangerouslySetInnerHTML={{
-                __html: util.documentation(decodeContents(sophomore)),
-              }}
-            ></S.StaticGradeBox>
-          </AccodianMenu>
-          <AccodianMenu name={`${new Date().getFullYear()}학년도 3학년`}>
-            <S.StaticGradeBox
-              dangerouslySetInnerHTML={{
-                __html: util.documentation(decodeContents(senior)),
-              }}
-            ></S.StaticGradeBox>
-          </AccodianMenu>
           {years.map((year) => (
-            <AccodianMenu name={`${year}년도 입학생`} key={year} isOpen={false}>
+            <AccodianMenu name={`${year}년도 입학생`} key={year} isOpen>
               {docs.map((student: Docs) => (
                 <S.StaticList key={student.id}>
                   {student.enroll === year && (

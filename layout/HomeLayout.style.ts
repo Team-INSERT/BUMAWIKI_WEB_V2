@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ToastContainer } from "react-toastify";
 import styled from "styled-components";
 
@@ -6,6 +7,19 @@ export const CustomToastContainer = styled(ToastContainer)`
     color: black;
     font-size: 14px;
   }
+`;
+
+export const NoticeWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 68vw;
+  gap: 14px;
+`;
+
+export const NoticeText = styled(Link)`
+  color: blue;
+  font-weight: 500;
 `;
 
 export const HomeWrap = styled.div`

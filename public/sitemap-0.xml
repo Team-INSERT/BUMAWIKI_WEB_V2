@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-<url><loc>https://buma.wiki</loc><lastmod>2023-07-24T12:17:57.029Z</lastmod><changefreq>daily</changefreq><priority>1</priority></url>
-<url><loc>https://buma.wiki/accident</loc><lastmod>2023-07-24T12:17:57.029Z</lastmod><changefreq>daily</changefreq><priority>1</priority></url>
-<url><loc>https://buma.wiki/club</loc><lastmod>2023-07-24T12:17:57.029Z</lastmod><changefreq>daily</changefreq><priority>1</priority></url>
-<url><loc>https://buma.wiki/create</loc><lastmod>2023-07-24T12:17:57.029Z</lastmod><changefreq>daily</changefreq><priority>1</priority></url>
-<url><loc>https://buma.wiki/frame</loc><lastmod>2023-07-24T12:17:57.029Z</lastmod><changefreq>daily</changefreq><priority>1</priority></url>
-<url><loc>https://buma.wiki/mypage</loc><lastmod>2023-07-24T12:17:57.029Z</lastmod><changefreq>daily</changefreq><priority>1</priority></url>
-<url><loc>https://buma.wiki/oauth</loc><lastmod>2023-07-24T12:17:57.029Z</lastmod><changefreq>daily</changefreq><priority>1</priority></url>
-<url><loc>https://buma.wiki/popular</loc><lastmod>2023-07-24T12:17:57.029Z</lastmod><changefreq>daily</changefreq><priority>1</priority></url>
-<url><loc>https://buma.wiki/student</loc><lastmod>2023-07-24T12:17:57.029Z</lastmod><changefreq>daily</changefreq><priority>1</priority></url>
-<url><loc>https://buma.wiki/teacher</loc><lastmod>2023-07-24T12:17:57.029Z</lastmod><changefreq>daily</changefreq><priority>1</priority></url>
+<url><loc>https://buma.wiki</loc><lastmod>2024-03-05T10:27:42.821Z</lastmod><changefreq>daily</changefreq><priority>1</priority></url>
+<url><loc>https://buma.wiki/accident</loc><lastmod>2024-03-05T10:27:42.822Z</lastmod><changefreq>daily</changefreq><priority>1</priority></url>
+<url><loc>https://buma.wiki/club</loc><lastmod>2024-03-05T10:27:42.822Z</lastmod><changefreq>daily</changefreq><priority>1</priority></url>
+<url><loc>https://buma.wiki/create</loc><lastmod>2024-03-05T10:27:42.822Z</lastmod><changefreq>daily</changefreq><priority>1</priority></url>
+<url><loc>https://buma.wiki/frame</loc><lastmod>2024-03-05T10:27:42.822Z</lastmod><changefreq>daily</changefreq><priority>1</priority></url>
+<url><loc>https://buma.wiki/mypage</loc><lastmod>2024-03-05T10:27:42.822Z</lastmod><changefreq>daily</changefreq><priority>1</priority></url>
+<url><loc>https://buma.wiki/oauth</loc><lastmod>2024-03-05T10:27:42.822Z</lastmod><changefreq>daily</changefreq><priority>1</priority></url>
+<url><loc>https://buma.wiki/popular</loc><lastmod>2024-03-05T10:27:42.822Z</lastmod><changefreq>daily</changefreq><priority>1</priority></url>
+<url><loc>https://buma.wiki/student</loc><lastmod>2024-03-05T10:27:42.822Z</lastmod><changefreq>daily</changefreq><priority>1</priority></url>
+<url><loc>https://buma.wiki/teacher</loc><lastmod>2024-03-05T10:27:42.822Z</lastmod><changefreq>daily</changefreq><priority>1</priority></url>
 </urlset>
