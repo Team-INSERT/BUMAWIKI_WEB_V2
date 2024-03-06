@@ -1,7 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 import styled from "styled-components";
 
-export const CreateButtonWrap = styled.button`
+export const CreateButtonWrap = styled(Link)`
   background-color: #274168;
   color: #fff;
   display: flex;
